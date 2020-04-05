@@ -96,6 +96,10 @@ export default class Game {
         cover.addEventListener("click", () => {
             cover.remove();
 
+            // Init sound here
+            this.soundManager.createGenericAudio("Birds", 'sounds/birds.mp3', true, false);
+            this._debugMode && this._debuglogs.addLog("Not looping birds, for your ears to survive...");
+
             // On iOS13 + devices, ask for device orientation events permission
             // https://medium.com/flawless-app-stories/how-to-request-device-motion-and-orientation-permission-in-ios-13-74fc9d6cd140
             if (typeof DeviceOrientationEvent.requestPermission === 'function') {
@@ -199,30 +203,6 @@ export default class Game {
             // Get reference of fox and change position
             let fox = this.modelManager.getModelReferenceByIdentifier('Fox');
             fox.position.x = 2;
-
-            // Sound init
-            this.soundManager.setup(this.cameraManager.camera);
-            this.soundManager.createGlobalAudio(
-                "AmbientMusic",
-                'sounds/birds.mp3',
-                (status, sound) => {
-                    if (status) { // Configure sound
-                        sound.setLoop(true);
-                        sound.setVolume(0.1);
-                        // sound.play();
-                    }
-                });
-            this.soundManager.createPositionalAudio(
-                this.modelManager.getModelReferenceByIdentifier('IceTruck'),
-                'sounds/car.wav',
-                (status, sound) => {
-                    if(status) {
-                        sound.setLoop(true);
-                        sound.setRefDistance(5);
-                        sound.setVolume(.5);
-                        // sound.play();
-                    }
-                });
 
             // Start loop!
             this._loop();

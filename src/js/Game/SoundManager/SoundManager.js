@@ -14,85 +14,41 @@ export default class SoundManager {
 
         this._debugMode = isDebugMode;
 
-        // Elements that will be added to the camera (listeners)
-        this._forCamera = [];
+        this._sounds = [];
     };
-
-
-    /**
-     * Do the setup.
-     * @param camera
-     */
-    setup(camera) {
-        this._camera = camera;
-    }
 
     // ------------------------------------------------------------------- DEBUG
 
 
     // ------------------------------------------------------------------- MAKE
 
-    createGenericAudio(identifier, path, callback) {
+    createGenericAudio(identifier, path, play = false, loop = false) {
+        let sound = new Audio(path);
+        sound.identifier = identifier;
 
+        if(play) sound.play();
+        if(loop) sound.loop = true;
+
+        this._sounds.push(sound);
     }
 
-    /**
-     * Creates a global audio source.
-     * @param identifier
-     * @param path
-     * @param callback
-     */
-    createGlobalAudio(identifier, path, callback) {
-        let listener = new THREE.AudioListener();
-        this._camera.add(listener);
+    // ------------------------------------------------------------------- INTERACT
 
-        let sound = new THREE.Audio( listener );
-
-        let audioLoader = new THREE.AudioLoader();
-        audioLoader.load(path, ( buffer ) => {
-            sound.setBuffer( buffer );
-            sound.identifier = identifier;
-            callback(true, sound);
-        });
-        callback(false);
+    play(identifier) {
+        this.getSoundReferenceByIdentifier(identifier).play();
     }
 
-    /**
-     * Creates a positional audio in a parent.
-     * @param parent
-     * @param path
-     * @param callback
-     */
-    createPositionalAudio(parent, path, callback) {
-        let listener = new THREE.AudioListener();
-        this._camera.add(listener);
-
-        let sound = new THREE.PositionalAudio( listener );
-
-        if(this._debugMode) {
-            sound.add(new PositionalAudioHelper( sound ));
-        }
-
-        let audioLoader = new THREE.AudioLoader();
-        audioLoader.load( path, ( buffer ) => {
-            sound.setBuffer( buffer );
-            parent.add( sound );
-            callback(true, sound);
-        });
+    pause(identifier) {
+        this.getSoundReferenceByIdentifier(identifier).pause();
     }
 
     // ------------------------------------------------------------------- GETTERS
 
-    /**
-     * TODO change to get global sound in camera by identifier
-     * Returns the global sound identified by string.
-     * @param identifier
-     */
-    getGlobalSoundReferenceByIdentifier(identifier) {
-    //     for (let sound of this._globalSounds) {
-    //         if(sound.identifier === identifier) return sound; // Reference
-    //     }
-    //     console.error("Couldn't find global sound with identifier " + identifier);
-    //     return null;
+    getSoundReferenceByIdentifier(identifier) {
+        for (let sound of this._sounds) {
+            if (sound.identifier === identifier) return sound; // Reference
+        }
+        console.error("Couldn't find global sound with identifier " + identifier);
+        return null;
     }
 }
