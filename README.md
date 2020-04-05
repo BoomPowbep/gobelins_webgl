@@ -1,6 +1,6 @@
 
 # Gobelins M1 Webgl Project 
-todo
+Based on [our Threejs webpack starter](https://github.com/BoomPowbep/three-starter).
   
 ## Setting up  
 First, install dependencies.  
