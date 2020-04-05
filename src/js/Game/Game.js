@@ -98,6 +98,8 @@ export default class Game {
 
             // Init sound here
             this.soundManager.createGenericAudio("Birds", 'sounds/birds.mp3', true, false);
+            this.soundManager.createGenericAudio("CarHorn", 'sounds/horn.wav');
+
             this._debugMode && this._debuglogs.addLog("Not looping birds, for your ears to survive...");
 
             // On iOS13 + devices, ask for device orientation events permission
@@ -238,7 +240,21 @@ export default class Game {
             this._mouse, this.cameraManager.camera
         );
         this._debuglogs.addLog("RayCast -> " + touchedElementIdentifier);
+        this.postTouchEventAction(touchedElementIdentifier);
         console.log(touchedElementIdentifier);
+    }
+
+    /**
+     * Perform action after touch event.
+     * @param identifier
+     */
+    postTouchEventAction(identifier) {
+        switch(identifier) {
+            case "IceTruck":
+                this.soundManager.getSoundReferenceByIdentifier("CarHorn").play();
+            default:
+                break;
+        }
     }
 
     // ------------------------------------------------------------------- RENDER

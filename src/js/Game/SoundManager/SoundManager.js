@@ -22,6 +22,13 @@ export default class SoundManager {
 
     // ------------------------------------------------------------------- MAKE
 
+    /**
+     * Creates an Audio object.
+     * @param identifier
+     * @param path
+     * @param play
+     * @param loop
+     */
     createGenericAudio(identifier, path, play = false, loop = false) {
         let sound = new Audio(path);
         sound.identifier = identifier;

@@ -20,7 +20,7 @@ export default class DebugLogs {
         log.innerHTML = string;
 
         // Max 4 elements in view
-        if(this._domContainer.children.length > 3) {
+        if(this._domContainer.children.length >= 4) {
             this._domContainer.removeChild(this._domContainer.children[0]);
         }
 
