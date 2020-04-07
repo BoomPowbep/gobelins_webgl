@@ -16,14 +16,14 @@ class DataManager {
     }
 
     initLetters() {
-        LETTERS_VAR.forEach(value => {
-            this.letters.add(new Letter(value));
+        Object.entries(LETTERS_VAR).forEach(value => {
+            this.letters.add(new Letter(value[0]));
         })
     }
 
     initRecords() {
-        RECORDS_VARS.forEach(value => {
-            this.records.add(new Record(value.id, AudioManager.getAudio(value.audio_id)));
+        Object.entries(LETTERS_VAR).forEach(value => {
+            this.records.add(new Record(value[0], AudioManager.getAudio(value[1].audio_id)));
         })
     }
 }
