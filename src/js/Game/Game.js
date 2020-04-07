@@ -14,6 +14,8 @@ import SoundManager from "./SoundManager/SoundManager";
 import {DebugPanel, DebugButton} from "./Debug/DebugPanel";
 import {Vector3} from "three";
 import AudioManager from "../models/audio/audio-manager";
+import DATA from "../models/data";
+import DataManager from "../models/data/data-manager";
 
 export default class Game {
 
@@ -97,6 +99,8 @@ export default class Game {
 
         AudioManager.init();
         document.addEventListener("sound_ready", function (e) {
+            //When sounds are ready, we can build our data manager
+            DATA.data_manager = new DataManager();
         });
 
         cover.addEventListener("click", () => {
