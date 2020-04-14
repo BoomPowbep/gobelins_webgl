@@ -7,13 +7,47 @@
     <meta name="description" content="Three.js Starter pack.">
 
     <!-- TODO add og, canonical, robots -->
-
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="build/app.css">
 </head>
 <body>
 
 <div id="cover"><h1>Click me!</h1></div>
+
+<div id="phone">
+    <div class="app" id="app_phone">
+
+    </div>
+    <div class="app" id="app_memo">
+        <div class="app-name">
+            <span>Mes enregistrements</span>
+        </div>
+
+        <script data-template="memo_el" type="text/html">
+            <div class="app-list-item" data-record="{id}">
+                <div class="app-toggler" data-to-toggle="{name}">
+                    <p class="important">{name}</p>
+                    <span class="small o-60">{date}</span>
+                    <span class="small o-60 f-r">{duration_text}</span>
+                </div>
+                <div class="app-toggled" data-to-toggle="{name}">
+                    <div class="timeline">
+                        <div></div>
+                        <input type="range" value="0" min="0" step="any" max="{duration}">
+                    </div>
+                    <button class="">Play</button>
+                </div>
+            </div>
+        </script>
+
+        <div class="app-content">
+            <div class="app-list">
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="build/runtime.js"></script>

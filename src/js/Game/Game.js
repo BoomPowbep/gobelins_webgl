@@ -16,6 +16,8 @@ import {Vector3} from "three";
 import AudioManager from "../models/audio/audio-manager";
 import DATA from "../models/data";
 import DataManager from "../models/data/data-manager";
+import UiManager from "../models/ui/ui-manager";
+import UiMemo from "../models/ui/ui-memo";
 
 export default class Game {
 
@@ -101,6 +103,9 @@ export default class Game {
         document.addEventListener("sound_ready", function (e) {
             //When sounds are ready, we can build our data manager
             DATA.data_manager = new DataManager();
+            DATA.ui_manager = new UiManager();
+            DATA.ui_manager.registerUi("memo", new UiMemo());
+            DATA.ui_manager.get("memo").show();
         });
 
         cover.addEventListener("click", () => {

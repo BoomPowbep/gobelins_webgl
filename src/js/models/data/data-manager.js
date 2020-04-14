@@ -22,7 +22,7 @@ class DataManager {
     }
 
     initRecords() {
-        Object.entries(LETTERS_VAR).forEach(value => {
+        Object.entries(RECORDS_VARS).forEach(value => {
             this.records.add(new Record(value[0], AudioManager.getAudio(value[1].audio_id)));
         })
     }

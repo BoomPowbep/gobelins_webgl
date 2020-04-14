@@ -6,6 +6,8 @@ class AudioFile {
         this.loop = loop;
         this.ready = false;
 
+        this.isPlaying = false;
+
         this.init();
     }
 
@@ -31,6 +33,24 @@ class AudioFile {
             this.ready = true;
             this.duration = this.audio.duration;
         });
+
+        this.audio.addEventListener("ended", function(){
+            this.isPlaying = false;
+        });
+    }
+
+    play(startAt = null) {
+        if(startAt != null)
+            this.audio.currentTime = startAt;
+        this.audio.play();
+
+        this.isPlaying = true;
+    }
+
+    pause() {
+        this.audio.pause();
+
+        this.isPlaying = false;
     }
 }
 

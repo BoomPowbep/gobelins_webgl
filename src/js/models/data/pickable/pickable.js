@@ -16,6 +16,10 @@ class Pickable {
     pickedUp() {
         this.picked = true;
     }
+
+    isPicked() {
+        return this.picked;
+    }
 }
 
 export default Pickable;
