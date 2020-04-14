@@ -28,7 +28,6 @@ class Template {
 
     recursiveReplace(template, parent_path, data) {
         Object.entries(data).forEach((value, key) => {
-            console.log(parent_path, value);
             if(Array.isArray(value[1]) || typeof value[1] === "object") {
                 template = this.recursiveReplace(template, `${parent_path + value[0]}.`, value[1]);
             }

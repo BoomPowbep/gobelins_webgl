@@ -17,7 +17,8 @@ import AudioManager from "../models/audio/audio-manager";
 import DATA from "../models/data";
 import DataManager from "../models/data/data-manager";
 import UiManager from "../models/ui/ui-manager";
-import UiMemo from "../models/ui/ui-memo";
+import UiNotes from "../models/ui/ui-notes";
+import UiMaps from "../models/ui/ui-maps";
 
 export default class Game {
 
@@ -104,12 +105,14 @@ export default class Game {
             //When sounds are ready, we can build our data manager
             DATA.data_manager = new DataManager();
             DATA.ui_manager = new UiManager();
-            DATA.ui_manager.registerUi("memo", new UiMemo());
-            DATA.ui_manager.get("memo").show();
+            DATA.ui_manager.registerUi("notes", new UiNotes());
+            DATA.ui_manager.registerUi("maps", new UiMaps());
+            //DATA.ui_manager.get("notes").show();
         });
 
         cover.addEventListener("click", () => {
             cover.remove();
+            DATA.ui_manager.get("maps").show();
 
             //Setup audio list here
             AudioManager.play("birds");

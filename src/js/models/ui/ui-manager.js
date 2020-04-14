@@ -1,6 +1,11 @@
 class UiManager {
     constructor() {
         this.ui_list = {};
+
+        document.querySelector("#phone").addEventListener("click", (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+        });
     }
 
     /**

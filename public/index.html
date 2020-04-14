@@ -16,14 +16,15 @@
 <div id="cover"><h1>Click me!</h1></div>
 
 <div id="phone">
-    <div class="app" id="app_phone">
-
-    </div>
-    <div class="app" id="app_memo">
+    <div class="app app_title-only" id="app_maps">
         <div class="app-name">
-            <span>Mes enregistrements</span>
+            <span>CARTE</span>
         </div>
-
+    </div>
+    <div class="app" id="app_notes">
+        <div class="app-name">
+            <span>FICHIERS</span>
+        </div>
         <script data-template="memo_el" type="text/html">
             <div class="app-list-item" data-record="{id}">
                 <div class="app-toggler" data-to-toggle="{name}">
@@ -40,11 +41,16 @@
                 </div>
             </div>
         </script>
-
-        <div class="app-content">
-            <div class="app-list">
-
+        <script data-template="photo_el" type="text/html">
+            <div class="app-grid-item" data-letter="{id}">
+                <img src="images/letters/test.png">
             </div>
+        </script>
+        <div class="app-content">
+            <h2>Enregistrements vocaux</h2>
+            <div class="app-list"></div>
+            <h2>Documents</h2>
+            <div class="app-grid"></div>
         </div>
     </div>
 </div>
