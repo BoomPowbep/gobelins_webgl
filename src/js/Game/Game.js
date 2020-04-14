@@ -142,18 +142,20 @@ export default class Game {
 
         // Basic geometries
         const geometries = [
-            this.geometryManager.createBasicGroundSurface("Ground", "textures/grass_dirt.jpg"), // Ground
-            this.geometryManager.createCubeSkybox("textures/sky/orange/"), // Skybox
-            this.geometryManager.createBasicShape({
-                identifier: "GreenCube",
-                position: {x: -.5, y: .5, z: 2.5}
-            }),
-            this.geometryManager.createBasicShape({
-                identifier: "BlueWall",
-                color: 0x4287f5,
-                position: {x: 0, y: 2.5, z: -11},
-                size: {x: 10, y: 5, z: 1}
-            }),
+            // --EXAMPLES
+            // this.geometryManager.createBasicGroundSurface("Ground", "textures/grass_dirt.jpg"), // Ground
+            // this.geometryManager.createCubeSkybox("textures/sky/orange/"), // Skybox
+            // this.geometryManager.createBasicShape({
+            //     identifier: "GreenCube",
+            //     position: {x: -.5, y: .5, z: 2.5}
+            // }),
+            // this.geometryManager.createBasicShape({
+            //     identifier: "BlueWall",
+            //     color: 0x4287f5,
+            //     position: {x: 0, y: 2.5, z: -11},
+            //     size: {x: 10, y: 5, z: 1}
+            // }),
+
             // Map
             this.geometryManager.createBasicShape({
                 identifier: "MapGround",
@@ -176,8 +178,7 @@ export default class Game {
 
         // 3D Models
         const models = [
-            new Model('Fox', 'models/Fox.glb', .02),
-            new Model('IceTruck', 'models/CesiumMilkTruck.glb', 1.5, {x: -5, y: 0, z: 0})
+            new Model('IceTruck', 'models/CesiumMilkTruck.glb', 1.5, {x: -5, y: 0, z: 0}),
         ];
 
         // Lights
@@ -202,10 +203,6 @@ export default class Game {
 
             // Controls init
             this.controlsManager.initDeviceOrientation(this.cameraManager.camera);
-
-            // Get reference of fox and change position
-            let fox = this.modelManager.getModelReferenceByIdentifier('Fox');
-            fox.position.x = 2;
 
             // Start loop!
             this._loop();
@@ -250,7 +247,7 @@ export default class Game {
      * @param identifier
      */
     postTouchEventAction(identifier) {
-        switch(identifier) {
+        switch (identifier) {
             case "IceTruck":
                 AudioManager.play("horn");
             default:
@@ -268,6 +265,8 @@ export default class Game {
         requestAnimationFrame(this._loop.bind(this));
 
         this._debugMode && this.stats.begin();
+
+        // console.log(this.cameraManager.camera.position.x, this.cameraManager.camera.position.z);
 
         this.controlsManager.controls.update(this._clock.getDelta()); // Only for device orientation controls
         this.renderer.render(this.sceneManager.scene, this.cameraManager.camera);

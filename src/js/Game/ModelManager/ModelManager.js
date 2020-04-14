@@ -88,7 +88,7 @@ class ModelManager {
                 // On error
                 (error) => {
                     console.error("Object loading error: ", error);
-                    // FIXME on charge l'expérience même si un objet a sauté ou pas ? (Je pense non)
+                    // FIXME on charge l'expérience même si un objet a sauté ou pas ?
                 });
         });
 
