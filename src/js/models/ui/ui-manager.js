@@ -27,7 +27,7 @@ class UiManager {
     /**
      * @param {string} identifier
      */
-    setActive(identifier) {
+    active(identifier) {
         if(identifier != null) {
             let ui = this.get(identifier);
             if(ui !== undefined)

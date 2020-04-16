@@ -15,3 +15,7 @@
 @import "ui/apps/notes";
 @import "ui/apps/pictures";
 @import "ui/apps/phone";
+
+.dg.ac{
+  z-index: 1000 !important;
+}

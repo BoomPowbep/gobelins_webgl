@@ -13,6 +13,7 @@ class UiNotes extends Ui {
     setupDOM() {
         super.setupDOM();
         let template = new Template("script[data-template='photo_el']");
+        this.grid.innerHTML = "";
         DATA.data_manager.letters.items.forEach(value => {
             template.append(this.grid, {
                 id: value.identifier,
@@ -20,6 +21,7 @@ class UiNotes extends Ui {
         });
 
         let templateMemo = new Template("script[data-template='memo_el']");
+        this.list.innerHTML = "";
         DATA.data_manager.records.items.forEach(value => {
             console.log(value);
             templateMemo.append(this.list, {
