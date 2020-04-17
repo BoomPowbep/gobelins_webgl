@@ -10,6 +10,7 @@ import LightingManager from './LightingManager/LightingManager';
 import SceneManager from './SceneManager/SceneManager';
 import RaycasterManager from "./RaycasterManager/RaycasterManager";
 import DebugLogs from "./Debug/DebugLogs";
+import SoundManager from "./SoundManager/SoundManager";
 import {DebugPanel, DebugButton} from "./Debug/DebugPanel";
 import {Vector3} from "three";
 import AudioManager from "../models/audio/audio-manager";
@@ -94,6 +95,7 @@ export default class Game {
         this.geometryManager = new GeometryManager(this._debugMode);
         this.modelManager = new ModelManager(this._debugMode);
         this.lightingManager = new LightingManager(this._debugMode);
+        this.soundManager = new SoundManager(this._debugMode);
         this.sceneManager = new SceneManager(this._debugMode);
         this._raycasterManager = new RaycasterManager(this._debugMode);
 
@@ -122,9 +124,9 @@ export default class Game {
 
             //Setup audio list here
             AudioManager.play("birds");
- 
+
             this._debugMode && this._debuglogs.addLog("Not looping birds, for your ears to survive...");
- 
+
             // On iOS13 + devices, ask for device orientation events permission
             // https://medium.com/flawless-app-stories/how-to-request-device-motion-and-orientation-permission-in-ios-13-74fc9d6cd140
             if (window.DeviceOrientationEvent !== undefined && typeof DeviceOrientationEvent.requestPermission === 'function') {
@@ -282,10 +284,11 @@ export default class Game {
                 letter.pickedUp();
         }
 
-        //specific cases 
+        //specific cases
         switch(identifier) {
-            case "IceTruck":
-                AudioManager.play("horn");
+            case "IceTruck":{
+                break;
+            }
             default:
                 break;
         }
