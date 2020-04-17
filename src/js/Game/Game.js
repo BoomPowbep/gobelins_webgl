@@ -264,9 +264,12 @@ export default class Game {
             this.sceneManager.scene,
             this._mouse, this.cameraManager.camera
         );
-        this._debuglogs.addLog("RayCast -> " + touchedElementIdentifier);
+
+        if(this._debugMode) {
+            this._debuglogs.addLog("RayCast -> " + touchedElementIdentifier);
+            console.log(touchedElementIdentifier);
+        }
         this.postTouchEventAction(touchedElementIdentifier);
-        console.log(touchedElementIdentifier);
     }
 
     /**
@@ -274,6 +277,14 @@ export default class Game {
      * @param identifier
      */
     postTouchEventAction(identifier) {
+        //if we touch a letter
+        if(identifier.match(new RegExp("^(letter-)"))) {
+            let letter = DATA.data_manager.get("letter", identifier);
+            if(letter != null)
+                letter.pickedUp();
+        }
+
+        //specific cases 
         switch(identifier) {
             case "IceTruck":
                 this.soundManager.getSoundReferenceByIdentifier("CarHorn").play();
