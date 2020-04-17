@@ -53,7 +53,7 @@ class DataManager {
     initInstagramPosts() {
         Object.entries(INSTAGRAM_POSTS_VARS).forEach(entries => {
             let value = entries[1];
-            this.records.add(new InstagramPost(entries[0], value.name, value.commentary, value.images));
+            this.instagramPosts.add(new InstagramPost(entries[0], value.name, value.commentary, value.images));
         })
     }
 }

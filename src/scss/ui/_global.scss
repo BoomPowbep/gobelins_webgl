@@ -75,4 +75,16 @@ $app_height_name : 64px;
       }
     }
   }
+
+  .slider{
+    overflow: scroll;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    .slide{
+      display: inline-block;
+      img{
+        width: 100%;
+      }
+    }
+  }
 }

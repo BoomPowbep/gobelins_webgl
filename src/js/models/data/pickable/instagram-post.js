@@ -15,15 +15,15 @@ class InstagramPost  extends Pickable {
     }
 
 
-    get name() {
+    getName() {
         return this._name;
     }
 
-    get commentary() {
+    getCommentary() {
         return this._commentary;
     }
 
-    get images() {
+    getImages() {
         return this._images;
     }
 }

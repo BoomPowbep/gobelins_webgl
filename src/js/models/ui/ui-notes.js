@@ -15,23 +15,24 @@ class UiNotes extends Ui {
         let template = new Template("script[data-template='photo_el']");
         this.grid.innerHTML = "";
         DATA.data_manager.letters.items.forEach(value => {
-            template.append(this.grid, {
-                id: value.identifier,
-            });
+            if (value.isPicked()) {
+                template.append(this.grid, {
+                    id: value.identifier,
+                });
+            }
         });
 
         let templateMemo = new Template("script[data-template='memo_el']");
         this.list.innerHTML = "";
         DATA.data_manager.records.items.forEach(value => {
-            console.log(value);
-            templateMemo.append(this.list, {
-                id: value.identifier,
-                duration:  (value.audio_file.duration),
-                duration_text: Converter.durationToTime(value.audio_file.duration),
-                name: value.identifier,
-                date: "Aujourd'hui"
-            });
             if (value.isPicked()){
+                templateMemo.append(this.list, {
+                    id: value.identifier,
+                    duration:  (value.audio_file.duration),
+                    duration_text: Converter.durationToTime(value.audio_file.duration),
+                    name: value.identifier,
+                    date: "Aujourd'hui"
+                });
             }
         });
     }

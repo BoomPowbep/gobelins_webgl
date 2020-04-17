@@ -112,6 +112,8 @@ export default class Game {
             DATA.ui_manager.registerUi("settings", new UiSettings());
             DATA.ui_manager.registerUi("instagram", new UiInstagram());
             //DATA.ui_manager.get("notes").show();
+
+            //Debug pickup
             DATA.data_manager.get("instagram", "post-1").pickedUp();
 
             Object.entries(DATA.ui_manager.ui_list).forEach(value =>  this.gui.add({add: () => {   DATA.ui_manager.get(value[0]).show()  }},'add').name('ui:' + value[0]));
@@ -119,15 +121,9 @@ export default class Game {
 
         cover.addEventListener("click", () => {
             cover.remove();
-            DATA.ui_manager.get("maps").show();
 
             //Setup audio list here
             AudioManager.play("birds");
-
-
-            // Init sound here
-        /*    this.soundManager.createGenericAudio("Birds", 'sounds/birds.mp3', true, false);
-            this.soundManager.createGenericAudio("CarHorn", 'sounds/horn.wav');*/
 
             this._debugMode && this._debuglogs.addLog("Not looping birds, for your ears to survive...");
 
