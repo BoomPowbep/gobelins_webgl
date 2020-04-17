@@ -9,7 +9,13 @@ import InstagramPostList from "./lists/instagram-post-list";
 import INSTAGRAM_POSTS_VARS from "../variables/instagram-post-var";
 import InstagramPost from "./pickable/instagram-post";
 
+/**
+ * Manager for all experience data
+ */
 class DataManager {
+    /**
+     * Create lists and init their contents
+     */
     constructor() {
         this.letters = new LetterList( []);
         this.records = new RecordList( []);
@@ -20,6 +26,12 @@ class DataManager {
         this.initInstagramPosts();
     }
 
+    /**
+     * Get specific element in lists
+     * @param type
+     * @param identifier
+     * @return {Pickable|null}
+     */
     get(type, identifier) {
         switch (type) {
             case "record": {
@@ -38,18 +50,29 @@ class DataManager {
         return null;
     }
 
+    /**
+     * Init letter list
+     */
     initLetters() {
         Object.entries(LETTERS_VAR).forEach(value => {
             this.letters.add(new Letter(value[0]));
         })
     }
 
+
+    /**
+     * Init record list
+     */
     initRecords() {
         Object.entries(RECORDS_VARS).forEach(value => {
             this.records.add(new Record(value[0], AudioManager.getAudio(value[1].audio_id)));
         })
     }
 
+
+    /**
+     * Init instagram post list
+     */
     initInstagramPosts() {
         Object.entries(INSTAGRAM_POSTS_VARS).forEach(entries => {
             let value = entries[1];

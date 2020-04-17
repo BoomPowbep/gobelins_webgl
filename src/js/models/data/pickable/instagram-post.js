@@ -1,5 +1,8 @@
 import Pickable from "./pickable";
 
+/**
+ * Instagram post is a post unlocked on Instagram List for hints on joining scenes
+ */
 class InstagramPost  extends Pickable {
     /**
      * @param {string} identifier

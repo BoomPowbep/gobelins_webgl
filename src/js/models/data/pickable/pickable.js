@@ -1,5 +1,5 @@
 /**
- * Constitue un objet qui peut être cliqué la map
+ * It's an item that is collected by user during his game
  */
 class Pickable {
     /**

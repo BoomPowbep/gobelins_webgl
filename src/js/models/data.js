@@ -1,5 +1,6 @@
 import DataManager from "./data/data-manager";
 
+//All our data
 const DATA = {
     data_manager : null,
     ui_manager : null
