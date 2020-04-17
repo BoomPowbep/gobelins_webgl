@@ -17,6 +17,12 @@ class Ui {
      * Caller for setup events
      */
     setupEvents() {
+        let close =  this.element.querySelector('.app-close'); 
+        if(close)
+            close.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.hide();
+            })
     }
 
     /**

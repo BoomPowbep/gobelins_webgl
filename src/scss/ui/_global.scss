@@ -11,6 +11,17 @@ $app_height_name : 64px;
   display: none;
   z-index: 100;
   pointer-events: initial;
+
+  .app-close {
+    background: green;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+
   &.app_title-only {
     height: $app_height_name;
   }
