@@ -1,6 +1,6 @@
 import Ui from "./ui";
-import Template from "../../../scss/template/template";
 import Converter from "../converter";
+import Template from "../../template/template";
 
 class UiNotes extends Ui {
     constructor() {

@@ -11,7 +11,7 @@ class UiManager {
     /**
      * Register an UI to the list
      * @param {string} identifier
-     * @param {Ui} ui
+     * @param {UiMaps} ui
      */
     registerUi(identifier, ui) {
         this.ui_list[identifier] = ui;

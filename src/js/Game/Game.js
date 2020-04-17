@@ -10,7 +10,6 @@ import LightingManager from './LightingManager/LightingManager';
 import SceneManager from './SceneManager/SceneManager';
 import RaycasterManager from "./RaycasterManager/RaycasterManager";
 import DebugLogs from "./Debug/DebugLogs";
-import SoundManager from "./SoundManager/SoundManager";
 import {DebugPanel, DebugButton} from "./Debug/DebugPanel";
 import {Vector3} from "three";
 import AudioManager from "../models/audio/audio-manager";
@@ -95,7 +94,6 @@ export default class Game {
         this.geometryManager = new GeometryManager(this._debugMode);
         this.modelManager = new ModelManager(this._debugMode);
         this.lightingManager = new LightingManager(this._debugMode);
-        this.soundManager = new SoundManager(this._debugMode);
         this.sceneManager = new SceneManager(this._debugMode);
         this._raycasterManager = new RaycasterManager(this._debugMode);
 
