@@ -29,8 +29,8 @@ export default class GeometryManager {
         let axesHelper = new THREE.AxesHelper(2);
         this._registerGeometry(axesHelper);
 
-        let gridHelper = new THREE.GridHelper(50, 50, 0xFFFFFF, 0xFFFFFF);
-        this._registerGeometry(gridHelper);
+        // let gridHelper = new THREE.GridHelper(50, 50, 0xFFFFFF, 0xFFFFFF);
+        // this._registerGeometry(gridHelper);
     }
 
     // ------------------------------------------------------------------- MAKE
@@ -64,22 +64,42 @@ export default class GeometryManager {
      * Create a cube skybox.
      * @returns {Mesh}
      */
-    createCubeSkybox(path) {
+    createCubeSkybox(path, side) {
 
-        let directions  = ["front", "back", "up", "down", "right", "left"];
+        let directions = ["front", "back", "up", "down", "right", "left"];
         let imageSuffix = ".jpg";
-        let skyGeometry = new THREE.CubeGeometry( 50, 50, 50 );
+        let skyGeometry = new THREE.CubeGeometry(side, side, side);
 
         let materialArray = [];
         for (let i = 0; i < 6; i++)
-            materialArray.push( new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture( path + directions[i] + imageSuffix ),
+            materialArray.push(new THREE.MeshBasicMaterial({
+                map: THREE.ImageUtils.loadTexture(path + directions[i] + imageSuffix),
                 side: THREE.BackSide
             }));
-        let skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+        let skyMaterial = new THREE.MeshFaceMaterial(materialArray);
 
-        let skyboxMesh = new THREE.Mesh( skyGeometry, skyMaterial );
-        skyboxMesh.identifier = "Skybox";
+        let skyboxMesh = new THREE.Mesh(skyGeometry, skyMaterial);
+        skyboxMesh.identifier = "Skybox-" + path;
+        return skyboxMesh;
+    }
+
+    /**
+     * Create a cube skybox.
+     * @returns {Mesh}
+     */
+    createColorSkybox(color, side) {
+        let skyGeometry = new THREE.CubeGeometry(side, side, side);
+
+        let materialArray = [];
+        for (let i = 0; i < 6; i++)
+            materialArray.push(new THREE.MeshBasicMaterial({
+                color: color,
+                side: THREE.BackSide
+            }));
+        let skyMaterial = new THREE.MeshFaceMaterial(materialArray);
+
+        let skyboxMesh = new THREE.Mesh(skyGeometry, skyMaterial);
+        skyboxMesh.identifier = "Skybox-" + color;
         return skyboxMesh;
     }
 
@@ -108,14 +128,18 @@ export default class GeometryManager {
      * @param size
      * @param position
      * @param color
+     * @param castShadow
+     * @param doubleSided
      * @returns {Mesh}
      */
     createBasicShape({
-                        identifier = "Unnamed",
-                        size = {x: 1, y: 1, z: 1},
-                        position = {x: 0, y: 0, z: 0},
-                        color = 0x00ff00
-                    }) {
+                         identifier = "Unnamed",
+                         size = {x: 1, y: 1, z: 1},
+                         position = {x: 0, y: 0, z: 0},
+                         color = 0x00ff00,
+                         castShadow = false,
+                         doubleSided = false
+                     }) {
         let geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
         let material = new THREE.MeshBasicMaterial({color: color});
         let cube = new THREE.Mesh(geometry, material);
@@ -124,7 +148,9 @@ export default class GeometryManager {
         cube.position.z = position.z;
         cube.identifier = identifier;
 
-        cube.castShadow = true;
+        cube.castShadow = castShadow;
+
+        cube.doubleSided = doubleSided;
 
         return cube;
     }
@@ -164,7 +190,7 @@ export default class GeometryManager {
      */
     getGeometryReferenceByIdentifier(identifier) {
         for (let geometry of this._geometries) {
-            if(geometry.identifier === identifier) return geometry; // Reference
+            if (geometry.identifier === identifier) return geometry; // Reference
         }
         return null;
     }

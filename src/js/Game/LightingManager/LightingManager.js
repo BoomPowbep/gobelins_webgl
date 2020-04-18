@@ -53,8 +53,8 @@ export default class LightingManager {
         spotLight.penumbra = penumbra;
         spotLight.decay = decay;
 
-        spotLight.castShadow = true;
-        spotLight.shadowCameraVisible = true;
+        // spotLight.castShadow = true;
+        // spotLight.shadowCameraVisible = true;
 
         spotLight.shadow.camera.near = .01;
         spotLight.shadow.camera.far = 4000;
@@ -73,7 +73,8 @@ export default class LightingManager {
      * @private
      */
     _createAmbientLight() {
-        let ambientLight = new THREE.AmbientLight(0xFFFFFF, .5);
+        let ambientLight = new THREE.AmbientLight(0xFFFFFF, 1);
+        ambientLight.identifier = "AmbientLight";
         this._registerLight(ambientLight);
     }
 

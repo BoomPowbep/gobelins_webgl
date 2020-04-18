@@ -44,7 +44,7 @@ export default class ControlsManager {
         // this._controls.minDistance = 5;
         // this._controls.maxDistance = 10;
 
-        camera.zoom = 1;
+        camera.zoom = 1.5;
         camera.updateProjectionMatrix();
     }
 
