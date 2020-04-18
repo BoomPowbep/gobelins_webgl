@@ -7,15 +7,9 @@ import RaycasterManager from "./RaycasterManager/RaycasterManager";
 import DebugLogs from "./Debug/DebugLogs";
 import {DebugPanel, DebugButton} from "./Debug/DebugPanel";
 import {Vector3} from "three";
-import AudioManager from "../models/audio/audio-manager";
 
 import DATA from "../models/data";
-import DataManager from "../models/data/data-manager";
-import UiManager from "../models/ui/ui-manager";
-import UiNotes from "../models/ui/ui-notes";
-import UiMaps from "../models/ui/ui-maps";
-import UiSettings from "../models/ui/ui-settings";
-import UiInstagram from "../models/ui/ui-instagram";
+
 
 import {Scenery} from "./SceneryManager/SceneryManager";
 
