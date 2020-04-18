@@ -1,9 +1,11 @@
 import GameBrain from "../GameManager/GameManager";
 import * as THREE from 'three';
+import {Vector3} from "three";
 
 class Scenery {
     constructor({
                     identifier = "Default",
+                    basePosition = {x: 0, y: 0, z: 0},
                     geometries = [],
                     models = [],
                     lights = [],
@@ -11,9 +13,11 @@ class Scenery {
                     fog = false,
                     canMove = true,
                     ambiantSoundIdentifier = "Default",
+                    orbitControls = true,
                     onLoadDone = () => null
                 }) {
         this.identifier = identifier;
+        this.basePosition = basePosition;
         this.geometries = geometries;
         this.models = models;
         this.lights = lights;
@@ -21,6 +25,7 @@ class Scenery {
         this.fog = fog;
         this.canMove = canMove;
         this.ambiantSoundIdentifier = ambiantSoundIdentifier;
+        this.orbitControls = orbitControls;
         this.onLoadDone = onLoadDone;
         this.loaded = false;
     }
@@ -50,6 +55,27 @@ class SceneryManager {
         const queued = this.getSceneryReferenceByIdentifier(sceneryIdentifier);
         if (queued !== null) {
 
+            // Set position of geometries
+            queued.geometries.forEach((geometry) => {
+                geometry.position.x += queued.basePosition.x;
+                geometry.position.y += queued.basePosition.y;
+                geometry.position.z += queued.basePosition.z;
+            });
+
+            // Set position of models
+            queued.models.forEach((model) => {
+                model.initialPosition.x += queued.basePosition.x;
+                model.initialPosition.y += queued.basePosition.y;
+                model.initialPosition.z += queued.basePosition.z;
+            });
+
+            // Set position of lights
+            // queued.lights.forEach((light) => {
+            //     light.position.x += queued.basePosition.x;
+            //     light.position.y += queued.basePosition.y;
+            //     light.position.z += queued.basePosition.z;
+            // });
+
             // Load geometries
             queued.geometries.length > 0 && GameBrain.geometryManager.loadGeometries(queued.geometries);
 
@@ -75,17 +101,29 @@ class SceneryManager {
         if (scenery.loaded) {
             // TODO Fade Out -> In
 
+            // Set controls
+            GameBrain.controlsManager.controls.dispose();
+            if (scenery.orbitControls) {
+                GameBrain.cameraManager.setCameraMode(true);
+                GameBrain.controlsManager.initDeviceOrientation(GameBrain.cameraManager.camera);
+            } else {
+                // Map controls
+                GameBrain.cameraManager.setCameraMode(false);
+                GameBrain.controlsManager.initMapControls(GameBrain.cameraManager.camera, GameBrain.renderer.domElement);
+                GameBrain.controlsManager.controls.target = new Vector3(0, -.5, 90); // TODO create targetTo(obj) in ControlsManager
+            }
+
             // Set fog
             GameBrain.sceneManager.scene.fog = null;
-            if(scenery.fog) {
+            if (scenery.fog) {
                 GameBrain.sceneManager.scene.fog = new THREE.FogExp2(0x000000, 0.0025);
             }
 
             // Set camera
             GameBrain.cameraManager.setPosition(
-                scenery.cameraPosition.x,
-                scenery.cameraPosition.y,
-                scenery.cameraPosition.z
+                scenery.cameraPosition.x + scenery.basePosition.x,
+                scenery.cameraPosition.y + scenery.basePosition.y,
+                scenery.cameraPosition.z + scenery.basePosition.z
             );
 
             // Play sound

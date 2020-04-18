@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import Stats from 'stats-js';
-import * as dat from 'dat.gui';
 
 import {Model} from './ModelManager/ModelManager';
 import RaycasterManager from "./RaycasterManager/RaycasterManager";
@@ -34,54 +33,53 @@ export default class Game {
 
         this._mouse = new THREE.Vector2();
 
+        GameBrain.init({debugMode: this._debugMode});
+
         if (this._debugMode) {
             // Init Stats.js
             this.stats = new Stats();
             this.stats.showPanel(0); // 0 = print fps
             document.body.appendChild(this.stats.dom);
 
-            this.gui = new dat.GUI();
-
             this._debuglogs = new DebugLogs();
             this._debugPanel = new DebugPanel();
+
 
             // Init debug buttons
             let debugButtonsArray = [
                 new DebugButton("To Map", () => {
                     console.log("To map!");
 
-                    this.controlsManager.controls.dispose();
+                    GameBrain.controlsManager.controls.dispose();
 
                     // Switch camera
-                    this.cameraManager.setCameraMode(false);
+                    GameBrain.cameraManager.setCameraMode(false);
 
                     // Set new camera position
-                    this.cameraManager.setPosition(10, 20, 110);
+                    GameBrain.cameraManager.setPosition(10, 20, 110);
 
                     // Set map controls
-                    this.controlsManager.initMapControls(this.cameraManager.camera, this.renderer.domElement);
-                    this.controlsManager.controls.target = new Vector3(0, -.5, 90); // TODO create targetTo(obj) in ControlsManager
+                    GameBrain.controlsManager.initMapControls(this.cameraManager.camera, this.renderer.domElement);
+                    GameBrain.controlsManager.controls.target = new Vector3(0, -.5, 90); // TODO create targetTo(obj) in ControlsManager
 
                 }),
                 new DebugButton("To Start", () => {
                     console.log("To start!");
 
-                    this.controlsManager.controls.dispose();
+                    GameBrain.controlsManager.controls.dispose();
 
                     // Switch camera
-                    this.cameraManager.setCameraMode(true);
+                    GameBrain.cameraManager.setCameraMode(true);
 
                     // Set new camera position
-                    this.cameraManager.setPosition(0, 5, 10);
+                    GameBrain.cameraManager.setPosition(0, 5, 10);
 
                     // Set device orientation controls
-                    this.controlsManager.initDeviceOrientation(this.cameraManager.camera);
+                    GameBrain.controlsManager.initDeviceOrientation(this.cameraManager.camera);
                 }),
             ];
             this._debugPanel.addButtons(debugButtonsArray);
         }
-
-        GameBrain.init({debugMode: this._debugMode});
 
         this._raycasterManager = new RaycasterManager(this._debugMode);
 
@@ -131,7 +129,13 @@ export default class Game {
 
             GameBrain.sceneryManager.loadScenery("BistroScenery");
 
-        }, 10000);
+            setTimeout(() => {
+
+                GameBrain.sceneryManager.setActiveScenery("BistroScenery");
+
+            }, 2000);
+
+        }, 5000);
 
         // Start loop!
         this._loop();
@@ -150,7 +154,7 @@ export default class Game {
         ];
 
         let models = [
-            new Model('ColleusesStreet', 'models/colleuses.glb', 1, {x: 0, y: 0, z: 0}),
+            new Model('Bistro', 'models/colleuses.glb', 1),
         ];
 
         let lights = [
@@ -171,6 +175,39 @@ export default class Game {
                     fog: true,
                     onLoadDone: () => {
                         GameBrain.sceneryManager.setActiveScenery("ColleusesScenery");
+                    }
+                }
+            )
+        );
+
+        // -- Scenery 3 - Bistro
+        geometries = [
+            // GameBrain.geometryManager.createColorSkybox(0x000000, 1500), // Skybox
+        ];
+
+        models = [
+            new Model('BistroEnvironment', 'models/bar.glb', 1),
+        ];
+
+        lights = [
+            GameBrain.lightingManager.createSpotLight({
+                identifier: "BistroSpotLight",
+                angle: 0,
+                distance: 500,
+            })
+        ];
+
+        GameBrain.sceneryManager.addScenery(
+            new Scenery({
+                    identifier: "BistroScenery",
+                    basePosition: {x: 0, y: 0, z: 3000},
+                    geometries: geometries,
+                    models: models,
+                    lights: lights,
+                    cameraPosition: {x: 0, y: 40, z: 0},
+                    fog: false,
+                    onLoadDone: () => {
+                        console.log("BistroScenery loading done");
                     }
                 }
             )
@@ -206,15 +243,15 @@ export default class Game {
      */
     postTouchEventAction(identifier) {
         //if we touch a letter
-        if(identifier.match(new RegExp("^(letter-)"))) {
+        if (identifier.match(new RegExp("^(letter-)"))) {
             let letter = DATA.data_manager.get("letter", identifier);
-            if(letter != null)
+            if (letter != null)
                 letter.pickedUp();
         }
 
         //specific cases
-        switch(identifier) {
-            case "IceTruck":{
+        switch (identifier) {
+            case "IceTruck": {
                 break;
             }
             default:

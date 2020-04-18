@@ -14,6 +14,7 @@ import UiNotes from "../../models/ui/ui-notes";
 import UiMaps from "../../models/ui/ui-maps";
 import UiSettings from "../../models/ui/ui-settings";
 import UiInstagram from "../../models/ui/ui-instagram";
+import * as dat from "dat.gui";
 
 class GameManager {
     /**
@@ -84,8 +85,10 @@ class GameManager {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(this.renderer.domElement);
 
-        /* -- Init Controls -- */
-        this.controlsManager.initDeviceOrientation(this.cameraManager.camera);
+        /* -- Set default controls -- */
+        GameBrain.controlsManager.initDeviceOrientation(GameBrain.cameraManager.camera);
+
+        if(this.debugMode) this.gui = new dat.GUI();
     }
 
     // ----------------------------------------------------------------------- CALLBACKS
