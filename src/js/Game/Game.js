@@ -8,9 +8,19 @@ import DebugLogs from "./Debug/DebugLogs";
 import {DebugPanel, DebugButton} from "./Debug/DebugPanel";
 import {Vector3} from "three";
 import AudioManager from "../models/audio/audio-manager";
+
+import DATA from "../models/data";
+import DataManager from "../models/data/data-manager";
+import UiManager from "../models/ui/ui-manager";
+import UiNotes from "../models/ui/ui-notes";
+import UiMaps from "../models/ui/ui-maps";
+import UiSettings from "../models/ui/ui-settings";
+import UiInstagram from "../models/ui/ui-instagram";
+
 import {Scenery} from "./SceneryManager/SceneryManager";
 
 import GameBrain from './GameManager/GameManager';
+
 
 export default class Game {
 
@@ -88,6 +98,8 @@ export default class Game {
 
             //Setup audio list here
             // AudioManager.play("birds");
+
+            this._debugMode && this._debuglogs.addLog("Not looping birds, for your ears to survive...");
 
             // On iOS13 + devices, ask for device orientation events permission
             // https://medium.com/flawless-app-stories/how-to-request-device-motion-and-orientation-permission-in-ios-13-74fc9d6cd140
@@ -199,9 +211,18 @@ export default class Game {
      * @param identifier
      */
     postTouchEventAction(identifier) {
-        switch (identifier) {
-            case "IceTruck":
-                AudioManager.play("horn");
+        //if we touch a letter
+        if(identifier.match(new RegExp("^(letter-)"))) {
+            let letter = DATA.data_manager.get("letter", identifier);
+            if(letter != null)
+                letter.pickedUp();
+        }
+
+        //specific cases
+        switch(identifier) {
+            case "IceTruck":{
+                break;
+            }
             default:
                 break;
         }

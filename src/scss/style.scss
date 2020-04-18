@@ -4,3 +4,18 @@
 
 // Main
 @import 'main/main';
+
+//Elements
+@import 'elements/text';
+
+//Phone
+@import "ui/phone";
+@import "ui/global";
+@import "ui/apps/map";
+@import "ui/apps/notes";
+@import "ui/apps/pictures";
+@import "ui/apps/phone";
+
+.dg.ac{
+  z-index: 1000 !important;
+}

@@ -1,3 +1,7 @@
+/*
+ * List of all audio and specific rules (loop, volume).
+ * A sound has a required file. loop and volume are optional
+ */
 const AUDIO_DICTIONARY = {
     'vocal_1' : {file: "sounds/vocal/vocal1.m4a"},
     'vocal_2' : {file: "sounds/vocal/vocal2.m4a"},

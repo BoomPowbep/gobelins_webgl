@@ -7,13 +7,90 @@
     <meta name="description" content="Three.js Starter pack.">
 
     <!-- TODO add og, canonical, robots -->
-
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="build/app.css">
 </head>
 <body>
 
-<div id="cover"><h1>Click me!</h1></div>
+<div id="cover">
+    <h1>MURDHER</h1>
+    <p style="color: wheat">Seulement sur mobile</p>
+    <button>Démarrer l'expérience</button>
+</div>
+
+<div id="phone">
+    <div class="app app_title-only" id="app_maps">
+        <div class="app-close"></div>
+        <div class="app-name">
+            <span>CARTE</span>
+        </div>
+    </div>
+    <div class="app" id="app_notes">
+        <div class="app-close"></div>
+        <div class="app-name">
+            <span>FICHIERS</span>
+        </div>
+        <script data-template="memo_el" type="text/html">
+            <div class="app-list-item" data-record="{id}">
+                <div class="app-toggler" data-to-toggle="{name}">
+                    <p class="important">{name}</p>
+                    <span class="small o-60">{date}</span>
+                    <span class="small o-60 f-r">{duration_text}</span>
+                </div>
+                <div class="app-toggled" data-to-toggle="{name}">
+                    <div class="timeline">
+                        <div></div>
+                        <input type="range" value="0" min="0" step="any" max="{duration}">
+                    </div>
+                    <button class="">Play</button>
+                </div>
+            </div>
+        </script>
+        <script data-template="photo_el" type="text/html">
+            <div class="app-grid-item" data-letter="{id}">
+                <img src="images/letters/test.png">
+            </div>
+        </script>
+        <div class="app-content">
+            <h2>Enregistrements vocaux</h2>
+            <div class="app-list"></div>
+            <h2>Documents</h2>
+            <div class="app-grid"></div>
+        </div>
+    </div>
+    <div class="app" id="app_settings">
+        <div class="app-close"></div>
+        <div class="app-name">
+            <span>Réglages</span>
+        </div>
+        <div class="app-content">
+            <h2>Crédits</h2>
+            <p>Projet réalisé par Mickael, Loris, Clara et Sandra.</p>
+            <p>Projet Gobelins</p>
+        </div>
+    </div>
+    <div class="app" id="app_instagram">
+        <div class="app-close"></div>
+        <div class="app-name">
+            <span>Instagram</span>
+        </div>
+        <script data-template="ig_el" type="text/html">
+            <div class="app-list-item" data-record="{id}">
+                <div    data-to-toggle="{name}">
+                    <p class="important">{name}</p>
+                    <div class="slider">
+                        <div class="slide"><img src="images/slides/slide_1.png"></div><div class="slide"><img src="images/slides/slide_2.png"></div><div class="slide"><img src="images/slides/slide_3.png"></div>
+                    </div>
+                    <span class="small o-60 f-r">{commentary}</span>
+                </div>
+            </div>
+        </script>
+        <div class="app-content">
+            <div class="app-list"></div>
+        </div>
+    </div>
+</div>
 
 
 <script src="build/runtime.js"></script>

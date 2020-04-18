@@ -5,6 +5,7 @@ const AUDIO_LIST = [];
 
 class AudioManager {
     /**
+     * Get all audio registered
      * @return {[AudioFile]}
      */
     static getAudioList() {
@@ -12,6 +13,7 @@ class AudioManager {
     }
 
     /**
+     * Get an audio from key
      * @param key
      * @return {AudioFile}
      */
@@ -19,11 +21,19 @@ class AudioManager {
         return AUDIO_LIST.find(value => value.identifier === key);
     }
 
+    /**
+     * Shorter way to play send
+     * @param key
+     */
     static play(key) {
-        AudioManager.getAudio(key).getAudioDom().play();
+        AudioManager.getAudio(key).play();
     }
 
+    /**
+     * Init all sounds
+     */
     static init() {
+        //Iterate through our audio dictionary
         Object.entries(AUDIO_DICTIONARY).forEach(entry => {
             let value = entry[1];
             console.log(entry);
