@@ -1,0 +1,7 @@
+#pickup {
+  transform: translateZ(0) translateY(100%);
+  transition: 1s;
+  &.show{
+    transform: translateY(0);
+  }
+}
