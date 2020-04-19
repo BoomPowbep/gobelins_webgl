@@ -66,6 +66,8 @@ export default class LightingManager {
             let spotLightHelper = new THREE.SpotLightHelper(spotLight);
             this._registerLight(spotLightHelper);
         }
+
+        return spotLight;
     }
 
     /**

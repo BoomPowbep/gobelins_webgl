@@ -36,7 +36,6 @@ class AudioManager {
         //Iterate through our audio dictionary
         Object.entries(AUDIO_DICTIONARY).forEach(entry => {
             let value = entry[1];
-            console.log(entry);
             let audio = new AudioFile(entry[0], value.file, value.volume??1, value.loop??false);
             AUDIO_LIST.push(audio);
         })

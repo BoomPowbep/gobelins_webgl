@@ -48,6 +48,8 @@ class SceneryManager {
     // ------------------------------------------------------------------- MAKE
 
     addScenery(scenery) {
+        console.log("AddScenery", scenery);
+
         this._sceneries.push(scenery);
     }
 
@@ -69,12 +71,14 @@ class SceneryManager {
                 model.initialPosition.z += queued.basePosition.z;
             });
 
+            console.log("loadScenery", queued);
+
             // Set position of lights
-            // queued.lights.forEach((light) => {
-            //     light.position.x += queued.basePosition.x;
-            //     light.position.y += queued.basePosition.y;
-            //     light.position.z += queued.basePosition.z;
-            // });
+            queued.lights.forEach((light) => {
+                light.position.x += queued.basePosition.x;
+                light.position.y += queued.basePosition.y;
+                light.position.z += queued.basePosition.z;
+            });
 
             // Load geometries
             queued.geometries.length > 0 && GameBrain.geometryManager.loadGeometries(queued.geometries);
@@ -110,7 +114,7 @@ class SceneryManager {
                 // Map controls
                 GameBrain.cameraManager.setCameraMode(false);
                 GameBrain.controlsManager.initMapControls(GameBrain.cameraManager.camera, GameBrain.renderer.domElement);
-                GameBrain.controlsManager.controls.target = new Vector3(0, -.5, 90); // TODO create targetTo(obj) in ControlsManager
+                GameBrain.controlsManager.targetTo("MapEnvironment");
             }
 
             // Set fog

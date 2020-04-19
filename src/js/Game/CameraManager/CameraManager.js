@@ -12,7 +12,7 @@ export default class CameraManager {
         console.log('🎥 CameraManager constructor');
 
         this._perspectiveCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 5000);
-        this._orthoCamera = new THREE.OrthographicCamera(window.innerWidth / -100, window.innerWidth / 100, window.innerHeight / 100, window.innerHeight / -100, 0.01, 5000);
+        this._orthoCamera = new THREE.OrthographicCamera(window.innerWidth / -1000, window.innerWidth / 1000, window.innerHeight / 1000, window.innerHeight / -1000, 0.01, 5000);
 
         this._isPerspective = true;
         this._activeCamera = this._perspectiveCamera;

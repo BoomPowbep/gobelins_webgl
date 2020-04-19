@@ -41,43 +41,6 @@ export default class Game {
             document.body.appendChild(this.stats.dom);
 
             this._debuglogs = new DebugLogs();
-            this._debugPanel = new DebugPanel();
-
-
-            // Init debug buttons
-            let debugButtonsArray = [
-                new DebugButton("To Map", () => {
-                    console.log("To map!");
-
-                    GameBrain.controlsManager.controls.dispose();
-
-                    // Switch camera
-                    GameBrain.cameraManager.setCameraMode(false);
-
-                    // Set new camera position
-                    GameBrain.cameraManager.setPosition(10, 20, 110);
-
-                    // Set map controls
-                    GameBrain.controlsManager.initMapControls(this.cameraManager.camera, this.renderer.domElement);
-                    GameBrain.controlsManager.controls.target = new Vector3(0, -.5, 90); // TODO create targetTo(obj) in ControlsManager
-
-                }),
-                new DebugButton("To Start", () => {
-                    console.log("To start!");
-
-                    GameBrain.controlsManager.controls.dispose();
-
-                    // Switch camera
-                    GameBrain.cameraManager.setCameraMode(true);
-
-                    // Set new camera position
-                    GameBrain.cameraManager.setPosition(0, 5, 10);
-
-                    // Set device orientation controls
-                    GameBrain.controlsManager.initDeviceOrientation(this.cameraManager.camera);
-                }),
-            ];
-            this._debugPanel.addButtons(debugButtonsArray);
         }
 
         this._raycasterManager = new RaycasterManager(this._debugMode);
@@ -95,8 +58,39 @@ export default class Game {
             //Debug pickup
             DATA.data_manager.get("instagram", "post-1").pickedUp();
 
-            this._debugMode && Object.entries(DATA.ui_manager.ui_list).forEach(value =>  GameBrain.gui.add({add: () => {   DATA.ui_manager.get(value[0]).show()  }},'add').name('ui:' + value[0]));
-            this._debugMode && Object.entries(DATA.conclusion_manager.list).forEach(value =>  GameBrain.gui.add({add: () => {   DATA.conclusion_manager.show(value[1].id)  }},'add').name('conc:' + value[1].id));
+            if(this._debugMode) {
+
+
+                Object.entries(DATA.ui_manager.ui_list).forEach(value => GameBrain.gui.add({
+                    add: () => {
+                        DATA.ui_manager.get(value[0]).show()
+                    }
+                }, 'add').name('ui:' + value[0]));
+
+                Object.entries(DATA.conclusion_manager.list).forEach(value => GameBrain.gui.add({
+                    add: () => {
+                        DATA.conclusion_manager.show(value[1].id)
+                    }
+                }, 'add').name('conc:' + value[1].id));
+
+                GameBrain.gui.add({
+                    tp: () => {
+                        GameBrain.sceneryManager.setActiveScenery("ColleusesScenery");
+                    }
+                }, 'tp').name('to Colleuses Scenery');
+
+                GameBrain.gui.add({
+                    tp: () => {
+                        GameBrain.sceneryManager.setActiveScenery("BistroScenery");
+                    }
+                }, 'tp').name('to Bistro Scenery');
+
+                GameBrain.gui.add({
+                    tp: () => {
+                        GameBrain.sceneryManager.setActiveScenery("MapScenery");
+                    }
+                }, 'tp').name('to Map Scenery');
+            }
         });
 
         cover.addEventListener("click", () => {
@@ -139,18 +133,6 @@ export default class Game {
 
         GameBrain.sceneryManager.loadScenery("ColleusesScenery");
 
-        setTimeout(() => {
-
-            GameBrain.sceneryManager.loadScenery("BistroScenery");
-
-            setTimeout(() => {
-
-                GameBrain.sceneryManager.setActiveScenery("BistroScenery");
-
-            }, 2000);
-
-        }, 5000);
-
         // Start loop!
         this._loop();
     }
@@ -164,7 +146,14 @@ export default class Game {
 
         // -- Scenery 3 - Colleuses
         let geometries = [
-            GameBrain.geometryManager.createColorSkybox(0x000000, 1500), // Skybox
+            GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "ColleusesSkybox"), // Skybox
+
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "letter-1",
+                position: {x: 80, y: 15, z: 0},
+                size: {x: 30, y: 30, z: 30},
+                color: 0x28BDF5,
+            })
         ];
 
         let models = [
@@ -189,14 +178,51 @@ export default class Game {
                     fog: true,
                     onLoadDone: () => {
                         GameBrain.sceneryManager.setActiveScenery("ColleusesScenery");
+                        // GameBrain.sceneryManager.loadScenery("BistroScenery");
+                        // GameBrain.sceneryManager.loadScenery("MapScenery");
+                        console.log(GameBrain.sceneManager.scene);
                     }
                 }
             )
         );
 
-        // -- Scenery 3 - Bistro
+        // -- Scenery 3 - Map
         geometries = [
-            // GameBrain.geometryManager.createColorSkybox(0x000000, 1500), // Skybox
+            GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "MapSkybox"), // Skybox
+        ];
+
+        models = [
+            new Model('MapEnvironment', 'models/map.glb', .005),
+        ];
+
+        lights = [
+            // GameBrain.lightingManager.createSpotLight({
+            //     identifier: "MapSpotLight",
+            //     angle: 0,
+            //     distance: 500,
+            // })
+        ];
+
+        GameBrain.sceneryManager.addScenery(
+            new Scenery({
+                    identifier: "MapScenery",
+                    basePosition: {x: 3000, y: 0, z: 0},
+                    geometries: geometries,
+                    models: models,
+                    lights: lights,
+                    cameraPosition: {x: 50, y: 40, z: 50},
+                    fog: false,
+                    orbitControls: false,
+                    onLoadDone: () => {
+
+                    }
+                }
+            )
+        );
+
+        // -- Scenery 4 - Bistro
+        geometries = [
+            // GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "BistroSkybox"), // Skybox
         ];
 
         models = [
@@ -204,11 +230,11 @@ export default class Game {
         ];
 
         lights = [
-            GameBrain.lightingManager.createSpotLight({
-                identifier: "BistroSpotLight",
-                angle: 0,
-                distance: 500,
-            })
+            // GameBrain.lightingManager.createSpotLight({
+            //     identifier: "BistroSpotLight",
+            //     angle: 0,
+            //     distance: 500,
+            // })
         ];
 
         GameBrain.sceneryManager.addScenery(
@@ -221,12 +247,11 @@ export default class Game {
                     cameraPosition: {x: 0, y: 40, z: 0},
                     fog: false,
                     onLoadDone: () => {
-                        console.log("BistroScenery loading done");
+
                     }
                 }
             )
         );
-
     }
 
     // ------------------------------------------------------------------- CALLBACKS
@@ -265,7 +290,7 @@ export default class Game {
 
         //specific cases
         switch (identifier) {
-            case "IceTruck": {
+            case "DemoLetter": {
                 break;
             }
             default:
@@ -283,6 +308,8 @@ export default class Game {
         requestAnimationFrame(this._loop.bind(this));
 
         this._debugMode && this.stats.begin();
+
+        // console.log(GameBrain.cameraManager.camera.position.x, GameBrain.cameraManager.camera.position.z);
 
         GameBrain.controlsManager.controls.update(this._clock.getDelta()); // Only for device orientation controls
         GameBrain.renderer.render(GameBrain.sceneManager.scene, GameBrain.cameraManager.camera);

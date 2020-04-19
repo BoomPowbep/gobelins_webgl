@@ -64,7 +64,7 @@ export default class GeometryManager {
      * Create a cube skybox.
      * @returns {Mesh}
      */
-    createCubeSkybox(path, side) {
+    createCubeSkybox(path, side, identifier) {
 
         let directions = ["front", "back", "up", "down", "right", "left"];
         let imageSuffix = ".jpg";
@@ -79,7 +79,7 @@ export default class GeometryManager {
         let skyMaterial = new THREE.MeshFaceMaterial(materialArray);
 
         let skyboxMesh = new THREE.Mesh(skyGeometry, skyMaterial);
-        skyboxMesh.identifier = "Skybox-" + path;
+        skyboxMesh.identifier = identifier;
         return skyboxMesh;
     }
 
@@ -87,7 +87,7 @@ export default class GeometryManager {
      * Create a cube skybox.
      * @returns {Mesh}
      */
-    createColorSkybox(color, side) {
+    createColorSkybox(color, side, identifier) {
         let skyGeometry = new THREE.CubeGeometry(side, side, side);
 
         let materialArray = [];
@@ -99,7 +99,7 @@ export default class GeometryManager {
         let skyMaterial = new THREE.MeshFaceMaterial(materialArray);
 
         let skyboxMesh = new THREE.Mesh(skyGeometry, skyMaterial);
-        skyboxMesh.identifier = "Skybox-" + color;
+        skyboxMesh.identifier = identifier;
         return skyboxMesh;
     }
 

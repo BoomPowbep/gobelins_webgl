@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import DeviceOrientationControls from 'three-device-orientation';
 import OrbitControls from 'orbit-controls-es6';
-import { MapControls } from 'three/examples/jsm/controls/OrbitControls';
+import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import GameBrain from "../GameManager/GameManager";
+import {Vector3} from "three";
 
 export default class ControlsManager {
 
@@ -44,8 +46,13 @@ export default class ControlsManager {
         // this._controls.minDistance = 5;
         // this._controls.maxDistance = 10;
 
-        camera.zoom = 1.5;
+        camera.zoom = .05;
         camera.updateProjectionMatrix();
+    }
+
+    targetTo(identifier) {
+        const target = GameBrain.modelManager.getModelReferenceByIdentifier(identifier);
+        this._controls.target = new Vector3(target.position.x, target.position.y, target.position.z);
     }
 
     // ------------------------------------------------------------------- GETTERS
