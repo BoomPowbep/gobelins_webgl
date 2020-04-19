@@ -1,3 +1,6 @@
+/**
+ * List of pickable items
+ */
 class PickableList {
     /**
      * @param {[Pickable]} items

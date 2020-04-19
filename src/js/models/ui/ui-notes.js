@@ -21,7 +21,7 @@ class UiNotes extends Ui {
                 });
             }
         });
-
+//
         let templateMemo = new Template("script[data-template='memo_el']");
         this.list.innerHTML = "";
         DATA.data_manager.records.items.forEach(value => {

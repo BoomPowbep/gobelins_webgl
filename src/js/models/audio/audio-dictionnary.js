@@ -7,6 +7,7 @@ const AUDIO_DICTIONARY = {
     'vocal_2' : {file: "sounds/vocal/vocal2.m4a"},
     'birds' : {file: "sounds/birds.mp3", loop: true, volume: 0.1},
     'horn' : {file: "sounds/horn.wav", volume: 0.2},
+    'paper' : {file: "sounds/paper.wav", volume: 0.5},
 };
 
 export default AUDIO_DICTIONARY;

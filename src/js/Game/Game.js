@@ -103,12 +103,9 @@ export default class Game {
         AudioManager.init();
         document.addEventListener("sound_ready", (e) => {
             //When sounds are ready, we can build our data manager
-            DATA.data_manager = new DataManager();
-            DATA.ui_manager = new UiManager();
-            DATA.ui_manager.registerUi("notes", new UiNotes());
-            DATA.ui_manager.registerUi("maps", new UiMaps());
-            DATA.ui_manager.registerUi("settings", new UiSettings());
-            DATA.ui_manager.registerUi("instagram", new UiInstagram());
+
+            DATA.setupManagers();
+
             //DATA.ui_manager.get("notes").show();
 
             //Debug pickup
@@ -121,7 +118,7 @@ export default class Game {
             cover.remove();
 
             //Setup audio list here
-            AudioManager.play("birds");
+            AudioManager.play("paper");
 
             this._debugMode && this._debuglogs.addLog("Not looping birds, for your ears to survive...");
 
