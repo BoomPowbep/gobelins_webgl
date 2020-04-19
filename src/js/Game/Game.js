@@ -159,7 +159,7 @@ export default class Game {
         ];
 
         let models = [
-            new Model('Bistro', 'models/colleuses.glb', 1),
+            new Model('ColleusesEnvironment', 'models/colleuses.glb', 1),
         ];
 
         let lights = [
