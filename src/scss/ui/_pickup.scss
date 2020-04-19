@@ -2,6 +2,7 @@
   transform: translateZ(0) translateY(100%);
   transition: 1s;
   height: 100vh;
+  display: none;
   &.show{
     transform: translateY(0);
   }
