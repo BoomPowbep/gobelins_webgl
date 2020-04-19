@@ -95,8 +95,8 @@ export default class Game {
             //Debug pickup
             DATA.data_manager.get("instagram", "post-1").pickedUp();
 
-            Object.entries(DATA.ui_manager.ui_list).forEach(value =>  this.gui.add({add: () => {   DATA.ui_manager.get(value[0]).show()  }},'add').name('ui:' + value[0]));
-            Object.entries(DATA.conclusion_manager.list).forEach(value =>  this.gui.add({add: () => {   DATA.conclusion_manager.show(value[1].id)  }},'add').name('conc:' + value[1].id));
+            this._debugMode && Object.entries(DATA.ui_manager.ui_list).forEach(value =>  GameBrain.gui.add({add: () => {   DATA.ui_manager.get(value[0]).show()  }},'add').name('ui:' + value[0]));
+            this._debugMode && Object.entries(DATA.conclusion_manager.list).forEach(value =>  GameBrain.gui.add({add: () => {   DATA.conclusion_manager.show(value[1].id)  }},'add').name('conc:' + value[1].id));
         });
 
         cover.addEventListener("click", () => {
