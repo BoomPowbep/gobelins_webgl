@@ -50,7 +50,7 @@ class AudioFile {
             this.ready = true;
             this.audio.autoplay = false;
             this.duration = this.audio.duration;
-            this.audio.stop();
+            this.audio.pause();
         });
 
         //When a sound has finish to be played
