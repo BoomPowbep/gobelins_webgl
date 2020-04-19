@@ -1,17 +1,17 @@
 const LETTERS_VAR = {
-    'letter-1_E': {},
-    'letter-2_O': {},
-    'letter-3_T': {},
-    'letter-4_S': {},
+    'letter-1': {},
+    'letter-2': {},
+    'letter-3': {},
+    'letter-4': {},
 
-    'letter-5_M': {},
-    'letter-6_R': {},
-    'letter-7_T': {},
+    'letter-5': {},
+    'letter-6': {},
+    'letter-7': {},
 
-    'letter-8_V': {},
-    'letter-9_I': {},
-    'letter-10_N': {},
-    'letter-11_E': {}
+    'letter-8': {},
+    'letter-9': {},
+    'letter-10': {},
+    'letter-11': {}
 };
 
 export default LETTERS_VAR;
