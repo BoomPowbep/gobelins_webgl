@@ -1,7 +1,7 @@
 import Pickable from "./pickable";
 
 /**
- * Constitue la donnée théoriquement d'une lettre.
+ * It's a letter that user need to find in scene
  */
 class Letter extends Pickable{
     /**

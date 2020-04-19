@@ -9,7 +9,6 @@ import {Vector3} from "three";
 
 import DATA from "../models/data";
 
-
 import {Scenery} from "./SceneryManager/SceneryManager";
 
 import GameBrain from './GameManager/GameManager';
@@ -84,6 +83,21 @@ export default class Game {
         this._raycasterManager = new RaycasterManager(this._debugMode);
 
         let cover = document.getElementById("cover");
+
+
+        document.addEventListener("sound_ready", (e) => {
+            //When sounds are ready, we can build our data manager
+
+            DATA.setupManagers();
+
+            //DATA.ui_manager.get("notes").show();
+
+            //Debug pickup
+            DATA.data_manager.get("instagram", "post-1").pickedUp();
+
+            Object.entries(DATA.ui_manager.ui_list).forEach(value =>  this.gui.add({add: () => {   DATA.ui_manager.get(value[0]).show()  }},'add').name('ui:' + value[0]));
+            Object.entries(DATA.conclusion_manager.list).forEach(value =>  this.gui.add({add: () => {   DATA.conclusion_manager.show(value[1].id)  }},'add').name('conc:' + value[1].id));
+        });
 
         cover.addEventListener("click", () => {
             cover.remove();

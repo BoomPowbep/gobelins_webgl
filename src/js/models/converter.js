@@ -1,4 +1,9 @@
 class Converter {
+    /**
+     * Converter to get a time string instead of a second duration
+     * @param duration
+     * @return {string}
+     */
     static durationToTime(duration) {
         duration = Math.ceil(duration);
 

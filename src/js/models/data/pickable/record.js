@@ -1,5 +1,8 @@
 import Pickable from "./pickable";
 
+/**
+ * It's an audio record that user need to find in scene
+ */
 class Record  extends Pickable {
     /**
      * @param {string} identifier
@@ -16,20 +19,6 @@ class Record  extends Pickable {
      */
     getAudioFile() {
         return this.audio_file;
-    }
-
-    /**
-     * Play the linked audio file
-     */
-    play() {
-        this.getAudioFile().getAudioDom().play();
-    }
-
-    /**
-     * Stop the linked audio file
-     */
-    stop() {
-        this.getAudioFile().getAudioDom().pause();
     }
 }
 
