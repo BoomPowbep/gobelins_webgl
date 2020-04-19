@@ -2,24 +2,19 @@ import * as THREE from 'three';
 import Stats from 'stats-js';
 import * as dat from 'dat.gui';
 
-import CameraManager from './CameraManager/CameraManager';
-import ControlsManager from './ControlsManager/ControlsManager';
-import GeometryManager from './GeometryManager/GeometryManager';
-import {ModelManager, Model} from './ModelManager/ModelManager';
-import LightingManager from './LightingManager/LightingManager';
-import SceneManager from './SceneManager/SceneManager';
+import {Model} from './ModelManager/ModelManager';
 import RaycasterManager from "./RaycasterManager/RaycasterManager";
 import DebugLogs from "./Debug/DebugLogs";
 import {DebugPanel, DebugButton} from "./Debug/DebugPanel";
 import {Vector3} from "three";
 import AudioManager from "../models/audio/audio-manager";
+
 import DATA from "../models/data";
-import DataManager from "../models/data/data-manager";
-import UiManager from "../models/ui/ui-manager";
-import UiNotes from "../models/ui/ui-notes";
-import UiMaps from "../models/ui/ui-maps";
-import UiSettings from "../models/ui/ui-settings";
-import UiInstagram from "../models/ui/ui-instagram";
+
+import {Scenery} from "./SceneryManager/SceneryManager";
+
+import GameBrain from './GameManager/GameManager';
+
 
 export default class Game {
 
@@ -28,14 +23,12 @@ export default class Game {
     /**
      * Constructor.
      * Inits all components ans starts the loop.
-     * @param isDebugMode
-     * @param highPerf
+     * @param debugMode
      */
-    constructor(isDebugMode = true, highPerf = false) {
+    constructor(debugMode = true) {
         console.log('🎮 Game constructor');
 
-        this._debugMode = isDebugMode;
-        this._highPerf = highPerf;
+        this._debugMode = debugMode;
 
         this._clock = new THREE.Clock();
 
@@ -88,19 +81,13 @@ export default class Game {
             this._debugPanel.addButtons(debugButtonsArray);
         }
 
-        // Game components
-        this.cameraManager = new CameraManager(this._debugMode);
-        this.controlsManager = new ControlsManager(this._debugMode);
-        this.geometryManager = new GeometryManager(this._debugMode);
-        this.modelManager = new ModelManager(this._debugMode);
-        this.lightingManager = new LightingManager(this._debugMode);
-        this.sceneManager = new SceneManager(this._debugMode);
+        GameBrain.init({debugMode: this._debugMode});
+
         this._raycasterManager = new RaycasterManager(this._debugMode);
 
         let cover = document.getElementById("cover");
 
 
-        AudioManager.init();
         document.addEventListener("sound_ready", (e) => {
             //When sounds are ready, we can build our data manager
 
@@ -112,13 +99,14 @@ export default class Game {
             DATA.data_manager.get("instagram", "post-1").pickedUp();
 
             Object.entries(DATA.ui_manager.ui_list).forEach(value =>  this.gui.add({add: () => {   DATA.ui_manager.get(value[0]).show()  }},'add').name('ui:' + value[0]));
+            Object.entries(DATA.conclusion_manager.list).forEach(value =>  this.gui.add({add: () => {   DATA.conclusion_manager.show(value[1].id)  }},'add').name('conc:' + value[1].id));
         });
 
         cover.addEventListener("click", () => {
             cover.remove();
 
             //Setup audio list here
-            AudioManager.play("paper");
+            // AudioManager.play("birds");
 
             this._debugMode && this._debuglogs.addLog("Not looping birds, for your ears to survive...");
 
@@ -128,7 +116,7 @@ export default class Game {
                 // iOS 13+
                 DeviceOrientationEvent.requestPermission()
                     .then(response => {
-                        if (response == 'granted') {
+                        if (response === 'granted') {
                             this.init();
                         } else {
                             console.error("Device Orientation Event permission rejected by user: ", response);
@@ -141,109 +129,72 @@ export default class Game {
             }
         });
 
-        // Event listeners
-        window.addEventListener('resize', this.resizeViewport.bind(this)); // Resize
+
         window.addEventListener('touchend', this.onTouchEnd.bind(this)); // Get normalized position of mouse & do raycasr
     }
 
     /**
-     * Creates the scene & creates essentials.
+     * Creates the three scene & creates essentials.
      */
     init() {
-        // Renderer init
-        this.renderer = new THREE.WebGLRenderer({
-            antialias: this._highPerf
-        });
-        this.renderer.shadowMap.enabled = true;
-        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(this.renderer.domElement);
 
-        // Basic geometries
-        const geometries = [
-            this.geometryManager.createBasicGroundSurface("Ground", "textures/grass_dirt.jpg"), // Ground
-            this.geometryManager.createCubeSkybox("textures/sky/orange/"), // Skybox
-            this.geometryManager.createBasicShape({
-                identifier: "GreenCube",
-                position: {x: -.5, y: .5, z: 2.5}
-            }),
-            this.geometryManager.createBasicShape({
-                identifier: "BlueWall",
-                color: 0x4287f5,
-                position: {x: 0, y: 2.5, z: -11},
-                size: {x: 10, y: 5, z: 1}
-            }),
-            // Map
-            this.geometryManager.createBasicShape({
-                identifier: "MapGround",
-                color: 0xa6a6a6,
-                position: {x: 0, y: -.5, z: 90},
-                size: {x: 30, y: 0, z: 50}
-            }),
-            this.geometryManager.createBasicShape({
-                identifier: "Building1",
-                color: 0x4287f5,
-                position: {x: 0, y: .5, z: 90}
-            }),
-            this.geometryManager.createBasicShape({
-                identifier: "Building2",
-                color: 0x4287f5,
-                position: {x: -5, y: .5, z: 80},
-                size: {x: 1, y: 5, z: 1}
+        this.initSceneries();
+
+        GameBrain.sceneryManager.loadScenery("ColleusesScenery");
+
+        setTimeout(() => {
+
+            GameBrain.sceneryManager.loadScenery("BistroScenery");
+
+        }, 10000);
+
+        // Start loop!
+        this._loop();
+    }
+
+    /**
+     * List all elements in different sceneries
+     */
+    initSceneries() {
+
+        // -- SCENERIES
+
+        // -- Scenery 3 - Colleuses
+        let geometries = [
+            GameBrain.geometryManager.createColorSkybox(0x000000, 1500), // Skybox
+        ];
+
+        let models = [
+            new Model('ColleusesStreet', 'models/colleuses.glb', 1, {x: 0, y: 0, z: 0}),
+        ];
+
+        let lights = [
+            GameBrain.lightingManager.createSpotLight({
+                identifier: "StreetSpotLight",
+                angle: 0,
+                distance: 500,
             })
         ];
 
-        // 3D Models
-        const models = [
-            new Model('Fox', 'models/Fox.glb', .02),
-            new Model('IceTruck', 'models/CesiumMilkTruck.glb', 1.5, {x: -5, y: 0, z: 0})
-        ];
+        GameBrain.sceneryManager.addScenery(
+            new Scenery({
+                    identifier: "ColleusesScenery",
+                    geometries: geometries,
+                    models: models,
+                    lights: lights,
+                    cameraPosition: {x: 0, y: 40, z: 0},
+                    fog: true,
+                    onLoadDone: () => {
+                        GameBrain.sceneryManager.setActiveScenery("ColleusesScenery");
+                    }
+                }
+            )
+        );
 
-        // Lights
-        this.lightingManager.createSpotLight({
-            identifier: "MainSpotLight",
-            intensity: 1,
-            position: {x: 20, y: 20, z: 0},
-            angle: .5
-        });
-
-        this.geometryManager.loadGeometries(geometries);
-
-        this.modelManager.loadModels(models, () => {
-            // Scene init
-            this.sceneManager.addThings(this.geometryManager.geometries);
-            this.sceneManager.addThings(this.modelManager.models);
-            this.sceneManager.addThings(this.lightingManager.lights);
-
-            // Camera init
-            this.cameraManager.setPosition(0, 5, 10);
-            this.cameraManager.lookAtSomething(new THREE.Vector3(0, 5, 0));
-
-            // Controls init
-            this.controlsManager.initDeviceOrientation(this.cameraManager.camera);
-
-            // Get reference of fox and change position
-            let fox = this.modelManager.getModelReferenceByIdentifier('Fox');
-            fox.position.x = 2;
-
-            // Start loop!
-            this._loop();
-        });
     }
 
     // ------------------------------------------------------------------- CALLBACKS
 
-    /**
-     * Window resize callback.
-     */
-    resizeViewport() {
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-
-        this.renderer.setSize(width, height);
-        this.cameraManager.camera.aspect = width / height;
-        this.cameraManager.camera.updateProjectionMatrix();
-    }
 
     /**
      * Touch event callback.
@@ -256,14 +207,11 @@ export default class Game {
         this._mouse.y = -(event.changedTouches[0].clientY / window.innerHeight) * 2 + 1;
 
         const touchedElementIdentifier = this._raycasterManager.getTouchedElementIdentifier(
-            this.sceneManager.scene,
-            this._mouse, this.cameraManager.camera
+            GameBrain.sceneManager.scene,
+            this._mouse, GameBrain.cameraManager.camera
         );
-
-        if(this._debugMode) {
-            this._debuglogs.addLog("RayCast -> " + touchedElementIdentifier);
-            console.log(touchedElementIdentifier);
-        }
+        this._debugMode && this._debuglogs.addLog("RayCast -> " + touchedElementIdentifier);
+        this._debugMode && console.log(touchedElementIdentifier);
         this.postTouchEventAction(touchedElementIdentifier);
     }
 
@@ -300,8 +248,8 @@ export default class Game {
 
         this._debugMode && this.stats.begin();
 
-        this.controlsManager.controls.update(this._clock.getDelta()); // Only for device orientation controls
-        this.renderer.render(this.sceneManager.scene, this.cameraManager.camera);
+        GameBrain.controlsManager.controls.update(this._clock.getDelta()); // Only for device orientation controls
+        GameBrain.renderer.render(GameBrain.sceneManager.scene, GameBrain.cameraManager.camera);
 
         this._debugMode && this.stats.end();
     }

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {Model} from "../ModelManager/ModelManager";
+import {checkForExistingObjectInSceneWithIdentifier} from "../Util/Helpers";
 
 export default class SceneManager {
 
@@ -24,7 +24,9 @@ export default class SceneManager {
      */
     addThings(things) {
         for(let thing of things) {
-            this._scene.add(thing);
+            if(!checkForExistingObjectInSceneWithIdentifier(thing.identifier)) {
+                this._scene.add(thing);
+            }
         }
     }
 

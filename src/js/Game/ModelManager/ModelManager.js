@@ -17,6 +17,7 @@ class Model {
         this.path = path;
         this.initialScaleFactor = initialScaleFactor;
         this.initialPosition = initialPosition;
+        this.loaded = false;
     }
 }
 
@@ -66,8 +67,8 @@ class ModelManager {
                     object.scene.position.z = model.initialPosition.z;
 
                     // Shadow
-                    object.scene.castShadow = true;
-                    object.scene.receiveShadow = true;
+                    // object.scene.castShadow = true;
+                    // object.scene.receiveShadow = true;
 
                     // Add identifier
                     object.scene.identifier = model.identifier;
@@ -88,7 +89,7 @@ class ModelManager {
                 // On error
                 (error) => {
                     console.error("Object loading error: ", error);
-                    // FIXME on charge l'expérience même si un objet a sauté ou pas ? (Je pense non)
+                    // FIXME on charge l'expérience même si un objet a sauté ou pas ?
                 });
         });
 
