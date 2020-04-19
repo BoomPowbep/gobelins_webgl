@@ -68,7 +68,6 @@ class GameManager {
         this.lightingManager = new LightingManager(this.debugMode);
         this.sceneryManager = new SceneryManager(this.debugMode);
 
-        AudioManager.init();
         document.addEventListener("sound_ready", function (e) {
             //When sounds are ready, we can build our data manager
             DATA.data_manager = new DataManager();

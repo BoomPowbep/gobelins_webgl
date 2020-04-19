@@ -12,6 +12,7 @@ import DATA from "../models/data";
 import {Scenery} from "./SceneryManager/SceneryManager";
 
 import GameBrain from './GameManager/GameManager';
+import AudioManager from "../models/audio/audio-manager";
 
 
 export default class Game {
@@ -94,6 +95,7 @@ export default class Game {
         });
 
         cover.addEventListener("click", () => {
+            AudioManager.init();
             cover.remove();
 
             //Setup audio list here
