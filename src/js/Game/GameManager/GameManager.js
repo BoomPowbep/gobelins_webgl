@@ -54,6 +54,11 @@ class GameManager {
     ) {
         this.debugMode = debugMode;
 
+        if(this.debugMode) {
+            this.gui = new dat.GUI();
+            this.gui.close();
+        }
+
         /* -- Init managers -- */
         this.sceneManager = new SceneManager(this.debugMode);
         this.cameraManager = new CameraManager(this.debugMode);
@@ -77,7 +82,7 @@ class GameManager {
             //Debug pickup
             DATA.data_manager.get("instagram", "post-1").pickedUp();
 
-            Object.entries(DATA.ui_manager.ui_list).forEach(value =>  this.gui.add({add: () => {   DATA.ui_manager.get(value[0]).show()  }},'add').name('ui:' + value[0]));
+            this.debugMode && Object.entries(DATA.ui_manager.ui_list).forEach(value =>  GameBrain.gui.add({add: () => {   DATA.ui_manager.get(value[0]).show()  }},'add').name('ui:' + value[0]));
         });
 
         /* -- Init Three components -- */
@@ -87,8 +92,6 @@ class GameManager {
 
         /* -- Set default controls -- */
         GameBrain.controlsManager.initDeviceOrientation(GameBrain.cameraManager.camera);
-
-        if(this.debugMode) this.gui = new dat.GUI();
     }
 
     // ----------------------------------------------------------------------- CALLBACKS
