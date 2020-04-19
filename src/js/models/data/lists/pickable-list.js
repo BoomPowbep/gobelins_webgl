@@ -31,6 +31,14 @@ class PickableList {
     hasPickupAll() {
         return this.items.find(value => !value.picked) === undefined;
     }
+
+    count() {
+        return this.items.length;
+    }
+
+    countPicked() {
+        return this.getPickedUp().length;
+    }
 }
 
 export default PickableList;
