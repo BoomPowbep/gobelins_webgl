@@ -130,7 +130,7 @@ class SceneryManager {
                 // Map controls
                 GameBrain.cameraManager.setCameraMode(false);
                 GameBrain.controlsManager.initMapControls(GameBrain.cameraManager.camera, GameBrain.renderer.domElement);
-                GameBrain.controlsManager.targetTo("MapGround"); // FIXME change back to GameBrain.controlsManager.targetTo("MapEnvironment");
+                GameBrain.controlsManager.targetTo("MapEnvironment");
             }
 
             // Set fog

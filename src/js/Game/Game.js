@@ -199,27 +199,27 @@ export default class Game {
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "MapSkybox"), // Skybox
 
             // Temp Map
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "MapGround",
-                color: 0xa6a6a6,
-                position: {x: 0, y: -.5, z: 90},
-                size: {x: 30, y: 0, z: 50}
-            }),
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "Building1",
-                color: 0x4287f5,
-                position: {x: 0, y: .5, z: 90}
-            }),
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "Building2",
-                color: 0x4287f5,
-                position: {x: -5, y: .5, z: 80},
-                size: {x: 1, y: 5, z: 1}
-            })
+            // GameBrain.geometryManager.createBasicShape({
+            //     identifier: "MapGround",
+            //     color: 0xa6a6a6,
+            //     position: {x: 0, y: -.5, z: 90},
+            //     size: {x: 30, y: 0, z: 50}
+            // }),
+            // GameBrain.geometryManager.createBasicShape({
+            //     identifier: "Building1",
+            //     color: 0x4287f5,
+            //     position: {x: 0, y: .5, z: 90}
+            // }),
+            // GameBrain.geometryManager.createBasicShape({
+            //     identifier: "Building2",
+            //     color: 0x4287f5,
+            //     position: {x: -5, y: .5, z: 80},
+            //     size: {x: 1, y: 5, z: 1}
+            // })
         ];
 
         models = [
-            // new Model('MapEnvironment', 'models/map.glb', .005),
+            new Model('MapEnvironment', 'models/map.glb', .005),
         ];
 
         lights = [

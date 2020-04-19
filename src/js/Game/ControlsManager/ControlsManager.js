@@ -60,7 +60,7 @@ export default class ControlsManager {
      * @param identifier
      */
     targetTo(identifier) {
-        const target = GameBrain.geometryManager.getGeometryReferenceByIdentifier(identifier); // FIXME change to const target = GameBrain.modelManager.getModelReferenceByIdentifier(identifier);
+        const target = GameBrain.modelManager.getModelReferenceByIdentifier(identifier);
         this._controls.target = new Vector3(target.position.x, target.position.y, target.position.z);
     }
 
