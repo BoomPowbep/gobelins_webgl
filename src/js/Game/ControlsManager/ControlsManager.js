@@ -36,6 +36,11 @@ export default class ControlsManager {
         this._controls = new DeviceOrientationControls(camera);
     }
 
+    /**
+     * Setup map controls
+     * @param camera
+     * @param rendererDom
+     */
     initMapControls(camera, rendererDom) {
         this._controls = new MapControls(camera, rendererDom);
 
@@ -50,8 +55,12 @@ export default class ControlsManager {
         camera.updateProjectionMatrix();
     }
 
+    /**
+     * For orthographic camera, this is the equivalent of camera.lookAt().
+     * @param identifier
+     */
     targetTo(identifier) {
-        const target = GameBrain.modelManager.getModelReferenceByIdentifier(identifier);
+        const target = GameBrain.geometryManager.getGeometryReferenceByIdentifier(identifier); // FIXME change to const target = GameBrain.modelManager.getModelReferenceByIdentifier(identifier);
         this._controls.target = new Vector3(target.position.x, target.position.y, target.position.z);
     }
 
