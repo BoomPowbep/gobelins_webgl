@@ -13,6 +13,7 @@ import {Scenery} from "./SceneryManager/SceneryManager";
 
 import GameBrain from './GameManager/GameManager';
 import AudioManager from "../models/audio/audio-manager";
+import Pickup from "../models/ui/pickup/pickup";
 
 
 export default class Game {
@@ -58,6 +59,7 @@ export default class Game {
 
             //Debug pickup
             DATA.data_manager.get("instagram", "post-1").pickedUp();
+            Pickup.show("Vous avez ramassé 1 lettre manquante. Encore 10.", "letter-1");
 
             if(this._debugMode) {
 
@@ -249,7 +251,7 @@ export default class Game {
                     cameraPosition: {x: 0, y: 40, z: 0},
                     fog: false,
                     onLoadDone: () => {
-
+                        DATA.data_manager.get("instagram", "post-1").pickedUp();
                     }
                 }
             )
@@ -286,8 +288,11 @@ export default class Game {
         //if we touch a letter
         if (identifier.match(new RegExp("^(letter-)"))) {
             let letter = DATA.data_manager.get("letter", identifier);
-            if (letter != null)
+            if (letter != null) {
                 letter.pickedUp();
+                AudioManager.play("paper");
+                Pickup.show("Vous avez ramassé 1 lettre manquante. Encore 10.", identifier)
+            }
         }
 
         //specific cases

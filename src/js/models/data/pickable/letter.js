@@ -19,6 +19,10 @@ class Letter extends Pickable{
     getPosition() {
         return this.position;
     }
+
+    getImage() {
+        return "images/letters/test.png";
+    }
 }
 
 export default Letter;
