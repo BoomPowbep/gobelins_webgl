@@ -39,10 +39,18 @@ class AudioFile {
         //Init sound duration is null
         this.duration = null;
 
+        //Event not fired on IOS Safari when sound not autoplayed
+        // Related : (https://stackoverflow.com/questions/33300294/html5-video-loadeddata-event-does-not-work-in-ios-safari)
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+            this.audio.autoplay = true;
+        }
+
         //When sound is load it's ready
         this.audio.addEventListener('loadeddata', () => {
             this.ready = true;
+            this.audio.autoplay = false;
             this.duration = this.audio.duration;
+            this.audio.pause();
         });
 
         //When a sound has finish to be played

@@ -47,12 +47,18 @@ class SceneryManager {
 
     // ------------------------------------------------------------------- MAKE
 
+    /**
+     * Add a scenery to the list.
+     * @param scenery
+     */
     addScenery(scenery) {
-        console.log("AddScenery", scenery);
-
         this._sceneries.push(scenery);
     }
 
+    /**
+     * Load the scenery specified by identifier.
+     * @param sceneryIdentifier
+     */
     loadScenery(sceneryIdentifier) {
         const queued = this.getSceneryReferenceByIdentifier(sceneryIdentifier);
         if (queued !== null) {
@@ -71,8 +77,6 @@ class SceneryManager {
                 model.initialPosition.z += queued.basePosition.z;
             });
 
-            console.log("loadScenery", queued);
-
             // Set position of lights
             queued.lights.forEach((light) => {
                 light.position.x += queued.basePosition.x;
@@ -83,22 +87,34 @@ class SceneryManager {
             // Load geometries
             queued.geometries.length > 0 && GameBrain.geometryManager.loadGeometries(queued.geometries);
 
-            // Load models
-            queued.models.length > 0 && GameBrain.modelManager.loadModels(queued.models, () => {
+            // Load models & add to scene
+            if(queued.models.length > 0) {
+                GameBrain.modelManager.loadModels(queued.models, () => {
+                    addToScene();
+                });
+            }
+            else {
+                addToScene();
+            }
 
+            function addToScene() {
                 GameBrain.sceneManager.addThings(GameBrain.geometryManager.geometries);
                 GameBrain.sceneManager.addThings(GameBrain.modelManager.models);
                 GameBrain.sceneManager.addThings(GameBrain.lightingManager.lights);
 
                 queued.loaded = true;
                 queued.onLoadDone();
-            });
+            }
 
         } else {
             console.error("Scenery " + sceneryIdentifier + " not found.");
         }
     }
 
+    /**
+     * Set the active scenery.
+     * @param sceneryIdentifier
+     */
     setActiveScenery(sceneryIdentifier) {
         const scenery = this.getSceneryReferenceByIdentifier(sceneryIdentifier);
 

@@ -44,6 +44,7 @@ class AudioManager {
         //To be improve but at least we get a way to see when sounds are ready
         let check = setInterval(() => {
             let hasOneNotReady = AudioManager.getAudioList().find(value => !value.ready);
+
             if(hasOneNotReady === undefined) {
                 document.dispatchEvent(new CustomEvent("sound_ready"));
                 clearInterval(check);
