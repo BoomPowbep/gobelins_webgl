@@ -2,8 +2,21 @@
   transform: translateZ(0) translateY(100%);
   transition: 1s;
   height: 100vh;
-  display: none;
-  &.show{
+  opacity: 0;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  &.active{
     transform: translateY(0);
+    opacity: 1;
+  }
+  img{
+    max-width: 100%;
+  }
+  p {
+    color: white;
+    font-weight: bold;
   }
 }
