@@ -1,11 +1,12 @@
 import GameBrain from "../GameManager/GameManager";
 import * as THREE from 'three';
-import {Vector3} from "three";
+import gsap from "gsap";
 
 class Scenery {
     constructor({
                     identifier = "Default",
                     basePosition = {x: 0, y: 0, z: 0},
+                    rotation = {x: 0, y: 0, z: 0},
                     geometries = [],
                     models = [],
                     lights = [],
@@ -18,6 +19,7 @@ class Scenery {
                 }) {
         this.identifier = identifier;
         this.basePosition = basePosition;
+        this.rotation = rotation;
         this.geometries = geometries;
         this.models = models;
         this.lights = lights;
@@ -42,6 +44,8 @@ class SceneryManager {
     constructor(isDebugMode) {
         console.log('🌈 SceneryManager constructor');
 
+        this._debugMode = isDebugMode;
+
         this._sceneries = [];
     };
 
@@ -58,8 +62,9 @@ class SceneryManager {
     /**
      * Load the scenery specified by identifier.
      * @param sceneryIdentifier
+     * @param callback
      */
-    loadScenery(sceneryIdentifier) {
+    loadScenery(sceneryIdentifier, callback = () => null) {
         const queued = this.getSceneryReferenceByIdentifier(sceneryIdentifier);
         if (queued !== null) {
 
@@ -82,6 +87,12 @@ class SceneryManager {
                 light.position.x += queued.basePosition.x;
                 light.position.y += queued.basePosition.y;
                 light.position.z += queued.basePosition.z;
+
+                if(this._debugMode) {
+                    let spotLightHelper = new THREE.SpotLightHelper(light);
+                    spotLightHelper.identifier = light.identifier + "-helper";
+                    GameBrain.lightingManager.lights.push(spotLightHelper);
+                }
             });
 
             // Load geometries
@@ -109,6 +120,27 @@ class SceneryManager {
         } else {
             console.error("Scenery " + sceneryIdentifier + " not found.");
         }
+    }
+
+    startSceneryTransition(sceneryIdentifier, duration = 1) {
+
+        // Fade in
+        gsap.to("#transition", {
+            autoAlpha: 1,
+            duration: duration,
+            onComplete: () => {
+
+                // Set active scenery
+                this.setActiveScenery(sceneryIdentifier);
+
+                // Fade out
+                gsap.to("#transition", {
+                    autoAlpha: 0,
+                    duration: duration,
+                    delay: duration
+                });
+            }
+        });
     }
 
     /**

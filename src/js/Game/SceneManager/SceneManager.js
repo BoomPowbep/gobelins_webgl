@@ -26,6 +26,12 @@ export default class SceneManager {
         for(let thing of things) {
             if(!checkForExistingObjectInSceneWithIdentifier(thing.identifier)) {
                 this._scene.add(thing);
+                if(thing.type === "SpotLight") {
+                    thing.target.identifier = thing.identifier + "-target";
+                    this._scene.add(thing.target);
+                    // FIXME ca marche pas ca
+                    thing.target.position.set(thing.position.x, 0, thing.position.z);
+                }
             }
         }
     }

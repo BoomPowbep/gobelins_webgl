@@ -8,15 +8,25 @@ class Model {
 
     /**
      * Construction.
+     * @param identifier
      * @param path
      * @param initialScaleFactor
      * @param initialPosition
+     * @param initialRotation
      */
-    constructor(identifier = "Unnamed", path = "", initialScaleFactor = .01, initialPosition = {x: 0, y: 0, z: 0}) {
+    constructor(
+        {
+            identifier = "Unnamed", path = "", initialScaleFactor = .01, initialPosition = {
+            x: 0,
+            y: 0,
+            z: 0
+        }, initialRotation = {x: 0, y: 0, z: 0}
+        }) {
         this.identifier = identifier;
         this.path = path;
         this.initialScaleFactor = initialScaleFactor;
         this.initialPosition = initialPosition;
+        this.initialRotation = initialRotation;
         this.loaded = false;
     }
 }
@@ -62,9 +72,14 @@ class ModelManager {
                     console.log("Loaded model from " + model.path, object);
 
                     object.scene.scale.set(model.initialScaleFactor, model.initialScaleFactor, model.initialScaleFactor);
+
                     object.scene.position.x = model.initialPosition.x;
                     object.scene.position.y = model.initialPosition.y;
                     object.scene.position.z = model.initialPosition.z;
+
+                    object.scene.rotation.x = model.initialRotation.x;
+                    object.scene.rotation.y = model.initialRotation.y;
+                    object.scene.rotation.z = model.initialRotation.z;
 
                     // Shadow
                     // object.scene.castShadow = true;
@@ -120,10 +135,10 @@ class ModelManager {
      */
     getModelReferenceByIdentifier(identifier) {
         for (let model of this._models) {
-            if(model.identifier === identifier) return model; // Reference
+            if (model.identifier === identifier) return model; // Reference
         }
         return null;
     }
 }
 
-export { ModelManager, Model };
+export {ModelManager, Model};

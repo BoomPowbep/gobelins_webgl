@@ -4,8 +4,6 @@ import Stats from 'stats-js';
 import {Model} from './ModelManager/ModelManager';
 import RaycasterManager from "./RaycasterManager/RaycasterManager";
 import DebugLogs from "./Debug/DebugLogs";
-import {DebugPanel, DebugButton} from "./Debug/DebugPanel";
-import {Vector3} from "three";
 
 import DATA from "../models/data";
 
@@ -14,6 +12,9 @@ import {Scenery} from "./SceneryManager/SceneryManager";
 import GameBrain from './GameManager/GameManager';
 import AudioManager from "../models/audio/audio-manager";
 import Pickup from "../models/ui/pickup/pickup";
+
+import gsap from "gsap";
+import {toRad} from "./Util/Helpers";
 
 
 export default class Game {
@@ -92,7 +93,7 @@ export default class Game {
                 sceneriesIdentifiers.forEach((identifier) => {
                     GameBrain.gui.add({
                         tp: () => {
-                            GameBrain.sceneryManager.setActiveScenery(identifier);
+                            GameBrain.sceneryManager.startSceneryTransition(identifier);
                         }
                     }, 'tp').name('to ' + identifier);
                 });
@@ -124,6 +125,11 @@ export default class Game {
                 // Not iOS 13+
                 this.init();
             }
+
+            // FIXME put elsewhere
+            document.querySelector("button[data-close-pickup]").addEventListener('click', () => {
+                document.getElementById("pickup").classList.remove("active");
+            });
         });
 
 
@@ -139,8 +145,10 @@ export default class Game {
         // FIXME make it dynamic
         this.initSceneries();
 
-        // Load first scenery elements
+        /* -- Load first scenery -- */
         GameBrain.sceneryManager.loadScenery("ColleusesScenery");
+
+        console.log("SCENE", GameBrain.sceneManager.scene);
 
         // Start loop!
         this._loop();
@@ -151,30 +159,61 @@ export default class Game {
      */
     initSceneries() {
 
+        // FIXME faire un système de chargement des éléments depuis du json avec une boucle !!
+
+        let ready = 0;
+
         // -- SCENERIES
 
         // -- Scenery 3 - Colleuses
         let geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "ColleusesSkybox"), // Skybox
 
-            // Demo letter
+            // Letters
             GameBrain.geometryManager.createBasicShape({
                 identifier: "letter-1",
-                position: {x: 80, y: 15, z: 0},
+                position: {x: 0, y: 15, z: -80},
                 size: {x: 30, y: 30, z: 30},
                 color: 0x28BDF5,
-            })
+            }),
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "letter-2",
+                position: {x: 0, y: 15, z: 80},
+                size: {x: 30, y: 30, z: 30},
+                color: 0x28BDC5,
+            }),
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "letter-3",
+                position: {x: -80, y: 15, z: 0},
+                size: {x: 30, y: 30, z: 30},
+                color: 0x28FDF5,
+            }),
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "letter-4",
+                position: {x: 80, y: 15, z: 0},
+                size: {x: 30, y: 30, z: 30},
+                color: 0x2FFFF5,
+            }),
         ];
 
         let models = [
-            new Model('ColleusesEnvironment', 'models/colleuses.glb', 1),
+            new Model({
+                identifier: 'ColleusesEnvironment',
+                path: 'models/colleuses.glb',
+                initialScaleFactor: 1,
+                initialRotation: {
+                    x: 0,
+                    y: toRad(90),
+                    z: 0
+                }
+            }),
         ];
 
         let lights = [
             // GameBrain.lightingManager.createSpotLight({
             //     identifier: "StreetSpotLight",
-            //     angle: 0,
-            //     distance: 500,
+            //     position: {x: 50, y: 150, z: -1000},
+            //     intensity: 3
             // })
         ];
 
@@ -187,10 +226,9 @@ export default class Game {
                     cameraPosition: {x: 0, y: 40, z: 0},
                     fog: true,
                     onLoadDone: () => {
-                        // On scenery loaded, set it active and load the others
-                        GameBrain.sceneryManager.setActiveScenery("ColleusesScenery");
-                        GameBrain.sceneryManager.loadScenery("BistroScenery");
+                        ready++;
                         GameBrain.sceneryManager.loadScenery("MapScenery");
+                        checkElementsReady();
                     }
                 }
             )
@@ -199,29 +237,10 @@ export default class Game {
         // -- Scenery 3 - Map
         geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "MapSkybox"), // Skybox
-
-            // Temp Map
-            // GameBrain.geometryManager.createBasicShape({
-            //     identifier: "MapGround",
-            //     color: 0xa6a6a6,
-            //     position: {x: 0, y: -.5, z: 90},
-            //     size: {x: 30, y: 0, z: 50}
-            // }),
-            // GameBrain.geometryManager.createBasicShape({
-            //     identifier: "Building1",
-            //     color: 0x4287f5,
-            //     position: {x: 0, y: .5, z: 90}
-            // }),
-            // GameBrain.geometryManager.createBasicShape({
-            //     identifier: "Building2",
-            //     color: 0x4287f5,
-            //     position: {x: -5, y: .5, z: 80},
-            //     size: {x: 1, y: 5, z: 1}
-            // })
         ];
 
         models = [
-            new Model('MapEnvironment', 'models/map.glb', .005),
+            new Model({identifier: 'MapEnvironment', path: 'models/map.glb', initialScaleFactor: .005}),
         ];
 
         lights = [
@@ -243,44 +262,58 @@ export default class Game {
                     fog: false,
                     orbitControls: false,
                     onLoadDone: () => {
-
+                        ready++;
+                        GameBrain.sceneryManager.loadScenery("BistroScenery");
+                        checkElementsReady();
                     }
                 }
             )
         );
 
         // -- Scenery 4 - Bistro
-        geometries = [
-            GameBrain.geometryManager.createColorSkybox(0x28BDF5, 1500, "BistroSkybox"), // Skybox
-        ];
+        // geometries = [
+        //     GameBrain.geometryManager.createColorSkybox(0x28BDF5, 1500, "BistroSkybox"), // Skybox
+        // ];
+        //
+        // models = [
+        //     new Model({identifier: 'BistroEnvironment', path: 'models/bar.glb', initialScaleFactor: 1, initialPosition: {x: 0, y: 0, z: -1000}}),
+        // ];
+        //
+        // lights = [
+        //     // GameBrain.lightingManager.createSpotLight({
+        //     //     identifier: "BistroSpotLight",
+        //     //     angle: 0,
+        //     //     distance: 500,
+        //     // })
+        // ];
+        //
+        // GameBrain.sceneryManager.addScenery(
+        //     new Scenery({
+        //             identifier: "BistroScenery",
+        //             basePosition: {x: 0, y: 0, z: 3000},
+        //             geometries: geometries,
+        //             models: models,
+        //             lights: lights,
+        //             cameraPosition: {x: 0, y: 40, z: 0},
+        //             fog: false,
+        //             onLoadDone: () => {
+        //                 ready++;
+        //                 DATA.data_manager.get("instagram", "post-1").pickedUp();
+        //                 checkElementsReady();
+        //             }
+        //         }
+        //     )
+        // );
 
-        models = [
-            new Model('BistroEnvironment', 'models/bar.glb', 1, {x: 0, y: 0, z: -1000}),
-        ];
-
-        lights = [
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "BistroSpotLight",
-            //     angle: 0,
-            //     distance: 500,
-            // })
-        ];
-
-        GameBrain.sceneryManager.addScenery(
-            new Scenery({
-                    identifier: "BistroScenery",
-                    basePosition: {x: 0, y: 0, z: 3000},
-                    geometries: geometries,
-                    models: models,
-                    lights: lights,
-                    cameraPosition: {x: 0, y: 40, z: 0},
-                    fog: false,
-                    onLoadDone: () => {
-                        DATA.data_manager.get("instagram", "post-1").pickedUp();
-                    }
-                }
-            )
-        );
+        function checkElementsReady() {
+            if(ready === 2) {
+                GameBrain.sceneryManager.setActiveScenery("ColleusesScenery");
+                gsap.to("#loading", {
+                    duration: 0,
+                    autoAlpha: 0
+                });
+            }
+        }
     }
 
     // ------------------------------------------------------------------- CALLBACKS
