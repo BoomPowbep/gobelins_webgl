@@ -49,7 +49,6 @@ class UiInstagram extends Ui {
                 startCl = e.touches[0].clientX;
             })
             value.addEventListener('touchend', (e) => {
-                e.preventDefault();
                 //Get End X position (in changedTouches, it's not in touches in this case)
                 let endCl = e.changedTouches[0].clientX;
 

@@ -36,9 +36,9 @@ export default class LightingManager {
                         color = 0xFFFFFF,
                         intensity = 1,
                         position = {x: 0, y: 40, z: 0},
-                        angle = .3,
-                        distance = 50,
-                        penumbra = .2,
+                        angle = .05,
+                        distance = 1000,
+                        penumbra = .7,
                         decay = 1.2
                     }) {
         let spotLight = new THREE.SpotLight(color, intensity);
@@ -48,6 +48,8 @@ export default class LightingManager {
 
         spotLight.position.set(position.x, position.y, position.z);
 
+        spotLight.rotation.set(0, 0, 0);
+
         spotLight.angle = angle;
         spotLight.distance = distance;
         spotLight.penumbra = penumbra;
@@ -56,16 +58,11 @@ export default class LightingManager {
         // spotLight.castShadow = true;
         // spotLight.shadowCameraVisible = true;
 
-        spotLight.shadow.camera.near = .01;
-        spotLight.shadow.camera.far = 4000;
-        spotLight.shadow.camera.fov = 30;
+        // spotLight.shadow.camera.near = .01;
+        // spotLight.shadow.camera.far = 4000;
+        // spotLight.shadow.camera.fov = 30;
 
         this._registerLight(spotLight);
-
-        if (this._debugMode) {
-            let spotLightHelper = new THREE.SpotLightHelper(spotLight);
-            this._registerLight(spotLightHelper);
-        }
 
         return spotLight;
     }

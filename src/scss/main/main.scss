@@ -10,6 +10,46 @@ html {
 
     touch-action: manipulation;
 
+    #cover {
+      z-index: 3;
+    }
+
+    #loading {
+      z-index: 2;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: $black-color;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      h3 {
+        color: $white-color;
+      }
+    }
+
+    #transition {
+      z-index: 2;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: $black-color;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
 
     .debugPanelWrapper {
       position: absolute;
