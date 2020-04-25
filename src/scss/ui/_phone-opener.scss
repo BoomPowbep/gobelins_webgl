@@ -1,0 +1,23 @@
+#phone-opener{
+  position: fixed;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: none;
+
+  bottom: 0;
+  left: 0;
+
+  width: 100px;
+  height: 150px;
+  z-index: 10;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  &.locked{
+    left: -100px;
+    bottom: -150px;
+  }
+}
