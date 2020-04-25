@@ -5,6 +5,8 @@ import UiMaps from "./ui/ui-maps";
 import UiSettings from "./ui/ui-settings";
 import UiInstagram from "./ui/ui-instagram";
 import ConclusionManager from "./ui/conclusion/conclusion-manager";
+import UiCall from "./ui/ui-call";
+import UiPhone from "./ui/ui-phone";
 
 //All our data
 const DATA = {
@@ -19,8 +21,9 @@ const DATA = {
         DATA.conclusion_manager = new ConclusionManager();
         DATA.ui_manager.registerUi("notes", new UiNotes());
         DATA.ui_manager.registerUi("maps", new UiMaps());
-        DATA.ui_manager.registerUi("settings", new UiSettings());
         DATA.ui_manager.registerUi("instagram", new UiInstagram());
+        DATA.ui_manager.registerUi("call", new UiCall());
+        DATA.ui_manager.registerUi("phone", new UiPhone());
     }
 };
 

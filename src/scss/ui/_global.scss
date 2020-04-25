@@ -20,6 +20,12 @@ $app_height_name : 64px;
     width: 40px;
     height: 40px;
     cursor: pointer;
+    &_bottom{
+      top: unset;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 
   &.app_title-only {
@@ -42,6 +48,14 @@ $app_height_name : 64px;
   .app-content {
     height: calc(100% - #{$app_height_name});
     overflow: auto;
+    &_full{
+      height: 100%;
+    }
+    &_center{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .app-list{
@@ -96,6 +110,28 @@ $app_height_name : 64px;
       img{
         width: 100%;
       }
+    }
+  }
+
+  .app-icon-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .app-icon{
+    max-width: 80px;
+    background: pink;
+    cursor: pointer;
+    border-radius: 100%;
+    margin-bottom: 50px;
+    &:nth-child(odd){
+      margin-bottom: 0;
+      margin-top: 50px;
+    }
+    img{
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
     }
   }
 }
