@@ -23,6 +23,10 @@ class Timeline {
                         DATA.ui_manager.active(value.content);
                         break;
                     }
+                    case TIMELINE_TYPES.UI_HIDE : {
+                        DATA.ui_manager.get(value.content).hide();
+                        break;
+                    }
                     case TIMELINE_TYPES.CONCLUSION : {
                         DATA.conclusion_manager.show(value.content);
                         break;
