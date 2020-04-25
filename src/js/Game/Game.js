@@ -15,6 +15,7 @@ import Pickup from "../models/ui/pickup/pickup";
 
 import gsap from "gsap";
 import {toRad} from "./Util/Helpers";
+import TIMELINES from "../models/timeline/timeline-configs";
 
 
 export default class Game {
@@ -226,6 +227,7 @@ export default class Game {
                     cameraPosition: {x: 0, y: 40, z: 0},
                     fog: true,
                     onLoadDone: () => {
+                        TIMELINES.begin.play();
                         ready++;
                         GameBrain.sceneryManager.loadScenery("MapScenery");
                         checkElementsReady();
