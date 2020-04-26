@@ -7,6 +7,13 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.SOUND, "passant_0", 0),
         new TimelineItem(TIMELINE_TYPES.SOUND, "ringtone", 6000),
         new TimelineItem(TIMELINE_TYPES.UI, "call", 6500)
+    ]),
+    call: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.SOUND_STOP, "ringtone", 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND, "appel", 0),
+        new TimelineItem(TIMELINE_TYPES.UI_HIDE, "call", 19000),
+        new TimelineItem(TIMELINE_TYPES.PHONE, null, 19000),
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 19000),
     ])
 };
 
