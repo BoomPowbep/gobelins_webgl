@@ -5,11 +5,12 @@ import Mobile from "../ui/mobile/pickup";
 class Timeline {
     constructor(timeline_content) {
         this.timeline_content = timeline_content;
+        this.timeout_id = [];
     }
 
     play() {
         this.timeline_content.forEach(value => {
-            setTimeout(() => {
+            let timeout = setTimeout(() => {
                 switch (value.type) {
                     case TIMELINE_TYPES.FUNCTION : {
                         value.content();
@@ -17,6 +18,10 @@ class Timeline {
                     }
                     case TIMELINE_TYPES.SOUND : {
                         AudioManager.play(value.content);
+                        break;
+                    }
+                    case TIMELINE_TYPES.SOUND_STOP : {
+                        AudioManager.getAudio(value.content).pause();
                         break;
                     }
                     case TIMELINE_TYPES.UI : {
@@ -36,8 +41,16 @@ class Timeline {
                         break;
                     }
                 }
-            }, value.delay)
+            }, value.delay);
+
+            this.timeout_id.push(timeout);
         });
+    }
+
+    stop() {
+        this.timeout_id.forEach(value => {
+            clearTimeout(value);
+        })
     }
 
 }
