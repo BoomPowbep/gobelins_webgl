@@ -86,8 +86,9 @@ export default class Game {
 
                 const sceneriesIdentifiers = [
                     "ColleusesScenery",
+                    "StreetScenery",
                     "BistroScenery",
-                    "MapScenery"
+                    "MapScenery",
                 ];
 
                 sceneriesIdentifiers.forEach((identifier) => {
