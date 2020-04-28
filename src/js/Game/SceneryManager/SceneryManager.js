@@ -155,8 +155,6 @@ class SceneryManager {
         const scenery = this.getSceneryReferenceByIdentifier(sceneryIdentifier);
 
         if (scenery.loaded) {
-            // TODO Fade Out -> In
-
             // Set controls
             GameBrain.controlsManager.controls.dispose();
             if (scenery.orbitControls) {

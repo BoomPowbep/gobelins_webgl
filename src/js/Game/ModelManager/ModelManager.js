@@ -67,10 +67,9 @@ class ModelManager {
             const type = model.path.match(/\.[0-9a-z]+$/i)[0];
 
             let loader;
-            if(type === ".glb") {
+            if (type === ".glb") {
                 loader = new GLTFLoader();
-            }
-            else if(type === ".fbx") {
+            } else if (type === ".fbx") {
                 loader = new FBXLoader();
             }
 
@@ -90,10 +89,6 @@ class ModelManager {
                     target.rotation.x = model.initialRotation.x;
                     target.rotation.y = model.initialRotation.y;
                     target.rotation.z = model.initialRotation.z;
-
-                    // Shadow
-                    // object.scene.castShadow = true;
-                    // object.scene.receiveShadow = true;
 
                     // Add identifier
                     target.identifier = model.identifier;
