@@ -2,7 +2,6 @@ import DataManager from "./data/data-manager";
 import UiManager from "./ui/ui-manager";
 import UiNotes from "./ui/ui-notes";
 import UiMaps from "./ui/ui-maps";
-import UiSettings from "./ui/ui-settings";
 import UiInstagram from "./ui/ui-instagram";
 import ConclusionManager from "./ui/conclusion/conclusion-manager";
 import UiCall from "./ui/ui-call";

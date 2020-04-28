@@ -20,6 +20,12 @@ class Letter extends Pickable{
         return this.scene;
     }
 
+    pickedUp() {
+        super.pickedUp();
+        let event = new CustomEvent("letter", {detail: this});
+        document.dispatchEvent(event);
+    }
+
     getImage() {
         return "images/letters/test.png";
     }
