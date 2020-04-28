@@ -40,16 +40,32 @@ export default class ControlsManager {
      * Setup map controls
      * @param camera
      * @param rendererDom
+     * @param cameraLimits
      */
-    initMapControls(camera, rendererDom) {
+    initMapControls(camera, rendererDom,  cameraLimits = null) {
         this._controls = new MapControls(camera, rendererDom);
 
         this._controls.enableDamping = true;
         this._controls.enableRotate = false;
         this._controls.enableKeys = false;
         this._controls.enableZoom = false;
+        this._controls.enablePan = true;
         // this._controls.minDistance = 5;
         // this._controls.maxDistance = 10;
+
+        //Map Limit
+        if(cameraLimits != null) {
+            const minPan = new THREE.Vector3(cameraLimits.minX, -2, cameraLimits.minZ);
+            const maxPan = new THREE.Vector3(cameraLimits.maxX, 2, cameraLimits.maxZ);
+            let _v = new THREE.Vector3();
+
+            this._controls.addEventListener('change', e => {
+                _v.copy(this._controls.target);
+                this._controls.target.clamp(minPan, maxPan);
+                _v.sub(this._controls.target);
+                camera.position.sub(_v);
+            });
+        }
 
         camera.zoom = .05;
         camera.updateProjectionMatrix();

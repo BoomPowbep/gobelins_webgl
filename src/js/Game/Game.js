@@ -307,6 +307,12 @@ export default class Game {
                 position: {x: -30, y: 1, z: -21},
                 color: 0xF033FF,
             }),
+
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "map-interest-final",
+                position: {x: -6, y: 1, z: -21},
+                color: 0xFF0000,
+            }),
         ];
 
         models = [
@@ -329,12 +335,24 @@ export default class Game {
                     models: models,
                     lights: lights,
                     cameraPosition: {x: 50, y: 40, z: 50},
+                    cameraLimits: {minX: 2970, maxX: 3000, minZ: -30, maxZ: 0},
                     fog: false,
                     orbitControls: false,
                     onLoadDone: () => {
                         ready++;
                         GameBrain.sceneryManager.loadScenery("BistroScenery");
                         checkElementsReady();
+                    },
+                    onSceneActive: (scene) => {
+                        //show the final pointer on map only if everything is picked-up
+                        let item = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-final");
+                        item.visible = DATA.data_manager.letters.hasPickupAll();
+
+                        let item_interest2 = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-2");
+                        item_interest2.visible = DATA.data_manager.letters.hasPickupAllInScene(1);
+
+                        let item_interest3 = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-3");
+                        item_interest3.visible = DATA.data_manager.letters.hasPickupAllInScene(2);
                     }
                 }
             )

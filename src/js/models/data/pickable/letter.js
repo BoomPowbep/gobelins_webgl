@@ -6,18 +6,18 @@ import Pickable from "./pickable";
 class Letter extends Pickable{
     /**
      * @param {string} identifier
-     * @param {Vector3|null} position
+     * @param {number|null} scene
      */
-    constructor(identifier, position = null) {
+    constructor(identifier, scene = null) {
         super(identifier);
-        this.position = position;
+        this.scene = scene;
     }
 
     /**
-     * @return {Vector3|null}
+     * @return {number|null}
      */
-    getPosition() {
-        return this.position;
+    getScene() {
+        return this.scene;
     }
 
     getImage() {

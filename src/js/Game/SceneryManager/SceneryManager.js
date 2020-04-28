@@ -11,11 +11,13 @@ class Scenery {
                     models = [],
                     lights = [],
                     cameraPosition = {x: 0, y: 0, z: 0},
+                    cameraLimits = null,
                     fog = false,
                     canMove = true,
                     ambiantSoundIdentifier = "Default",
                     orbitControls = true,
-                    onLoadDone = () => null
+                    onLoadDone = () => null,
+                    onSceneActive = (scene) => null,
                 }) {
         this.identifier = identifier;
         this.basePosition = basePosition;
@@ -24,11 +26,13 @@ class Scenery {
         this.models = models;
         this.lights = lights;
         this.cameraPosition = cameraPosition;
+        this.cameraLimits = cameraLimits;
         this.fog = fog;
         this.canMove = canMove;
         this.ambiantSoundIdentifier = ambiantSoundIdentifier;
         this.orbitControls = orbitControls;
         this.onLoadDone = onLoadDone;
+        this.onSceneActive = onSceneActive;
         this.loaded = false;
     }
 }
@@ -161,7 +165,7 @@ class SceneryManager {
             } else {
                 // Map controls
                 GameBrain.cameraManager.setCameraMode(false);
-                GameBrain.controlsManager.initMapControls(GameBrain.cameraManager.camera, GameBrain.renderer.domElement);
+                GameBrain.controlsManager.initMapControls(GameBrain.cameraManager.camera, GameBrain.renderer.domElement, scenery.cameraLimits);
                 GameBrain.controlsManager.targetTo("MapEnvironment");
             }
 
@@ -180,7 +184,8 @@ class SceneryManager {
 
             console.log("CAMERA", GameBrain.cameraManager.camera);
 
-            // Play sound
+            // Play active scene event (scene argument to show or hide elements based on picked up or not)
+            scenery.onSceneActive(GameBrain.sceneManager.scene);
 
             // Start animations
         }
