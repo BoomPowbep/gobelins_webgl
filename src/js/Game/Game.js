@@ -329,6 +329,7 @@ export default class Game {
                     models: models,
                     lights: lights,
                     cameraPosition: {x: 50, y: 40, z: 50},
+                    cameraLimits: {minX: 2970, maxX: 3000, minZ: -30, maxZ: 0},
                     fog: false,
                     orbitControls: false,
                     onLoadDone: () => {

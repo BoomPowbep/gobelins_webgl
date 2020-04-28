@@ -11,6 +11,7 @@ class Scenery {
                     models = [],
                     lights = [],
                     cameraPosition = {x: 0, y: 0, z: 0},
+                    cameraLimits = null,
                     fog = false,
                     canMove = true,
                     ambiantSoundIdentifier = "Default",
@@ -24,6 +25,7 @@ class Scenery {
         this.models = models;
         this.lights = lights;
         this.cameraPosition = cameraPosition;
+        this.cameraLimits = cameraLimits;
         this.fog = fog;
         this.canMove = canMove;
         this.ambiantSoundIdentifier = ambiantSoundIdentifier;
@@ -161,7 +163,7 @@ class SceneryManager {
             } else {
                 // Map controls
                 GameBrain.cameraManager.setCameraMode(false);
-                GameBrain.controlsManager.initMapControls(GameBrain.cameraManager.camera, GameBrain.renderer.domElement);
+                GameBrain.controlsManager.initMapControls(GameBrain.cameraManager.camera, GameBrain.renderer.domElement, scenery.cameraLimits);
                 GameBrain.controlsManager.targetTo("MapEnvironment");
             }
 
