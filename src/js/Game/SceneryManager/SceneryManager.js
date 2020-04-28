@@ -182,10 +182,10 @@ class SceneryManager {
                 scenery.cameraPosition.z + scenery.basePosition.z
             );
 
-            console.log("CAMERA", GameBrain.cameraManager.camera);
-
             // Play active scene event (scene argument to show or hide elements based on picked up or not)
             scenery.onSceneActive(GameBrain.sceneManager.scene);
+
+            // Play sound
 
             // Start animations
         }

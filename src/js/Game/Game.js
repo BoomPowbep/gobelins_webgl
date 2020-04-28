@@ -173,20 +173,10 @@ export default class Game {
 
         let models = [
             new Model({
-                identifier: 'StreetGround',
-                path: 'models/Street/Street.glb',
+                identifier: 'StreetEnvironment',
+                path: 'models/FBX/Street.fbx',
                 initialScaleFactor: streetScaleFactor
             }),
-            new Model({
-                identifier: 'StreetCollage',
-                path: 'models/Street/Collage.glb',
-                initialScaleFactor: streetScaleFactor
-            }),
-            // new Model({
-            //     identifier: 'StreetBuildings',
-            //     path: 'models/Street/Builings.glb',
-            //     initialScaleFactor: streetScaleFactor
-            // }),
         ];
 
         let lights = [

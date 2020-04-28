@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
+import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 import {Vector3} from "three";
 
 class Model {
@@ -63,32 +64,41 @@ class ModelManager {
 
         modelsArray.map(model => {
 
-            // TODO handle more file types
-            const loader = new GLTFLoader();
+            const type = model.path.match(/\.[0-9a-z]+$/i)[0];
+
+            let loader;
+            if(type === ".glb") {
+                loader = new GLTFLoader();
+            }
+            else if(type === ".fbx") {
+                loader = new FBXLoader();
+            }
 
             loader.load(model.path,
                 // On loaded
                 (object) => {
                     console.log("Loaded model from " + model.path, object);
 
-                    object.scene.scale.set(model.initialScaleFactor, model.initialScaleFactor, model.initialScaleFactor);
+                    const target = (type === ".glb") ? object.scene : object;
 
-                    object.scene.position.x = model.initialPosition.x;
-                    object.scene.position.y = model.initialPosition.y;
-                    object.scene.position.z = model.initialPosition.z;
+                    target.scale.set(model.initialScaleFactor, model.initialScaleFactor, model.initialScaleFactor);
 
-                    object.scene.rotation.x = model.initialRotation.x;
-                    object.scene.rotation.y = model.initialRotation.y;
-                    object.scene.rotation.z = model.initialRotation.z;
+                    target.position.x = model.initialPosition.x;
+                    target.position.y = model.initialPosition.y;
+                    target.position.z = model.initialPosition.z;
+
+                    target.rotation.x = model.initialRotation.x;
+                    target.rotation.y = model.initialRotation.y;
+                    target.rotation.z = model.initialRotation.z;
 
                     // Shadow
                     // object.scene.castShadow = true;
                     // object.scene.receiveShadow = true;
 
                     // Add identifier
-                    object.scene.identifier = model.identifier;
+                    target.identifier = model.identifier;
 
-                    this._registerModel(object.scene);
+                    this._registerModel(target);
 
                     loadedCount++;
 
