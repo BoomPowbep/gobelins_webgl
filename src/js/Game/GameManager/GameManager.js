@@ -12,7 +12,6 @@ import DataManager from "../../models/data/data-manager";
 import UiManager from "../../models/ui/ui-manager";
 import UiNotes from "../../models/ui/ui-notes";
 import UiMaps from "../../models/ui/ui-maps";
-import UiSettings from "../../models/ui/ui-settings";
 import UiInstagram from "../../models/ui/ui-instagram";
 import * as dat from "dat.gui";
 
@@ -68,15 +67,7 @@ class GameManager {
         this.lightingManager = new LightingManager(this.debugMode);
         this.sceneryManager = new SceneryManager(this.debugMode);
 
-        document.addEventListener("sound_ready", function (e) {
-            //When sounds are ready, we can build our data manager
-            DATA.data_manager = new DataManager();
-            DATA.ui_manager = new UiManager();
-            DATA.ui_manager.registerUi("notes", new UiNotes());
-            DATA.ui_manager.registerUi("maps", new UiMaps());
-            DATA.ui_manager.registerUi("settings", new UiSettings());
-            DATA.ui_manager.registerUi("instagram", new UiInstagram());
-            //DATA.ui_manager.get("notes").show();
+        document.addEventListener("sound_ready", function (e) {  ;
 
             //Debug pickup
             DATA.data_manager.get("instagram", "post-1").pickedUp();

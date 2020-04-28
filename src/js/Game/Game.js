@@ -57,6 +57,16 @@ export default class Game {
 
         let cover = document.getElementById("cover");
 
+        document.addEventListener("letter", (e) => {
+            let letter = e.detail;
+            let letters = DATA.data_manager.letters;
+
+            AudioManager.play("paper");
+            Pickup.show(`Vous avez ramassé 1 lettre manquante. Encore ${letters.count() - letters.countPicked()}`, letter.identifier);
+
+            if(letters.hasPickupAllInScene(letter.scene))
+                DATA.conclusion_manager.show(`scene-${letter.scene}`);
+        });
         document.addEventListener("sound_ready", (e) => {
             //When sounds are ready, we can build our data manager
 
@@ -66,7 +76,6 @@ export default class Game {
 
             //Debug pickup
             DATA.data_manager.get("instagram", "post-1").pickedUp();
-            Pickup.show("Vous avez ramassé 1 lettre manquante. Encore 10.", "letter-1");
 
             if (this._debugMode) {
 
@@ -439,8 +448,6 @@ export default class Game {
             let letter = DATA.data_manager.get("letter", identifier);
             if (letter != null) {
                 letter.pickedUp();
-                AudioManager.play("paper");
-                Pickup.show("Vous avez ramassé 1 lettre manquante. Encore 10.", identifier)
 
                 // Delete object from scene
                 GameBrain.sceneManager.scene.remove(GameBrain.geometryManager.getGeometryReferenceByIdentifier(identifier));

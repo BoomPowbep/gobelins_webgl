@@ -8,6 +8,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: fixed;
+  z-index: 1;
   &.active{
     transform: translateY(0);
     opacity: 1;
