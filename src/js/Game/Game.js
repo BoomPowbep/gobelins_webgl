@@ -142,7 +142,6 @@ export default class Game {
     init() {
 
         // Create sceneries
-        // FIXME make it dynamic
         this.initSceneries();
 
         /* -- Load first scenery -- */
@@ -183,11 +182,11 @@ export default class Game {
                 path: 'models/Street/Collage.glb',
                 initialScaleFactor: streetScaleFactor
             }),
-            new Model({
-                identifier: 'StreetBuildings',
-                path: 'models/Street/Builings.glb',
-                initialScaleFactor: streetScaleFactor
-            }),
+            // new Model({
+            //     identifier: 'StreetBuildings',
+            //     path: 'models/Street/Builings.glb',
+            //     initialScaleFactor: streetScaleFactor
+            // }),
         ];
 
         let lights = [
@@ -290,6 +289,24 @@ export default class Game {
         // -- Scenery 3 - Map
         geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "MapSkybox"), // Skybox
+
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "map-interest-1",
+                position: {x: -12, y: 1, z: 0},
+                color: 0xF033FF,
+            }),
+
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "map-interest-2",
+                position: {x: -3, y: 1, z: 8},
+                color: 0xF033FF,
+            }),
+
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "map-interest-3",
+                position: {x: -30, y: 1, z: -21},
+                color: 0xF033FF,
+            }),
         ];
 
         models = [
@@ -324,43 +341,43 @@ export default class Game {
         );
 
         // -- Scenery 4 - Bistro
-        // geometries = [
-        //     GameBrain.geometryManager.createColorSkybox(0x28BDF5, 1500, "BistroSkybox"), // Skybox
-        // ];
-        //
-        // models = [
-        //     new Model({identifier: 'BistroEnvironment', path: 'models/bar.glb', initialScaleFactor: 1, initialPosition: {x: 0, y: 0, z: -1000}}),
-        // ];
-        //
-        // lights = [
-        //     // GameBrain.lightingManager.createSpotLight({
-        //     //     identifier: "BistroSpotLight",
-        //     //     angle: 0,
-        //     //     distance: 500,
-        //     // })
-        // ];
-        //
-        // GameBrain.sceneryManager.addScenery(
-        //     new Scenery({
-        //             identifier: "BistroScenery",
-        //             basePosition: {x: 0, y: 0, z: 3000},
-        //             geometries: geometries,
-        //             models: models,
-        //             lights: lights,
-        //             cameraPosition: {x: 0, y: 40, z: 0},
-        //             fog: false,
-        //             onLoadDone: () => {
-        //                 ready++;
-        //                 DATA.data_manager.get("instagram", "post-1").pickedUp();
-        //                 checkElementsReady();
-        //             }
-        //         }
-        //     )
-        // );
+        geometries = [
+            GameBrain.geometryManager.createColorSkybox(0x28BDF5, 1500, "BistroSkybox"), // Skybox
+        ];
+
+        models = [
+            new Model({identifier: 'BistroEnvironment', path: 'models/bar.glb', initialScaleFactor: 1}),
+        ];
+
+        lights = [
+            // GameBrain.lightingManager.createSpotLight({
+            //     identifier: "BistroSpotLight",
+            //     angle: 0,
+            //     distance: 500,
+            // })
+        ];
+
+        GameBrain.sceneryManager.addScenery(
+            new Scenery({
+                    identifier: "BistroScenery",
+                    basePosition: {x: 0, y: 0, z: 3000},
+                    geometries: geometries,
+                    models: models,
+                    lights: lights,
+                    cameraPosition: {x: 0, y: 40, z: 0},
+                    fog: false,
+                    onLoadDone: () => {
+                        ready++;
+                        DATA.data_manager.get("instagram", "post-1").pickedUp();
+                        checkElementsReady();
+                    }
+                }
+            )
+        );
 
         function checkElementsReady() {
-            if (ready === 3) {
-                GameBrain.sceneryManager.setActiveScenery("StreetScenery");
+            if (ready === 4) {
+                GameBrain.sceneryManager.setActiveScenery("MapScenery");
                 gsap.to("#loading", {
                     duration: 0,
                     autoAlpha: 0
@@ -412,8 +429,17 @@ export default class Game {
             }
         }
 
-        //specific cases
+        // Map
         switch (identifier) {
+            case "map-interest-1":
+                GameBrain.sceneryManager.setActiveScenery("ColleusesScenery");
+                break;
+            case "map-interest-2":
+                GameBrain.sceneryManager.setActiveScenery("StreetScenery");
+                break;
+            case "map-interest-3":
+                GameBrain.sceneryManager.setActiveScenery("BistroScenery");
+                break;
             default:
                 break;
         }
