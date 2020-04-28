@@ -23,6 +23,7 @@ export default class LightingManager {
     /**
      * Create a spot light.
      * https://threejs.org/examples/#webgl_lights_spotlight
+     * @param identifier
      * @param color
      * @param intensity
      * @param position
@@ -54,13 +55,6 @@ export default class LightingManager {
         spotLight.distance = distance;
         spotLight.penumbra = penumbra;
         spotLight.decay = decay;
-
-        // spotLight.castShadow = true;
-        // spotLight.shadowCameraVisible = true;
-
-        // spotLight.shadow.camera.near = .01;
-        // spotLight.shadow.camera.far = 4000;
-        // spotLight.shadow.camera.fov = 30;
 
         this._registerLight(spotLight);
 

@@ -30,6 +30,7 @@ export default class SceneManager {
                     thing.target.identifier = thing.identifier + "-target";
                     this._scene.add(thing.target);
                     // FIXME ca marche pas ca
+                    // https://threejs.org/docs/#api/en/lights/SpotLight.target
                     thing.target.position.set(thing.position.x, 0, thing.position.z);
                 }
             }

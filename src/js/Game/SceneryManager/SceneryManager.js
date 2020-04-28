@@ -178,6 +178,8 @@ class SceneryManager {
                 scenery.cameraPosition.z + scenery.basePosition.z
             );
 
+            console.log("CAMERA", GameBrain.cameraManager.camera);
+
             // Play sound
 
             // Start animations

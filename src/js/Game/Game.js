@@ -55,7 +55,6 @@ export default class Game {
         this._raycasterManager = new RaycasterManager(this._debugMode);
 
 
-
         let cover = document.getElementById("cover");
 
         document.addEventListener("sound_ready", (e) => {
@@ -69,7 +68,7 @@ export default class Game {
             DATA.data_manager.get("instagram", "post-1").pickedUp();
             Pickup.show("Vous avez ramassé 1 lettre manquante. Encore 10.", "letter-1");
 
-            if(this._debugMode) {
+            if (this._debugMode) {
 
 
                 Object.entries(DATA.ui_manager.ui_list).forEach(value => GameBrain.gui.add({
@@ -147,7 +146,7 @@ export default class Game {
         this.initSceneries();
 
         /* -- Load first scenery -- */
-        GameBrain.sceneryManager.loadScenery("ColleusesScenery");
+        GameBrain.sceneryManager.loadScenery("StreetScenery");
 
         console.log("SCENE", GameBrain.sceneManager.scene);
 
@@ -166,8 +165,60 @@ export default class Game {
 
         // -- SCENERIES
 
-        // -- Scenery 3 - Colleuses
+        // -- Scenery 2 - Rue
         let geometries = [
+            GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "StreetSkybox"), // Skybox
+        ];
+
+        const streetScaleFactor = 1;
+
+        let models = [
+            new Model({
+                identifier: 'StreetGround',
+                path: 'models/Street/Street.glb',
+                initialScaleFactor: streetScaleFactor
+            }),
+            new Model({
+                identifier: 'StreetCollage',
+                path: 'models/Street/Collage.glb',
+                initialScaleFactor: streetScaleFactor
+            }),
+            new Model({
+                identifier: 'StreetBuildings',
+                path: 'models/Street/Builings.glb',
+                initialScaleFactor: streetScaleFactor
+            }),
+        ];
+
+        let lights = [
+            // GameBrain.lightingManager.createSpotLight({
+            //     identifier: "StreetSpotLight",
+            //     position: {x: 50, y: 150, z: -1000},
+            //     intensity: 3
+            // })
+        ];
+
+        GameBrain.sceneryManager.addScenery(
+            new Scenery({
+                    identifier: "StreetScenery",
+                    basePosition: {x: 0, y: 0, z: 0},
+                    geometries: geometries,
+                    models: models,
+                    lights: lights,
+                    cameraPosition: {x: 0, y: 200, z: 0},
+                    fog: false,
+                    onLoadDone: () => {
+                        // TIMELINES.begin.play();
+                        ready++;
+                        GameBrain.sceneryManager.loadScenery("ColleusesScenery");
+                        checkElementsReady();
+                    }
+                }
+            )
+        );
+
+        // -- Scenery 3 - Colleuses
+        geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "ColleusesSkybox"), // Skybox
 
             // Letters
@@ -197,7 +248,7 @@ export default class Game {
             }),
         ];
 
-        let models = [
+        models = [
             new Model({
                 identifier: 'ColleusesEnvironment',
                 path: 'models/colleuses.glb',
@@ -210,9 +261,9 @@ export default class Game {
             }),
         ];
 
-        let lights = [
+        lights = [
             // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "StreetSpotLight",
+            //     identifier: "ColleusesSpotLight",
             //     position: {x: 50, y: 150, z: -1000},
             //     intensity: 3
             // })
@@ -221,13 +272,13 @@ export default class Game {
         GameBrain.sceneryManager.addScenery(
             new Scenery({
                     identifier: "ColleusesScenery",
+                    basePosition: {x: 0, y: 3000, z: 0},
                     geometries: geometries,
                     models: models,
                     lights: lights,
-                    cameraPosition: {x: 0, y: 40, z: 0},
+                    cameraPosition: {x: 0, y: -25, z: 0},
                     fog: true,
                     onLoadDone: () => {
-                        TIMELINES.begin.play();
                         ready++;
                         GameBrain.sceneryManager.loadScenery("MapScenery");
                         checkElementsReady();
@@ -308,8 +359,8 @@ export default class Game {
         // );
 
         function checkElementsReady() {
-            if(ready === 2) {
-                GameBrain.sceneryManager.setActiveScenery("ColleusesScenery");
+            if (ready === 3) {
+                GameBrain.sceneryManager.setActiveScenery("StreetScenery");
                 gsap.to("#loading", {
                     duration: 0,
                     autoAlpha: 0
