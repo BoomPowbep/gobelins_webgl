@@ -92,6 +92,13 @@ export default class Game {
                     }
                 }, 'add').name('conc:' + value[1].id));
 
+                (DATA.data_manager.letters.items).forEach(value => GameBrain.gui.add({
+                    add: () => {
+                        let el = DATA.data_manager.get('letter', value.identifier);
+                        el.pickedUp();
+                    }
+                }, 'add').name('letter:' + value.identifier));
+
 
                 const sceneriesIdentifiers = [
                     "ColleusesScenery",
