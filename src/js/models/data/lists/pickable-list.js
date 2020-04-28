@@ -32,6 +32,10 @@ class PickableList {
         return this.items.find(value => !value.picked) === undefined;
     }
 
+    hasPickupAllInScene(scene_id) {
+        return this.items.filter(value => value.scene === scene_id && !value.picked).length === 0;
+    }
+
     count() {
         return this.items.length;
     }

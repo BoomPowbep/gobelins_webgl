@@ -16,7 +16,8 @@ class Scenery {
                     canMove = true,
                     ambiantSoundIdentifier = "Default",
                     orbitControls = true,
-                    onLoadDone = () => null
+                    onLoadDone = () => null,
+                    onSceneActive = (scene) => null,
                 }) {
         this.identifier = identifier;
         this.basePosition = basePosition;
@@ -31,6 +32,7 @@ class Scenery {
         this.ambiantSoundIdentifier = ambiantSoundIdentifier;
         this.orbitControls = orbitControls;
         this.onLoadDone = onLoadDone;
+        this.onSceneActive = onSceneActive;
         this.loaded = false;
     }
 }
@@ -182,7 +184,8 @@ class SceneryManager {
 
             console.log("CAMERA", GameBrain.cameraManager.camera);
 
-            // Play sound
+            // Play active scene event (scene argument to show or hide elements based on picked up or not)
+            scenery.onSceneActive(GameBrain.sceneManager.scene);
 
             // Start animations
         }

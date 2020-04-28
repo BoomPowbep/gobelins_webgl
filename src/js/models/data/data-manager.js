@@ -55,7 +55,7 @@ class DataManager {
      */
     initLetters() {
         Object.entries(LETTERS_VAR).forEach(value => {
-            this.letters.add(new Letter(value[0]));
+            this.letters.add(new Letter(value[0], value[1].scene));
         })
     }
 

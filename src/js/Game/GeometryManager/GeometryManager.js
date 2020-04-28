@@ -130,6 +130,7 @@ export default class GeometryManager {
      * @param color
      * @param castShadow
      * @param doubleSided
+     * @param visibility
      * @returns {Mesh}
      */
     createBasicShape({
@@ -138,7 +139,8 @@ export default class GeometryManager {
                          position = {x: 0, y: 0, z: 0},
                          color = 0x00ff00,
                          castShadow = false,
-                         doubleSided = false
+                         doubleSided = false,
+                         visibility = true
                      }) {
         let geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
         let material = new THREE.MeshBasicMaterial({color: color});
@@ -146,6 +148,7 @@ export default class GeometryManager {
         cube.position.x = position.x;
         cube.position.y = position.y;
         cube.position.z = position.z;
+        cube.visible = visibility;
         cube.identifier = identifier;
 
         cube.castShadow = castShadow;
