@@ -64,8 +64,9 @@ export default class Game {
             AudioManager.play("paper");
             Pickup.show(`Vous avez ramassé 1 lettre manquante. Encore ${letters.count() - letters.countPicked()}`, letter.identifier);
 
-            if(letters.hasPickupAllInScene(letter.scene))
-                DATA.conclusion_manager.show(`scene-${letter.scene}`);
+            if(letters.hasPickupAllInScene(letter.scene)) {
+                //todo : ajouter une pastille de notification sur la map et le téléphone
+            }
         });
         document.addEventListener("sound_ready", (e) => {
             //When sounds are ready, we can build our data manager
@@ -288,6 +289,9 @@ export default class Game {
                         ready++;
                         GameBrain.sceneryManager.loadScenery("MapScenery");
                         checkElementsReady();
+                    },
+                    onSceneActive : (scene) => {
+                        DATA.conclusion_manager.show("scene-1")
                     }
                 }
             )
@@ -395,6 +399,9 @@ export default class Game {
                         ready++;
                         DATA.data_manager.get("instagram", "post-1").pickedUp();
                         checkElementsReady();
+                    },
+                    onSceneActive : (scene) => {
+                        DATA.conclusion_manager.show("scene-2")
                     }
                 }
             )
