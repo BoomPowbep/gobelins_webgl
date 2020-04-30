@@ -415,15 +415,14 @@ export default class Game {
             let total =  GameBrain.sceneryManager._sceneries.length;
 
             if (ready === total) {
-                // GameBrain.sceneryManager.startSceneryTransition("StreetScenery", duration);
-                GameBrain.sceneryManager.startSceneryTransition("ColleusesScenery", duration);
+                GameBrain.sceneryManager.startSceneryTransition("StreetScenery", duration);
                 gsap.to("#loading", {
                     duration: duration/2,
                     autoAlpha: 0
                 });
 
                 setTimeout(() => {
-                    // TIMELINES.begin.play();
+                    TIMELINES.begin.play();
                 }, 3000);
             }
             else {
