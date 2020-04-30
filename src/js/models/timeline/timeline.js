@@ -1,6 +1,8 @@
 import TIMELINE_TYPES from "./timeline-types";
 import AudioManager from "../audio/audio-manager";
 import Mobile from "../ui/mobile/pickup";
+import Message from "../ui/mobile/message";
+import Notification from "../ui/mobile/notification";
 
 class Timeline {
     constructor(timeline_content) {
@@ -34,6 +36,18 @@ class Timeline {
                     }
                     case TIMELINE_TYPES.CONCLUSION : {
                         DATA.conclusion_manager.show(value.content);
+                        break;
+                    }
+                    case TIMELINE_TYPES.NOTIFICATION : {
+                        Notification.show(value.content);
+                        break
+                    }
+                    case TIMELINE_TYPES.NOTIFICATION_HIDE : {
+                        Notification.hide(value.content);
+                        break
+                    }
+                    case TIMELINE_TYPES.MESSAGE : {
+                        Message.message(value.content);
                         break;
                     }
                     case TIMELINE_TYPES.PHONE : {

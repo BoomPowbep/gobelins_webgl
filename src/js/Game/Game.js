@@ -216,6 +216,9 @@ export default class Game {
                         ready++;
                         GameBrain.sceneryManager.loadScenery("ColleusesScenery");
                         checkElementsReady();
+                    },
+                    onSceneActive : (scene) => {
+
                     }
                 }
             )

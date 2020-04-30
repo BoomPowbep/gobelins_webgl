@@ -14,6 +14,7 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.UI_HIDE, "call", 19000),
         new TimelineItem(TIMELINE_TYPES.PHONE, null, 19000),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 19000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 19000),
     ])
 };
 

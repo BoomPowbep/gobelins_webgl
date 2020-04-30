@@ -124,6 +124,7 @@ $app_height_name : 64px;
     cursor: pointer;
     border-radius: 100%;
     margin-bottom: 50px;
+    position: relative;
     &:nth-child(odd){
       margin-bottom: 0;
       margin-top: 50px;

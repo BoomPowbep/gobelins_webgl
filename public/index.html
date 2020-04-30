@@ -14,7 +14,12 @@
 <body>
 
 <div id="hud">
-    <div id="phone-opener" class="locked" style="background-image: url('images/phone.png')"></div>
+    <div id="phone-opener" data-open="phone" class="locked" style="background-image: url('images/phone.png')">
+        <div class="notification" ></div>
+    </div>
+
+    <div id="message"></div>
+
     <div id="hours"></div>
 </div>
 
@@ -131,12 +136,15 @@
             <div class="app-icon-group">
                 <div class="app-icon" data-open="notes">
                     <img src="images/app/folder.svg">
+                    <div class="notification"></div>
                 </div>
                 <div class="app-icon" data-open="maps">
                     <img src="images/app/map.svg">
+                    <div class="notification"></div>
                 </div>
                 <div class="app-icon" data-open="instagram">
                     <img src="images/app/instagram.svg">
+                    <div class="notification"></div>
                 </div>
 
             </div>
