@@ -67,7 +67,7 @@ class GameManager {
         this.lightingManager = new LightingManager(this.debugMode);
         this.sceneryManager = new SceneryManager(this.debugMode);
 
-        document.addEventListener("sound_ready", function (e) {  ;
+        document.addEventListener("sound_ready", function (e) {
 
             //Debug pickup
             DATA.data_manager.get("instagram", "post-1").pickedUp();

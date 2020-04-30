@@ -1,4 +1,5 @@
 import Ui from "./ui";
+import GameBrain from "../../Game/GameManager/GameManager";
 
 class UiPhone extends Ui {
     constructor() {
@@ -14,7 +15,12 @@ class UiPhone extends Ui {
             value.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.hide();
-                DATA.ui_manager.active(value.getAttribute("data-open"));
+                if(value.getAttribute("data-open") === "maps") {
+                    GameBrain.sceneryManager.startSceneryTransition("MapScenery");
+                }
+                else {
+                    DATA.ui_manager.active(value.getAttribute("data-open"));
+                }
             })
         })
     }

@@ -38,6 +38,9 @@ class Timeline {
                     }
                     case TIMELINE_TYPES.PHONE : {
                         Mobile.unlock();
+                        document.querySelector("#phone-opener").addEventListener("touchend", () => {
+                            DATA.ui_manager.get("phone").show()
+                        });
                         break;
                     }
                 }

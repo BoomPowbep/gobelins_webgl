@@ -93,6 +93,8 @@ class ModelManager {
                     // Add identifier
                     target.identifier = model.identifier;
 
+                    this._enableBackfaceCulling(target);
+
                     this._registerModel(target);
 
                     loadedCount++;
@@ -104,15 +106,24 @@ class ModelManager {
                 (status) => {
                     let progress = [status.loaded, status.total];
                     // Progress bar...
-                    // TODO Utiliser un singleton pour l'affichage du chargement ?
                 },
                 // On error
                 (error) => {
                     console.error("Object loading error: ", error);
-                    // FIXME on charge l'expérience même si un objet a sauté ou pas ?
                 });
         });
 
+    }
+
+    _enableBackfaceCulling(target) {
+        target.traverse((obj) => {
+            if(obj.isMesh) {
+                obj.material.side = THREE.DoubleSide;
+            }
+            else if(obj.isGroup) {
+                // this._enableBackfaceCulling(obj);
+            }
+        });
     }
 
     /**

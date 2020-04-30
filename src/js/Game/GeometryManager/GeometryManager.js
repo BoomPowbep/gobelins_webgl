@@ -26,7 +26,7 @@ export default class GeometryManager {
      * @private
      */
     _createDebugElements() {
-        let axesHelper = new THREE.AxesHelper(2);
+        let axesHelper = new THREE.AxesHelper(50);
         this._registerGeometry(axesHelper);
 
         // let gridHelper = new THREE.GridHelper(50, 50, 0xFFFFFF, 0xFFFFFF);

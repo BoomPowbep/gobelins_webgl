@@ -51,6 +51,8 @@ class SceneryManager {
         this._debugMode = isDebugMode;
 
         this._sceneries = [];
+
+        this.activeScenery = "None";
     };
 
     // ------------------------------------------------------------------- MAKE
@@ -91,6 +93,10 @@ class SceneryManager {
                 light.position.x += queued.basePosition.x;
                 light.position.y += queued.basePosition.y;
                 light.position.z += queued.basePosition.z;
+
+                light.target.position.x += queued.basePosition.x;
+                light.target.position.y += queued.basePosition.y;
+                light.target.position.z += queued.basePosition.z;
 
                 if(this._debugMode) {
                     let spotLightHelper = new THREE.SpotLightHelper(light);
@@ -154,6 +160,8 @@ class SceneryManager {
     setActiveScenery(sceneryIdentifier) {
         const scenery = this.getSceneryReferenceByIdentifier(sceneryIdentifier);
 
+        this.activeScenery = sceneryIdentifier;
+
         if (scenery.loaded) {
             // Set controls
             GameBrain.controlsManager.controls.dispose();
@@ -170,7 +178,7 @@ class SceneryManager {
             // Set fog
             GameBrain.sceneManager.scene.fog = null;
             if (scenery.fog) {
-                GameBrain.sceneManager.scene.fog = new THREE.FogExp2(0x000000, 0.0025);
+                GameBrain.sceneManager.scene.fog = new THREE.FogExp2(0x000000, 0.0015);
             }
 
             // Set camera

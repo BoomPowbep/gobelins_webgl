@@ -107,7 +107,7 @@ export default class Game {
                     "MapScenery",
                 ];
 
-                sceneriesIdentifiers.forEach((identifier) => {
+                sceneriesIdentifiers.map((identifier) => {
                     GameBrain.gui.add({
                         tp: () => {
                             GameBrain.sceneryManager.startSceneryTransition(identifier);
@@ -186,13 +186,11 @@ export default class Game {
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "StreetSkybox"), // Skybox
         ];
 
-        const streetScaleFactor = 1;
-
         let models = [
             new Model({
                 identifier: 'StreetEnvironment',
                 path: 'models/FBX/Street.fbx',
-                initialScaleFactor: streetScaleFactor
+                initialScaleFactor: 1
             }),
         ];
 
@@ -211,10 +209,9 @@ export default class Game {
                     geometries: geometries,
                     models: models,
                     lights: lights,
-                    cameraPosition: {x: 0, y: 200, z: 0},
-                    fog: false,
+                    cameraPosition: {x: 100, y: 70, z: 260},
+                    fog: true,
                     onLoadDone: () => {
-                        // TIMELINES.begin.play();
                         ready++;
                         GameBrain.sceneryManager.loadScenery("ColleusesScenery");
                         checkElementsReady();
@@ -230,25 +227,25 @@ export default class Game {
             // Letters
             GameBrain.geometryManager.createBasicShape({
                 identifier: "letter-1",
-                position: {x: 0, y: 15, z: -80},
+                position: {x: 0, y: 0, z: -120},
                 size: {x: 30, y: 30, z: 30},
                 color: 0x28BDF5,
             }),
             GameBrain.geometryManager.createBasicShape({
                 identifier: "letter-2",
-                position: {x: 0, y: 15, z: 80},
+                position: {x: 0, y: 0, z: 120},
                 size: {x: 30, y: 30, z: 30},
                 color: 0x28BDC5,
             }),
             GameBrain.geometryManager.createBasicShape({
                 identifier: "letter-3",
-                position: {x: -80, y: 15, z: 0},
+                position: {x: -120, y: 0, z: 0},
                 size: {x: 30, y: 30, z: 30},
                 color: 0x28FDF5,
             }),
             GameBrain.geometryManager.createBasicShape({
                 identifier: "letter-4",
-                position: {x: 80, y: 15, z: 0},
+                position: {x: 120, y: 0, z: 0},
                 size: {x: 30, y: 30, z: 30},
                 color: 0x2FFFF5,
             }),
@@ -257,7 +254,7 @@ export default class Game {
         models = [
             new Model({
                 identifier: 'ColleusesEnvironment',
-                path: 'models/colleuses.glb',
+                path: 'models/FBX/Colleuses.fbx',
                 initialScaleFactor: 1,
                 initialRotation: {
                     x: 0,
@@ -268,11 +265,14 @@ export default class Game {
         ];
 
         lights = [
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "ColleusesSpotLight",
-            //     position: {x: 50, y: 150, z: -1000},
-            //     intensity: 3
-            // })
+            GameBrain.lightingManager.createSpotLight({
+                identifier: "ColleusesSpotLight",
+                position: {x: 80, y: 35, z: -190},
+                intensity: 10,
+                angle: .2,
+                distance: 200
+
+            })
         ];
 
         GameBrain.sceneryManager.addScenery(
@@ -323,7 +323,7 @@ export default class Game {
         ];
 
         models = [
-            new Model({identifier: 'MapEnvironment', path: 'models/map.glb', initialScaleFactor: .005}),
+            new Model({identifier: 'MapEnvironment', path: 'models/FBX/Map.fbx', initialScaleFactor: .005}),
         ];
 
         lights = [
@@ -371,7 +371,7 @@ export default class Game {
         ];
 
         models = [
-            new Model({identifier: 'BistroEnvironment', path: 'models/bar.glb', initialScaleFactor: 1}),
+            new Model({identifier: 'BistroEnvironment', path: 'models/FBX/Bar.fbx', initialScaleFactor: 1}),
         ];
 
         lights = [
@@ -402,11 +402,17 @@ export default class Game {
 
         function checkElementsReady() {
             if (ready === 4) {
-                GameBrain.sceneryManager.setActiveScenery("MapScenery");
+                const duration = 1;
+                // GameBrain.sceneryManager.startSceneryTransition("StreetScenery", duration);
+                GameBrain.sceneryManager.startSceneryTransition("ColleusesScenery", duration);
                 gsap.to("#loading", {
-                    duration: 0,
+                    duration: duration/2,
                     autoAlpha: 0
                 });
+
+                setTimeout(() => {
+                    // TIMELINES.begin.play();
+                }, 3000);
             }
         }
     }
@@ -455,13 +461,13 @@ export default class Game {
         // Map
         switch (identifier) {
             case "map-interest-1":
-                GameBrain.sceneryManager.setActiveScenery("ColleusesScenery");
+                GameBrain.sceneryManager.startSceneryTransition("StreetScenery");
                 break;
             case "map-interest-2":
-                GameBrain.sceneryManager.setActiveScenery("StreetScenery");
+                GameBrain.sceneryManager.startSceneryTransition("ColleusesScenery");
                 break;
             case "map-interest-3":
-                GameBrain.sceneryManager.setActiveScenery("BistroScenery");
+                GameBrain.sceneryManager.startSceneryTransition("BistroScenery");
                 break;
             default:
                 break;

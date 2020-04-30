@@ -5,8 +5,8 @@ import Timeline from "./timeline";
 const TIMELINES = {
     begin : new Timeline([
         new TimelineItem(TIMELINE_TYPES.SOUND, "passant_0", 0),
-        new TimelineItem(TIMELINE_TYPES.SOUND, "ringtone", 6000),
-        new TimelineItem(TIMELINE_TYPES.UI, "call", 6500)
+        new TimelineItem(TIMELINE_TYPES.SOUND, "ringtone", 8000),
+        new TimelineItem(TIMELINE_TYPES.UI, "call", 8500)
     ]),
     call: new Timeline([
         new TimelineItem(TIMELINE_TYPES.SOUND_STOP, "ringtone", 0),
