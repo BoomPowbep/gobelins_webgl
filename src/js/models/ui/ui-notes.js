@@ -42,7 +42,7 @@ class UiNotes extends Ui {
 
         //MEMO VOCAUX
 
-        let items = document.querySelectorAll('.app-list-item');
+        let items = this.list.querySelectorAll('.app-list-item');
         items.forEach(value => {
             let record = DATA.data_manager.records.get(value.getAttribute(`data-record`));
 
@@ -50,35 +50,37 @@ class UiNotes extends Ui {
             let range = value.querySelector("input[type='range']");
             let wasPlaying = false;
 
-            range.addEventListener('focus', function (e) {
-                wasPlaying = record.audio_file.isPlaying;
-            });
-            range.addEventListener('input', function (e) {
-                record.audio_file.pause();
-            });
-            range.addEventListener('change', function (e) {
-                e.preventDefault();
-                record.audio_file.audio.currentTime = (range.value);
-                if(wasPlaying)
+            if(range !== undefined) {
+                range.addEventListener('focus', function (e) {
+                    wasPlaying = record.audio_file.isPlaying;
+                });
+                range.addEventListener('input', function (e) {
+                    record.audio_file.pause();
+                });
+                range.addEventListener('change', function (e) {
+                    e.preventDefault();
+                    record.audio_file.audio.currentTime = (range.value);
+                    if (wasPlaying)
+                        record.audio_file.play();
+                })
+                let range_progression = setInterval(() => {
+                    if (record.audio_file.isPlaying) {
+                        range.value = (record.audio_file.audio.currentTime);
+                    }
+                }, 33);
+
+                //bouton pour jouer le son
+                value.querySelector("button").addEventListener('click', function (e) {
+                    e.preventDefault();
                     record.audio_file.play();
-            })
-            let range_progression = setInterval(() => {
-                if(record.audio_file.isPlaying) {
-                    range.value = (record.audio_file.audio.currentTime);
-                }
-            },  33);
+                })
 
-            //bouton pour jouer le son
-            value.querySelector("button").addEventListener('click', function (e) {
-                e.preventDefault();
-                record.audio_file.play();
-            })
-
-            //active l'app
-            value.querySelector('.app-toggler').addEventListener('click', function (e) {
-                e.preventDefault();
-                value.querySelector('.app-toggled').classList.toggle("active");
-            })
+                //active l'app
+                value.querySelector('.app-toggler').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    value.querySelector('.app-toggled').classList.toggle("active");
+                })
+            }
         })
     }
 }
