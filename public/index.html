@@ -13,7 +13,10 @@
 </head>
 <body>
 
-<div id="phone-opener" class="locked" style="background-image: url('images/phone.png')"></div>
+<div id="hud">
+    <div id="phone-opener" class="locked" style="background-image: url('images/phone.png')"></div>
+    <div id="hours"></div>
+</div>
 
 <div id="cover">
     <img src="images/logo.png">
@@ -22,7 +25,10 @@
 </div>
 
 <div id="loading">
-    <h3>Chargement...</h3>
+    <h3>Construction du monde</h3>
+    <div class="progress-bar">
+        <div style="width: 0"></div>
+    </div>
 </div>
 
 <div id="transition"></div>

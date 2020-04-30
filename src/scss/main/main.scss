@@ -29,6 +29,17 @@ html {
       justify-content: center;
       align-items: center;
 
+      .progress-bar{
+        margin-top: 20px;
+        width: 150px;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.11);
+        > div{
+          background: red;
+          height: 20px;
+        }
+      }
+
       h3 {
         color: $white-color;
       }

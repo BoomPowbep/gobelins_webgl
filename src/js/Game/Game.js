@@ -401,8 +401,10 @@ export default class Game {
         );
 
         function checkElementsReady() {
-            if (ready === 4) {
-                const duration = 1;
+            const duration = 1;
+            let total =  GameBrain.sceneryManager._sceneries.length;
+
+            if (ready === total) {
                 // GameBrain.sceneryManager.startSceneryTransition("StreetScenery", duration);
                 GameBrain.sceneryManager.startSceneryTransition("ColleusesScenery", duration);
                 gsap.to("#loading", {
@@ -413,6 +415,12 @@ export default class Game {
                 setTimeout(() => {
                     // TIMELINES.begin.play();
                 }, 3000);
+            }
+            else {
+                gsap.to("#loading .progress-bar div", {
+                    duration: duration/2,
+                    width:  (ready / total * 150)
+                });
             }
         }
     }
