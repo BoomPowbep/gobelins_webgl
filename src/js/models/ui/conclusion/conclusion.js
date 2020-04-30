@@ -2,12 +2,16 @@ class Conclusion {
     constructor(id, el) {
         this.id = id;
         this.el = el;
+        this.played_once = false;
 
         this.init();
     }
 
     show() {
-        this.el.classList.add('show');
+        if (!this.played_once) {
+            this.el.classList.add('show');
+            this.played_once = true;
+        }
     }
 
     hide() {

@@ -1,0 +1,22 @@
+.notification{
+  background: red;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.5s;
+  &.active{
+    opacity: 1;
+  }
+}
+
+#phone-opener{
+  .notification{
+    right: -4px;
+    top: 26px;
+  }
+}

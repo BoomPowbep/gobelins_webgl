@@ -6,7 +6,9 @@ const TIMELINE_TYPES = {
     MESSAGE : 'message', //todo
     FUNCTION : 'function',
     CONCLUSION : 'conclusion',
-    PHONE : 'phone'
+    PHONE : 'phone',
+    NOTIFICATION : 'notification',
+    NOTIFICATION_HIDE : 'notification_hide',
 };
 
 export default TIMELINE_TYPES;

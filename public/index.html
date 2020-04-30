@@ -13,7 +13,15 @@
 </head>
 <body>
 
-<div id="phone-opener" class="locked" style="background-image: url('images/phone.png')"></div>
+<div id="hud">
+    <div id="phone-opener" data-open="phone" class="locked" style="background-image: url('images/phone.png')">
+        <div class="notification" ></div>
+    </div>
+
+    <div id="message"></div>
+
+    <div id="hours"></div>
+</div>
 
 <div id="cover">
     <img src="images/logo.png">
@@ -22,7 +30,10 @@
 </div>
 
 <div id="loading">
-    <h3>Chargement...</h3>
+    <h3>Construction du monde</h3>
+    <div class="progress-bar">
+        <div style="width: 0"></div>
+    </div>
 </div>
 
 <div id="transition"></div>
@@ -125,12 +136,15 @@
             <div class="app-icon-group">
                 <div class="app-icon" data-open="notes">
                     <img src="images/app/folder.svg">
+                    <div class="notification"></div>
                 </div>
                 <div class="app-icon" data-open="maps">
                     <img src="images/app/map.svg">
+                    <div class="notification"></div>
                 </div>
                 <div class="app-icon" data-open="instagram">
                     <img src="images/app/instagram.svg">
+                    <div class="notification"></div>
                 </div>
 
             </div>
