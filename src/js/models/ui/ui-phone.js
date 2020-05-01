@@ -1,5 +1,6 @@
 import Ui from "./ui";
 import GameBrain from "../../Game/GameManager/GameManager";
+import Notification from "../ui/mobile/notification";
 
 class UiPhone extends Ui {
     constructor() {
@@ -27,6 +28,8 @@ class UiPhone extends Ui {
 
     setupDOM() {
         super.setupDOM();
+
+        Notification.hide("phone");
     }
 
     setupEvents() {

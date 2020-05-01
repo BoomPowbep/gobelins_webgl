@@ -1,4 +1,5 @@
 import Ui from "./ui";
+import Notification from "../ui/mobile/notification";
 
 class UiMaps extends Ui {
     constructor() {
@@ -7,6 +8,7 @@ class UiMaps extends Ui {
 
     setupDOM() {
         super.setupDOM();
+        Notification.hide("maps");
     }
 
     setupEvents() {

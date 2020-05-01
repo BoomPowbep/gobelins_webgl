@@ -1,6 +1,7 @@
 import Ui from "./ui";
 import Converter from "../converter";
 import Template from "../../template/template";
+import Notification from "../ui/mobile/notification";
 
 class UiNotes extends Ui {
     constructor() {
@@ -35,6 +36,7 @@ class UiNotes extends Ui {
                 });
             }
         });
+        Notification.hide("notes");
     }
 
     setupEvents() {
