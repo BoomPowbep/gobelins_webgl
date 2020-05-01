@@ -68,11 +68,6 @@ class GameManager {
         this.sceneryManager = new SceneryManager(this.debugMode);
 
         document.addEventListener("sound_ready", function (e) {
-
-            //Debug pickup
-            DATA.data_manager.get("instagram", "post-1").pickedUp();
-
-            this.debugMode && Object.entries(DATA.ui_manager.ui_list).forEach(value =>  GameBrain.gui.add({add: () => {   DATA.ui_manager.get(value[0]).show()  }},'add').name('ui:' + value[0]));
         });
 
         /* -- Init Three components -- */

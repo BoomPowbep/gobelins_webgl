@@ -16,6 +16,7 @@ import Pickup from "../models/ui/pickup/pickup";
 import gsap from "gsap";
 import {toRad} from "./Util/Helpers";
 import TIMELINES from "../models/timeline/timeline-configs";
+import SlideContent from "../models/ui/slide-content";
 
 
 export default class Game {
@@ -76,7 +77,7 @@ export default class Game {
             //DATA.ui_manager.get("notes").show();
 
             //Debug pickup
-            DATA.data_manager.get("instagram", "post-1").pickedUp();
+            //DATA.data_manager.get("instagram", "post-1").pickedUp();
 
             if (this._debugMode) {
 
@@ -422,8 +423,8 @@ export default class Game {
                 });
 
                 setTimeout(() => {
-                    TIMELINES.begin.play();
-                }, 3000);
+                    SlideContent.introduction();
+                }, 500);
             }
             else {
                 gsap.to("#loading .progress-bar div", {
