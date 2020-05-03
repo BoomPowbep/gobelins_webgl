@@ -17,11 +17,15 @@ class Model {
      */
     constructor(
         {
-            identifier = "Unnamed", path = "", initialScaleFactor = .01, initialPosition = {
-            x: 0,
-            y: 0,
-            z: 0
-        }, initialRotation = {x: 0, y: 0, z: 0}
+            identifier = "Unnamed",
+            path = "",
+            initialScaleFactor = .01,
+            initialPosition = {
+                x: 0,
+                y: 0,
+                z: 0
+            },
+            initialRotation = {x: 0, y: 0, z: 0}
         }) {
         this.identifier = identifier;
         this.path = path;
@@ -63,6 +67,12 @@ class ModelManager {
         const targetCount = modelsArray.length;
 
         modelsArray.map(model => {
+            //obligé d'ajouter ca y'a un truc qui crash dans ton code mickael, peut être t'as fix mais du coup impossible pour moi de debug quoi que ce soit
+            if(!(model instanceof Model)) {
+                loadedCount++;
+                loadedCount === targetCount && callback();
+                return;
+            }
 
             const type = model.path.match(/\.[0-9a-z]+$/i)[0];
 
@@ -109,7 +119,7 @@ class ModelManager {
                 },
                 // On error
                 (error) => {
-                    console.error("Object loading error: ", error);
+                    console.error(`Object loading error [model = ${model.path}]: `, error);
                 });
         });
 

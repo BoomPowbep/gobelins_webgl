@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import DeviceOrientationControls from 'three-device-orientation';
 import OrbitControls from 'orbit-controls-es6';
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import GameBrain from "../GameManager/GameManager";
 import {Vector3} from "three";
+import DeviceOrientationControls from "../../device-orientation-control";
 
 export default class ControlsManager {
 
@@ -33,7 +33,10 @@ export default class ControlsManager {
      * @param camera
      */
     initDeviceOrientation(camera) {
-        this._controls = new DeviceOrientationControls(camera);
+        this._controls = new DeviceOrientationControls(camera, {});
+        setTimeout(() => {
+            this._controls.rotateAndFreeze({rotation: {x: 50, y:100, z:300}});
+        }, 5000)
     }
 
     /**
