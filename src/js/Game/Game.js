@@ -154,6 +154,7 @@ export default class Game {
 
 
         window.addEventListener('touchend', this.onTouchEnd.bind(this)); // Get normalized position of mouse & do raycasr
+        window.addEventListener('touchstart', this.onTouchStart.bind(this)); // Get normalized position of mouse & do raycasr
     }
 
     /**
@@ -485,18 +486,56 @@ export default class Game {
             GameBrain.sceneManager.scene,
             this._mouse, GameBrain.cameraManager.camera
         );
-        this._debugMode && this._debuglogs.addLog("RayCast -> " + touchedElementIdentifier);
+        this._debugMode && this._debuglogs.addLog("Rcast End -> " + touchedElementIdentifier);
         this._debugMode && console.log(touchedElementIdentifier);
 
         // Process data
-        this.postTouchEventAction(touchedElementIdentifier);
+        this.postEndTouchEventAction(touchedElementIdentifier, this._mouse.x, this._mouse.y);
+    }
+
+
+    /**
+     * Touch event callback.
+     * @param event
+     */
+    onTouchStart(event) {
+        // calculate mouse position in normalized device coordinates
+        // (-1 to +1) for both components
+        this._mouse.x = (event.changedTouches[0].clientX / window.innerWidth) * 2 - 1;
+        this._mouse.y = -(event.changedTouches[0].clientY / window.innerHeight) * 2 + 1;
+
+        // Get the element identifier
+        const touchedElementIdentifier = this._raycasterManager.getTouchedElementIdentifier(
+            GameBrain.sceneManager.scene,
+            this._mouse, GameBrain.cameraManager.camera
+        );
+        this._debugMode && this._debuglogs.addLog("Rcast Start -> " + touchedElementIdentifier);
+        this._debugMode && console.log(touchedElementIdentifier);
+
+        // Process data
+        this.postStartTouchEventAction(touchedElementIdentifier, this._mouse.x, this._mouse.y);
     }
 
     /**
      * Perform action after touch event.
      * @param identifier
+     *
+     * @param posX
+     * @param posY
      */
-    postTouchEventAction(identifier) {
+    postStartTouchEventAction(identifier, posX, posY) {
+        //Drag'n'Drop
+
+        //Listening
+    }
+
+    /**
+     * Perform action after touch event.
+     * @param identifier
+     * @param posX
+     * @param posY
+     */
+    postEndTouchEventAction(identifier, posX, posY) {
         //if we touch a letter
         if (identifier.match(new RegExp("^(letter-)"))) {
             let letter = DATA.data_manager.get("letter", identifier);
