@@ -150,15 +150,12 @@ export default class GeometryManager {
 
         let material = null;
 
-        console.log(texture);
-
         if(texture !== null && texture !== undefined) {
             let loadedTexture = new THREE.TextureLoader().load( texture );
             material = new THREE.MeshBasicMaterial({map: loadedTexture});
         }
         else
             material = new THREE.MeshBasicMaterial({color: color});
-
 
         let cube = new THREE.Mesh(geometry, material);
         cube.position.x = position.x;

@@ -78,8 +78,20 @@ class UserHand {
            gsap.fromTo(el.position, {x: GameBrain.cameraManager.camera.position.x, y: GameBrain.cameraManager.camera.position.y, z: GameBrain.cameraManager.camera.position.z}, el.scenePosition);
            gsap.to(el.rotation, {x: 0, y:  toRad(90), z:  0, duration: 2});
            gsap.to(el.scale, {x: 0.55, y: 0.55, z: 0.55, duration: 2});
+
+           UserHand.checkFinish();
         }
     }
+
+    /**
+     * Vérifie si le joueur a tout D'n'D
+     */
+    static checkFinish(){
+        let el = draggableElements.find(value => value.appendInCamera);
+        if(el === undefined || el === null) {
+            document.dispatchEvent(new CustomEvent("end-dragndrop"));
+        }
+    };
 }
 
 export default UserHand;

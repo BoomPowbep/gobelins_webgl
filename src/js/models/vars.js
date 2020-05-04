@@ -1,5 +1,5 @@
 const VARS = {
-    DRAG_N_DROP_DELTA : 0.5
+    DRAG_N_DROP_DELTA : 0.3
 };
 
 export default VARS;

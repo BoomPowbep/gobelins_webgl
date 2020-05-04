@@ -20,6 +20,7 @@ import SlideContent from "../models/ui/slide-content";
 import SCENE_EVENTS_VARS from "../models/scene-events-vars";
 import VARS from "../models/vars";
 import UserHand from "./UserHand";
+import ControlsManager from "./ControlsManager/ControlsManager";
 
 
 export default class Game {
@@ -72,11 +73,15 @@ export default class Game {
                 //todo : ajouter une pastille de notification sur la map et le téléphone
             }
         });
+
+        document.addEventListener("end-dragndrop", (e) => {
+            DATA.is_gluing = false;
+            setTimeout(function () {
+                GameBrain.controlsManager.controls.rotateAndFreeze({rotation: {x: (1.5), y:(36), z:(-44)}});
+            }, 2000)
+        });
+
         document.addEventListener("sound_ready", (e) => {
-            //When sounds are ready, we can build our data manager
-
-            DATA.setupManagers();
-
             //DATA.ui_manager.get("notes").show();
 
             //Debug pickup
@@ -163,6 +168,8 @@ export default class Game {
      * Creates the three scene & creates essentials.
      */
     init() {
+        //When sounds are ready, we can build our data manager
+        DATA.setupManagers();
 
         // Create sceneries
         this.initSceneries();
