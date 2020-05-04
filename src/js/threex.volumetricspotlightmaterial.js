@@ -6,9 +6,9 @@ var THREEx = THREEx || {}
  * from http://stemkoski.blogspot.fr/2013/07/shaders-in-threejs-glow-and-halo.html
  * @return {[type]} [description]
  */
-export function VolumetricSpotLightMaterial() {
+THREEx.VolumetricSpotLightMaterial	= function(){
     //
-    var vertexShader = [
+    var vertexShader	= [
         'varying vec3 vNormal;',
         'varying vec3 vWorldPosition;',
 
@@ -23,7 +23,7 @@ export function VolumetricSpotLightMaterial() {
         'gl_Position	= projectionMatrix * modelViewMatrix * vec4( position, 1.0 );',
         '}',
     ].join('\n')
-    var fragmentShader = [
+    var fragmentShader	= [
         'varying vec3		vNormal;',
         'varying vec3		vWorldPosition;',
 
@@ -62,31 +62,34 @@ export function VolumetricSpotLightMaterial() {
 
     // create custom material from the shader code above
     //   that is within specially labeled script tags
-    var material = new THREE.ShaderMaterial({
+    var material	= new THREE.ShaderMaterial({
         uniforms: {
-            attenuation: {
-                type: "f",
-                value: 5.0
+            attenuation	: {
+                type	: "f",
+                value	: 5.0
             },
-            anglePower: {
-                type: "f",
-                value: 1.2
+            anglePower	: {
+                type	: "f",
+                value	: 1.2
             },
-            spotPosition: {
-                type: "v3",
-                value: new THREE.Vector3(0, 0, 0)
+            spotPosition		: {
+                type	: "v3",
+                value	: new THREE.Vector3( 0, 0, 0 )
             },
-            lightColor: {
-                type: "c",
-                value: new THREE.Color('cyan')
+            lightColor	: {
+                type	: "c",
+                value	: new THREE.Color('cyan')
             },
         },
-        vertexShader: vertexShader,
-        fragmentShader: fragmentShader,
+        vertexShader	: vertexShader,
+        fragmentShader	: fragmentShader,
         // side		: THREE.DoubleSide,
         // blending	: THREE.AdditiveBlending,
-        transparent: true,
-        depthWrite: false,
+        transparent	: true,
+        depthWrite	: false,
     });
     return material
 }
+
+
+export default THREEx;

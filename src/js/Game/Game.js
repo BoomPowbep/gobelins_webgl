@@ -125,9 +125,6 @@ export default class Game {
             AudioManager.init();
             cover.remove();
 
-            //Setup audio list here
-            // AudioManager.play("birds");
-
             // On iOS13 + devices, ask for device orientation events permission
             // https://medium.com/flawless-app-stories/how-to-request-device-motion-and-orientation-permission-in-ios-13-74fc9d6cd140
             if (window.DeviceOrientationEvent !== undefined && typeof DeviceOrientationEvent.requestPermission === 'function') {
@@ -449,7 +446,7 @@ export default class Game {
             let total =  GameBrain.sceneryManager._sceneries.length;
 
             if (ready === total) {
-                GameBrain.sceneryManager.startSceneryTransition("StreetScenery", duration);
+                GameBrain.sceneryManager.startSceneryTransition("ColleusesScenery", duration);
                 gsap.to("#loading", {
                     duration: duration/2,
                     autoAlpha: 0

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import OrbitControls from 'orbit-controls-es6';
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import GameBrain from "../GameManager/GameManager";
 import {Vector3} from "three";
 import DeviceOrientationControls from "../../device-orientation-control";

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {VolumetricSpotLightMaterial} from '../../threex.volumetricspotlightmaterial';
+import THREEx from '../../threex.volumetricspotlightmaterial';
 
 export default class LightingManager {
 
@@ -47,15 +47,16 @@ export default class LightingManager {
                     }) {
 
         // add spot light
-        var geometry = new THREE.CylinderGeometry(10, 30, 2000, 32 * 2, 200, true);
-        geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, -geometry.parameters.height / 2, 0));
-        geometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
-        var material = new VolumetricSpotLightMaterial()
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.set(position.x, position.y, position.z);
-        mesh.lookAt(new THREE.Vector3(0, 0, 0))
+        // var geometry	= new THREE.CylinderGeometry( .5, 10, 200, 32*16, 40, false);
+        var geometry	= new THREE.CylinderGeometry( 0.1, 5*Math.cos(Math.PI/3)/1.5, 10, 32*2, 20, true);
+        geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -geometry.parameters.height/2, 0 ) );
+        geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI / 2 ) );
+        var material	= new THREEx.VolumetricSpotLightMaterial()
+        var mesh	= new THREE.Mesh( geometry, material );
+        mesh.position.set(80,3035,-190);
+        mesh.lookAt(new THREE.Vector3(0,0, 0));
         material.uniforms.lightColor.value.set('white')
-        material.uniforms.spotPosition.value = mesh.position
+        material.uniforms.spotPosition.value	= mesh.position
 
         mesh.identifier = identifier + "-volumetry";
 
