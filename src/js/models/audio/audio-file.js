@@ -35,6 +35,7 @@ class AudioFile {
         this.audio = new Audio(this.path);
         this.audio.volume = this.volume;
         this.audio.loop = this.loop;
+        this.audio.muted = true;
 
         //Init sound duration is null
         this.duration = null;
@@ -47,10 +48,13 @@ class AudioFile {
 
         //When sound is load it's ready
         this.audio.addEventListener('loadeddata', () => {
+            this.audio.pause();
+            console.log("Audio loaded : "  + this.path);
             this.ready = true;
             this.audio.autoplay = false;
             this.duration = this.audio.duration;
-            this.audio.pause();
+            this.audio.volume = this.volume;
+            this.audio.muted = false;
         });
 
         //When a sound has finish to be played

@@ -1,6 +1,7 @@
 import GameBrain from "../GameManager/GameManager";
 import * as THREE from 'three';
 import gsap from "gsap";
+import {Model} from "../ModelManager/ModelManager";
 
 class Scenery {
     constructor({
@@ -83,9 +84,11 @@ class SceneryManager {
 
             // Set position of models
             queued.models.forEach((model) => {
-                model.initialPosition.x += queued.basePosition.x;
-                model.initialPosition.y += queued.basePosition.y;
-                model.initialPosition.z += queued.basePosition.z;
+                if(model instanceof Model) {
+                    model.initialPosition.x += queued.basePosition.x;
+                    model.initialPosition.y += queued.basePosition.y;
+                    model.initialPosition.z += queued.basePosition.z;
+                }
             });
 
             // Set position of lights

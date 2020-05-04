@@ -188,6 +188,6 @@
 
 
 <script src="build/runtime.js"></script>
-<script src="build/app.js"></script>
+<script src="build/app.js?v=<?= uniqid(); ?>"></script>
 </body>
 </html>

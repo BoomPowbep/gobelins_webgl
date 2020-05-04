@@ -15,7 +15,11 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.PHONE, null, 19000),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 19000),
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 19000),
-    ])
+    ]),
+    stopAll() {
+        //On sait jamais si y'a des trucs qui trainent
+        [TIMELINES.begin,TIMELINES.call].forEach(value => value.stop());
+    }
 };
 
 export default TIMELINES;

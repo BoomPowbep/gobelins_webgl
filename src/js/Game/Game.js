@@ -16,6 +16,8 @@ import Pickup from "../models/ui/pickup/pickup";
 import gsap from "gsap";
 import {toRad} from "./Util/Helpers";
 import TIMELINES from "../models/timeline/timeline-configs";
+import SlideContent from "../models/ui/slide-content";
+import SCENE_EVENTS_VARS from "../models/scene-events-vars";
 
 
 export default class Game {
@@ -76,7 +78,7 @@ export default class Game {
             //DATA.ui_manager.get("notes").show();
 
             //Debug pickup
-            DATA.data_manager.get("instagram", "post-1").pickedUp();
+            //DATA.data_manager.get("instagram", "post-1").pickedUp();
 
             if (this._debugMode) {
 
@@ -294,7 +296,7 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive : (scene) => {
-                        DATA.conclusion_manager.show("scene-1")
+                        SCENE_EVENTS_VARS.sceneColleuse();
                     }
                 }
             )
@@ -330,7 +332,11 @@ export default class Game {
         ];
 
         models = [
-            new Model({identifier: 'MapEnvironment', path: 'models/FBX/Map.fbx', initialScaleFactor: .005}),
+            new Model({
+                identifier: 'MapEnvironment',
+                path: 'models/FBX/Map.fbx',
+                initialScaleFactor: .005
+            }),
         ];
 
         lights = [
@@ -373,12 +379,39 @@ export default class Game {
         );
 
         // -- Scenery 4 - Bistro
+        // Première scène de jeu
         geometries = [
             GameBrain.geometryManager.createColorSkybox(0x28BDF5, 1500, "BistroSkybox"), // Skybox
         ];
 
         models = [
             new Model({identifier: 'BistroEnvironment', path: 'models/FBX/Bar.fbx', initialScaleFactor: 1}),
+
+            // Letters
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "letter-1",
+                position: {x: 0, y: 0, z: -120},
+                size: {x: 30, y: 30, z: 30},
+                color: 0x28BDF5,
+            }),
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "letter-2",
+                position: {x: 0, y: 0, z: 120},
+                size: {x: 30, y: 30, z: 30},
+                color: 0x28BDC5,
+            }),
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "letter-3",
+                position: {x: -120, y: 0, z: 0},
+                size: {x: 30, y: 30, z: 30},
+                color: 0x28FDF5,
+            }),
+            GameBrain.geometryManager.createBasicShape({
+                identifier: "letter-4",
+                position: {x: 120, y: 0, z: 0},
+                size: {x: 30, y: 30, z: 30},
+                color: 0x2FFFF5,
+            }),
         ];
 
         lights = [
@@ -404,7 +437,7 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive : (scene) => {
-                        DATA.conclusion_manager.show("scene-2")
+                        SCENE_EVENTS_VARS.sceneBistro();
                     }
                 }
             )
@@ -422,8 +455,8 @@ export default class Game {
                 });
 
                 setTimeout(() => {
-                    TIMELINES.begin.play();
-                }, 3000);
+                    SlideContent.introduction();
+                }, 500);
             }
             else {
                 gsap.to("#loading .progress-bar div", {

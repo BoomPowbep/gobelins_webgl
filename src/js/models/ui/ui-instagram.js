@@ -1,5 +1,6 @@
 import Ui from "./ui";
 import Template from "../../template/template";
+import Notification from "../ui/mobile/notification";
 
 /**
  * UI For Instagram in Game APP
@@ -27,6 +28,8 @@ class UiInstagram extends Ui {
                 });
             }
         });
+
+        Notification.hide("instagram");
     }
 
     /**
