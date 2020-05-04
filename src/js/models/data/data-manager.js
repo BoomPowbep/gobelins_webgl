@@ -55,7 +55,8 @@ class DataManager {
      */
     initLetters() {
         Object.entries(LETTERS_VAR).forEach(value => {
-            this.letters.add(new Letter(value[0], value[1].scene));
+            let v = value[1];
+            this.letters.add(new Letter(value[0], v.scene, v.letter, v.dragPos, v.dragRotate, v.scenePosition));
         })
     }
 

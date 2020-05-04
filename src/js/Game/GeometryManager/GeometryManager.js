@@ -127,7 +127,9 @@ export default class GeometryManager {
      * @param identifier
      * @param size
      * @param position
+     * @param rotation
      * @param color
+     * @param texture
      * @param castShadow
      * @param doubleSided
      * @param visibility
@@ -137,17 +139,34 @@ export default class GeometryManager {
                          identifier = "Unnamed",
                          size = {x: 1, y: 1, z: 1},
                          position = {x: 0, y: 0, z: 0},
+                         rotation = {x: 0, y: 0, z: 0},
+                         texture = null,
                          color = 0x00ff00,
                          castShadow = false,
                          doubleSided = false,
                          visibility = true
                      }) {
         let geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-        let material = new THREE.MeshBasicMaterial({color: color});
+
+        let material = null;
+
+        console.log(texture);
+
+        if(texture !== null && texture !== undefined) {
+            let loadedTexture = new THREE.TextureLoader().load( texture );
+            material = new THREE.MeshBasicMaterial({map: loadedTexture});
+        }
+        else
+            material = new THREE.MeshBasicMaterial({color: color});
+
+
         let cube = new THREE.Mesh(geometry, material);
         cube.position.x = position.x;
         cube.position.y = position.y;
         cube.position.z = position.z;
+        cube.rotation.x = rotation.x;
+        cube.rotation.y = rotation.y;
+        cube.rotation.z = rotation.z;
         cube.visible = visibility;
         cube.identifier = identifier;
 
@@ -157,6 +176,7 @@ export default class GeometryManager {
 
         return cube;
     }
+
 
     /**
      * Register all created geometries.

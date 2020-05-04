@@ -41,7 +41,7 @@ class SlideContent {
             SlideContent.image("https://pokexp.com/uploads/event/28042020-staff-day.png", () => {
                 SlideContent.date("25 mars", "16:20", () => {
                     SlideContent.hide();
-                    TIMELINES.begin.play();
+                    //TIMELINES.begin.play();
                 })
             })
         }, "red")

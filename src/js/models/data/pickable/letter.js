@@ -7,10 +7,19 @@ class Letter extends Pickable{
     /**
      * @param {string} identifier
      * @param {number|null} scene
+     * @param {string|null} letter
+     * @param dragPos
+     * @param dragRotate
+     * @param scenePosition
      */
-    constructor(identifier, scene = null) {
+    constructor(identifier, scene = null, letter = null, dragPos={x:0, y:0, z:0}, dragRotate={x:0,y:0,z:0}, scenePosition={x:0, y:0, z:0}) {
         super(identifier);
         this.scene = scene;
+        this.letter = letter;
+
+        this.dragPos = dragPos;
+        this.dragRotate = dragRotate;
+        this.scenePosition = scenePosition;
     }
 
     /**
@@ -27,7 +36,7 @@ class Letter extends Pickable{
     }
 
     getImage() {
-        return "images/letters/test.png";
+        return `textures/letters/${this.letter}.png`;
     }
 }
 

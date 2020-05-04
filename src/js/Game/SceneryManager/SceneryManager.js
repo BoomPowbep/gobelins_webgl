@@ -156,6 +156,10 @@ class SceneryManager {
         });
     }
 
+    getActiveScenaryObject() {
+        return this.getSceneryReferenceByIdentifier(this.activeScenery);
+    }
+
     /**
      * Set the active scenery.
      * @param sceneryIdentifier

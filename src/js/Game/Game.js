@@ -18,6 +18,8 @@ import {toRad} from "./Util/Helpers";
 import TIMELINES from "../models/timeline/timeline-configs";
 import SlideContent from "../models/ui/slide-content";
 import SCENE_EVENTS_VARS from "../models/scene-events-vars";
+import VARS from "../models/vars";
+import UserHand from "./UserHand";
 
 
 export default class Game {
@@ -206,6 +208,7 @@ export default class Game {
             // })
         ];
 
+        let dragabbleElements = null;
         GameBrain.sceneryManager.addScenery(
             new Scenery({
                     identifier: "StreetScenery",
@@ -221,7 +224,10 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive : (scene) => {
+                        scene.add( GameBrain.cameraManager.camera );
 
+                        //On montre ce que l'utilisateur a en main (les papiers)
+                        UserHand.show();
                     }
                 }
             )
@@ -525,6 +531,10 @@ export default class Game {
      */
     postStartTouchEventAction(identifier, posX, posY) {
         //Drag'n'Drop
+        if(DATA.is_gluing) {
+            DATA.drag_start_y = posY;
+            DATA.drag_element = identifier;
+        }
 
         //Listening
     }
@@ -536,6 +546,21 @@ export default class Game {
      * @param posY
      */
     postEndTouchEventAction(identifier, posX, posY) {
+        //Drag'n'Drop
+        if(DATA.is_gluing) {
+            let delta = posY - DATA.drag_start_y;
+            if(delta >= VARS.DRAG_N_DROP_DELTA) {
+                //On execute une action de drag'n'drop (on recolle le papier)
+                this._debugMode && this._debuglogs.addLog("Drag'n'Drop");
+
+                if(UserHand.isDragable(DATA.drag_element)) {
+                    UserHand.putOnScene(DATA.drag_element);
+                }
+
+                return;
+            }
+        }
+
         //if we touch a letter
         if (identifier.match(new RegExp("^(letter-)"))) {
             let letter = DATA.data_manager.get("letter", identifier);
