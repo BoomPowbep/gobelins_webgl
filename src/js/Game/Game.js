@@ -16,11 +16,13 @@ import Pickup from "../models/ui/pickup/pickup";
 import gsap from "gsap";
 import {toRad} from "./Util/Helpers";
 import TIMELINES from "../models/timeline/timeline-configs";
+import Notification from "../models/ui/mobile/notification";
 import SlideContent from "../models/ui/slide-content";
 import SCENE_EVENTS_VARS from "../models/scene-events-vars";
 import VARS from "../models/vars";
 import UserHand from "./UserHand";
 import ControlsManager from "./ControlsManager/ControlsManager";
+import Rewind from "./Util/Rewind";
 
 
 export default class Game {
@@ -61,6 +63,7 @@ export default class Game {
 
 
         let cover = document.getElementById("cover");
+        let date = cover.querySelector('.data-time');
 
         document.addEventListener("letter", (e) => {
             let letter = e.detail;
@@ -71,6 +74,7 @@ export default class Game {
 
             if(letters.hasPickupAllInScene(letter.scene)) {
                 //todo : ajouter une pastille de notification sur la map et le téléphone
+                Notification.mapNotification();
             }
         });
 
