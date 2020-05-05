@@ -9,6 +9,10 @@ const TIMELINE_TYPES = {
     PHONE : 'phone',
     NOTIFICATION : 'notification',
     NOTIFICATION_HIDE : 'notification_hide',
+    CAMERA : 'camera',
+    HOURS_SLIDE : 'hours_slide',
+    HIDE_SLIDE : 'hide_slide',
+    HOURS_HUD : 'hours_hud',
 };
 
 export default TIMELINE_TYPES;

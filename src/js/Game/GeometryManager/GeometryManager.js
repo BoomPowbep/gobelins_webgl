@@ -176,6 +176,70 @@ export default class GeometryManager {
 
 
     /**
+     * Creates a basic shape.
+     * @param identifier
+     * @param size
+     * @param position
+     * @param rotation
+     * @param color
+     * @param facingCamera
+     * @param texture
+     * @param castShadow
+     * @param visibility
+     * @returns {Mesh|Sprite}
+     */
+    createBasicSprite({
+                         identifier = "Unnamed",
+                         size = {x: 1, y: 1, z: 1},
+                         position = {x: 0, y: 0, z: 0},
+                         rotation = {x: 0, y: 0, z: 0},
+                         texture = null,
+                         facingCamera = true,
+                         color = 0x00ff00,
+                         castShadow = false,
+                         visibility = true
+                     }) {
+
+        console.log("SPRITE");
+
+        let material = null;
+        let shape = null;
+        if(facingCamera) {
+            material = new THREE.SpriteMaterial({
+                map:  new THREE.TextureLoader().load( texture ),
+                transparent: true
+            });
+            shape = new THREE.Sprite(material);
+        }
+        else {
+            let geometry = new THREE.PlaneBufferGeometry(size.x, size.y, 50);
+            material = new THREE.MeshLambertMaterial({
+                map:  new THREE.TextureLoader().load( texture ),
+                transparent: true,
+                side: THREE.DoubleSide
+            });
+            shape = new THREE.Mesh(geometry, material);
+        }
+
+        shape.position.x = position.x;
+        shape.position.y = position.y;
+        shape.position.z = position.z;
+        shape.scale.x = size.x;
+        shape.scale.y = size.y;
+        shape.scale.z = size.z;
+        shape.rotation.x = rotation.x;
+        shape.rotation.y = rotation.y;
+        shape.rotation.z = rotation.z;
+        shape.visible = visibility;
+        shape.identifier = identifier;
+        shape.castShadow = castShadow;
+        shape.doubleSided = true;
+
+        return shape;
+    }
+
+
+    /**
      * Register all created geometries.
      * @param geometriesArray
      */

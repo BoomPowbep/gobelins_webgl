@@ -65,6 +65,35 @@ export default class Game {
         let cover = document.getElementById("cover");
         let date = cover.querySelector('.data-time');
 
+        /**
+         * Evenement dispatch après avoir fermé une conclusion
+         */
+        document.addEventListener("close-conc", (e) => {
+            switch (e.detail) {
+                case "scene-1" : {
+                    SlideContent.fromTo(VARS.HOURS.SCENE_1, VARS.HOURS.SCENE_2, () => {
+                        SlideContent.hide();
+                    }, 2000);
+                    break;
+                }
+                case "scene-2" : {
+                    SlideContent.fromTo(VARS.HOURS.SCENE_2, VARS.HOURS.SCENE_3, () => {
+                        SlideContent.hide();
+                    }, 2000);
+                    break;
+                }
+                case "scene-3" : {
+                    SlideContent.fromTo(VARS.HOURS.SCENE_3, VARS.HOURS.SCENE_FINAL, () => {
+                        SlideContent.hide();
+                    }, 2000);
+                    break;
+                }
+            }
+        });
+
+        /**
+         * Evenement dispatch après avoir ramassé une lettre
+         */
         document.addEventListener("letter", (e) => {
             let letter = e.detail;
             let letters = DATA.data_manager.letters;
@@ -78,13 +107,28 @@ export default class Game {
             }
         });
 
+        /**
+         * Evenement dispatch après la fin du drag'n'drop
+         */
         document.addEventListener("end-dragndrop", (e) => {
             DATA.is_gluing = false;
-            setTimeout(function () {
+
+            TIMELINES.end.play();
+
+            /*setTimeout(function () {
                 GameBrain.controlsManager.controls.rotateAndFreeze({rotation: {x: (1.5), y:(36), z:(-44)}});
-            }, 2000)
+                setTimeout(function () {
+                    SlideContent.fromTo(VARS.HOURS.SCENE_3, VARS.HOURS.SCENE_FINAL, () => {
+                        SlideContent.hide();
+                        //todo Intégrer la scène finale
+                    }, 2000);
+                }, 2000)
+            }, 2000)*/
         });
 
+        /**
+         * Evenement dispatch quand tous les sons sont prêts
+         */
         document.addEventListener("sound_ready", (e) => {
             //DATA.ui_manager.get("notes").show();
 
@@ -200,7 +244,15 @@ export default class Game {
 
         // -- Scenery 2 - Rue
         let geometries = [
-            GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "StreetSkybox"), // Skybox
+            GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "StreetSkybox"), // Skybox,
+            GameBrain.geometryManager.createBasicSprite({
+                identifier : "button",
+                texture: "textures/button.png",
+                facingCamera: false,
+                size: {x:4, y:2, z:0},
+                rotation : {x: toRad(0), y: toRad(-90), z: toRad(0)},
+                position: {x: 130, y: 65, z:270}
+            })
         ];
 
         let models = [
@@ -208,7 +260,7 @@ export default class Game {
                 identifier: 'StreetEnvironment',
                 path: 'models/FBX/Street.fbx',
                 initialScaleFactor: 1
-            }),
+            })
         ];
 
         let lights = [
@@ -219,7 +271,6 @@ export default class Game {
             // })
         ];
 
-        let dragabbleElements = null;
         GameBrain.sceneryManager.addScenery(
             new Scenery({
                     identifier: "StreetScenery",

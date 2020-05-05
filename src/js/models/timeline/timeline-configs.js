@@ -1,6 +1,7 @@
 import TimelineItem from "./timeline-item";
 import TIMELINE_TYPES from "./timeline-types";
 import Timeline from "./timeline";
+import VARS from "../vars";
 
 const TIMELINES = {
     begin : new Timeline([
@@ -16,9 +17,17 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 19000),
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 19000),
     ]),
+    end: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.CAMERA,  {x: (1.5), y:(36), z:(-44)}, 2000),
+        new TimelineItem(TIMELINE_TYPES.HOURS_SLIDE, {start: VARS.HOURS.SCENE_FINAL, end: VARS.HOURS.BEGIN, duration: 4000}, 4000),
+        new TimelineItem(TIMELINE_TYPES.HIDE_SLIDE, null, 10000),
+        new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 10000)
+    ]),
     stopAll() {
         //On sait jamais si y'a des trucs qui trainent
-        [TIMELINES.begin,TIMELINES.call].forEach(value => value.stop());
+        Object.values(TIMELINES)
+            .filter(value => value instanceof Timeline)
+            .forEach(value => value.stop());
     }
 };
 
