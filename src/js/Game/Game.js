@@ -249,9 +249,9 @@ export default class Game {
                 identifier : "button",
                 texture: "textures/button.png",
                 facingCamera: false,
-                size: {x:4, y:2, z:0},
+                size: {x:4, y:2, z:0.1},
                 rotation : {x: toRad(0), y: toRad(-90), z: toRad(0)},
-                position: {x: 130, y: 65, z:270}
+                position: {x: 120, y: 65, z:270}
             })
         ];
 
@@ -282,14 +282,12 @@ export default class Game {
                     fog: true,
                     onLoadDone: () => {
                         ready++;
+                        UserHand.createElements();
                         GameBrain.sceneryManager.loadScenery("ColleusesScenery");
                         checkElementsReady();
                     },
                     onSceneActive : (scene) => {
                         scene.add( GameBrain.cameraManager.camera );
-
-                        //On montre ce que l'utilisateur a en main (les papiers)
-                        UserHand.show();
                     }
                 }
             )
@@ -644,6 +642,11 @@ export default class Game {
                 break;
             case "map-interest-3":
                 GameBrain.sceneryManager.startSceneryTransition("BistroScenery");
+                break;
+            case "button":
+                GameBrain.sceneManager.scene.remove(GameBrain.geometryManager.getGeometryReferenceByIdentifier("button"));
+                DATA.is_gluing = true;
+                UserHand.show();
                 break;
             default:
                 break;

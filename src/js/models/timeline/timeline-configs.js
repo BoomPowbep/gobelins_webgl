@@ -18,10 +18,10 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 19000),
     ]),
     end: new Timeline([
-        new TimelineItem(TIMELINE_TYPES.CAMERA,  {x: (1.5), y:(36), z:(-44)}, 2000),
-        new TimelineItem(TIMELINE_TYPES.HOURS_SLIDE, {start: VARS.HOURS.SCENE_FINAL, end: VARS.HOURS.BEGIN, duration: 4000}, 4000),
-        new TimelineItem(TIMELINE_TYPES.HIDE_SLIDE, null, 10000),
-        new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 10000)
+        new TimelineItem(TIMELINE_TYPES.CAMERA,  {x: (1.5), y:(36), z:(-44)}, 5000),
+        new TimelineItem(TIMELINE_TYPES.HOURS_SLIDE, {start: VARS.HOURS.SCENE_FINAL, end: VARS.HOURS.BEGIN, duration: 4000}, 7000),
+        new TimelineItem(TIMELINE_TYPES.HIDE_SLIDE, null, 14000),
+        new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 14000)
     ]),
     stopAll() {
         //On sait jamais si y'a des trucs qui trainent

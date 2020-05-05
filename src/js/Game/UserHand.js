@@ -34,7 +34,6 @@ class UserHand {
      */
     static show() {
         //on crée les éléments (sauf si ils existent déjà)
-        UserHand.createElements();
         if (DATA.is_gluing && draggableElements != null) {
             draggableElements.forEach(value => {
                 if(value.appendInCamera) {
