@@ -33,7 +33,7 @@
     <img src="images/logo-murdher.svg" class="logo">
     <img src="images/icons/headphone.svg" class="icon">
     <p>Pour une meilleure immersion, mettez des écouteurs.</p>
-    <button>Commencer</button>
+    <button class="btn">Commencer</button>
 </div>
 
 
@@ -112,16 +112,10 @@
         <script data-template="memo_el" type="text/html">
             <div class="app-list-item" data-record="{id}">
                 <div class="app-toggler" data-to-toggle="{name}">
-                    <p class="important">{name}</p>
-                    <span class="small o-60">{date}</span>
-                    <span class="small o-60 f-r">{duration_text}</span>
-                </div>
-                <div class="app-toggled" data-to-toggle="{name}">
-                    <div class="timeline">
-                        <div></div>
-                        <input type="range" value="0" min="0" step="any" max="{duration}">
-                    </div>
-                    <button class="">Play</button>
+                    <p class="name">{name}</p>
+                    <span class="duration">{duration_text}</span>
+                    <img src="images/icons/play.svg" class="play icon">
+                    <img src="images/icons/pause.svg" class="pause icon">
                 </div>
             </div>
         </script>

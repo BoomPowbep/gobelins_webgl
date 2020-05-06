@@ -1,0 +1,20 @@
+#app_notes{
+  .duration{
+    color: $grey;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .name {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .icon {
+    position: absolute;
+    right: 0;
+    top: 18px;
+  }
+
+  .pause{
+    display: none;
+  }
+}

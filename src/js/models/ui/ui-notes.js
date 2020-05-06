@@ -47,42 +47,39 @@ class UiNotes extends Ui {
         let items = this.list.querySelectorAll('.app-list-item');
         items.forEach(value => {
             let record = DATA.data_manager.records.get(value.getAttribute(`data-record`));
+            let duration = value.querySelector(".duration");
+            let playIcon = value.querySelector(".play");
+            let pauseIcon = value.querySelector(".pause");
 
-            //range pour la barre de son
-            let range = value.querySelector("input[type='range']");
-            let wasPlaying = false;
+            let updateTime = null;
 
-            if(range !== undefined) {
-                range.addEventListener('focus', function (e) {
-                    wasPlaying = record.audio_file.isPlaying;
-                });
-                range.addEventListener('input', function (e) {
-                    record.audio_file.pause();
-                });
-                range.addEventListener('change', function (e) {
-                    e.preventDefault();
-                    record.audio_file.audio.currentTime = (range.value);
-                    if (wasPlaying)
-                        record.audio_file.play();
-                })
-                let range_progression = setInterval(() => {
-                    if (record.audio_file.isPlaying) {
-                        range.value = (record.audio_file.audio.currentTime);
-                    }
-                }, 33);
+            //Si le son a fini d'être joué
+            record.getAudioFile().audio.addEventListener('ended', function () {
+                pauseIcon.style.display = "none";
+                playIcon.style.display = "block";
 
-                //bouton pour jouer le son
-                value.querySelector("button").addEventListener('click', function (e) {
-                    e.preventDefault();
-                    record.audio_file.play();
-                })
+                duration.innerText = Converter.durationToTime(record.getAudioFile().duration);
+                clearInterval(updateTime);
+            });
 
-                //active l'app
-                value.querySelector('.app-toggler').addEventListener('click', function (e) {
-                    e.preventDefault();
-                    value.querySelector('.app-toggled').classList.toggle("active");
-                })
-            }
+            //bouton pour jouer le son
+            playIcon.addEventListener('click', function (e) {
+                e.preventDefault();
+                record.audio_file.play();
+                playIcon.style.display = "none";
+                pauseIcon.style.display = "block";
+
+                updateTime = setInterval(function () {
+                    duration.innerText = Converter.durationToTime(record.getAudioFile().audio.currentTime);
+                }, 250)
+            });
+            pauseIcon.addEventListener('click', function (e) {
+                e.preventDefault();
+                record.audio_file.pause();
+                pauseIcon.style.display = "none";
+                playIcon.style.display = "block";
+                clearInterval(updateTime);
+            });
         })
     }
 }

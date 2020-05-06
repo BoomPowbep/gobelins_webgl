@@ -66,7 +66,7 @@ class DataManager {
      */
     initRecords() {
         Object.entries(RECORDS_VARS).forEach(value => {
-            this.records.add(new Record(value[0], AudioManager.getAudio(value[1].audio_id)));
+            this.records.add(new Record(value[0], AudioManager.getAudio(value[1].audio_id), value[1].record_name));
         })
     }
 

@@ -75,8 +75,9 @@ $app_height_name : 64px;
     grid-template-columns: 1fr;
 
     &-item{
-      padding: 10px 15px;
-      border-bottom: 1px solid rgba(255,255,255,0.5);
+      padding: 10px 0px;
+      border-bottom: 1px solid transparentize($grey, 0.5);
+      position: relative;
     }
   }
 
