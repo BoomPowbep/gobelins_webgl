@@ -1,17 +1,18 @@
 button {
   border: 0;
-  border-radius: 20px;
-  background: white;
-  color: black;
+  border-radius: 10px;
+  background: $red;
+  color: $white;
   font: inherit;
   cursor: pointer;
-  font-size: 16px;
-  padding: 10px 25px;
-  font-weight: bold;
+  padding: 14px 25px 12px;
   margin-top: 10px;
   transition: 1s;
-  &:hover {
-    color: white;
-    background: red;
-  }
+  height: 45px;
+  width: 260px;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 18px;
+  text-align: center;
 }

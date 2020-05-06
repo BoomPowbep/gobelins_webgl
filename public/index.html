@@ -14,7 +14,8 @@
 <body>
 
 <div id="hud">
-    <div id="phone-opener" data-open="phone" class="locked" style="background-image: url('images/phone.png')">
+    <div class="red-bubble hided"></div>
+    <div id="phone-opener" data-open="phone" class="locked not-opened" style="background-image: url('images/phone.png')">
         <div class="notification" ></div>
     </div>
 
@@ -29,9 +30,10 @@
 </div>
 
 <div id="cover">
-    <img src="images/logo.png">
-    <p>Seulement sur mobile</p>
-    <button>Démarrer l'expérience</button>
+    <img src="images/logo-murdher.svg" class="logo">
+    <img src="images/icons/headphone.svg" class="icon">
+    <p>Pour une meilleure immersion, mettez des écouteurs.</p>
+    <button>Commencer</button>
 </div>
 
 
@@ -99,15 +101,13 @@
 
 <div id="phone">
     <div class="app app_title-only" id="app_maps">
-        <div class="app-close"></div>
-        <div class="app-name">
-            <span>CARTE</span>
+        <div class="app-close">
+            <img src="images/icons/red.svg">
         </div>
     </div>
     <div class="app" id="app_notes">
-        <div class="app-close"></div>
-        <div class="app-name">
-            <span>FICHIERS</span>
+        <div class="app-close">
+            <img src="images/icons/red.svg">
         </div>
         <script data-template="memo_el" type="text/html">
             <div class="app-list-item" data-record="{id}">
@@ -131,7 +131,7 @@
             </div>
         </script>
         <div class="app-content">
-            <h2>Enregistrements vocaux</h2>
+            <h2>Enregistrements</h2>
             <div class="app-list"></div>
             <h2>Documents</h2>
             <div class="app-grid"></div>
@@ -154,20 +154,29 @@
                 </div>
 
             </div>
-            <div class="app-close app-close_bottom"></div>
+            <div class="app-close app-close_bottom">
+                <img src="images/icons/close.svg">
+            </div>
         </div>
     </div>
     <div class="app" id="app_call">
-        <div class="app-content app-content_full">
-            <span>Le sang 💯💯</span>
+        <div class="app-content app-content_full app-content_center">
+            <span class="caller-name">Meilleur ami</span>
             <span class="duration">00:00</span>
-            <button>Décrocher</button>
+
+            <div class="start-call">
+                <img src="images/icons/green-call.svg">
+                <p>Décrocher</p>
+            </div>
+            <div class="stop-call">
+                <img src="images/icons/red-call.svg">
+                <p>Raccrocher</p>
+            </div>
         </div>
     </div>
     <div class="app" id="app_instagram">
-        <div class="app-close"></div>
-        <div class="app-name">
-            <span>Instagram</span>
+        <div class="app-close">
+            <img src="images/icons/red.svg">
         </div>
         <script data-template="ig_el" type="text/html">
             <div class="app-list-item" data-record="{id}">

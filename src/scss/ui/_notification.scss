@@ -1,5 +1,5 @@
 .notification{
-  background: red;
+  background: $red;
   width: 16px;
   height: 16px;
   border-radius: 100%;
@@ -16,7 +16,28 @@
 
 #phone-opener{
   .notification{
-    right: -4px;
-    top: 26px;
+    width: 24px;
+    height: 24px;
+    top: 2px;
+    right: 0;
+  }
+}
+
+
+
+.red-bubble{
+  width: 250px;
+  height: 250px;
+  background: $red;
+  z-index: 9;
+  position: absolute;
+  bottom: -70px;
+  border-radius: 100%;
+  left: -30px;
+  transition: 1s;
+  &.hided {
+    opacity: 0;
+    left: -250px;
+    bottom: -250px;
   }
 }

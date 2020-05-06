@@ -4,7 +4,7 @@ class App {
     constructor() {
         console.log('🏗 App constructor');
 
-        this.game = new Game();
+        this.game = new Game(false);
     }
 
     init() {

@@ -1,0 +1,10 @@
+$red : #C12F38;
+$dark-red : #5d0a0f;
+$green: #4DD964;
+$white: #FFFFFF;
+
+//BACKGROUNDS
+
+$background-color : black;
+$call-background: linear-gradient(to top, $dark-red, $background-color);
+$fog-background: black url('../../images/background-fog@2x.png') no-repeat center / cover;

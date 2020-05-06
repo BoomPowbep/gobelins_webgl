@@ -62,7 +62,12 @@ class Timeline {
                         break;
                     }
                     case TIMELINE_TYPES.HOURS_HUD : {
-                        Dates.fromDateHour(value.content.month,value.content.day,value.content.hour,value.content.minute);
+                        Dates.fromObject(value.content);
+                        break;
+                    }
+                    case TIMELINE_TYPES.TEXT : {
+                        let el = document.querySelector(value.content.el);
+                        el.innerText = value.content.text;
                         break;
                     }
                     case TIMELINE_TYPES.HIDE_SLIDE : {
@@ -71,8 +76,11 @@ class Timeline {
                     }
                     case TIMELINE_TYPES.PHONE : {
                         Mobile.unlock();
-                        document.querySelector("#phone-opener").addEventListener("touchend", () => {
+                        let opener = document.querySelector("#phone-opener");
+                        opener.addEventListener("touchend", () => {
                             DATA.ui_manager.get("phone").show()
+                            opener.classList.remove('not-opened');
+                            Mobile.bubble(false);
                         });
                         break;
                     }

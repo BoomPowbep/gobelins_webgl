@@ -1,6 +1,7 @@
 import gsap from "gsap";
 import TIMELINES from "../timeline/timeline-configs";
 import Rewind from "../../Game/Util/Rewind";
+import VARS from "../vars";
 
 class SlideContent {
     static show(html, callback = () => SlideContent.hide(), event = true) {
@@ -21,12 +22,12 @@ class SlideContent {
         gsap.fromTo(content, {opacity: 0}, {opacity: 1});
     }
 
-    static date(day, hour, callback = undefined, color = "white", event = true) {
-        SlideContent.show(`<div class='date' style="color:${color}">${hour}<br>${day}</div>`, callback, event);
+    static date(date, callback = undefined, color = "white", event = true) {
+        SlideContent.show(`<div class='date' style="color:${color}"><span>${date.hour}:${date.minute}</span><span>${VARS.DAYS[date.weekDay]} ${date.day} ${date.month}</span></div>`, callback, event);
     }
 
     static fromTo(start_date, end_date, callback = undefined, duration=5000, color = "white", event = true) {
-        SlideContent.show(`<div class='date' style="color:${color}">${start_date.day} ${start_date.month}<br>${start_date.hour}:${start_date.minute}</div>`, callback, event);
+        SlideContent.show(`<div class='date' style="color:${color}"><span>${start_date.hour}:${start_date.minute}</span><span>${VARS.DAYS[start_date.weekDay]} ${start_date.day} ${start_date.month}</span></div>`, callback, event);
         let el = document.querySelector('#slide-content');
         let date = el.querySelector('.date');
 
@@ -54,14 +55,14 @@ class SlideContent {
 
     //Special Slide Content
     static introduction() {
-        SlideContent.date("21 mars", "00:15", () => {
+        SlideContent.date(VARS.HOURS.BEGIN, () => {
             SlideContent.image("https://pokexp.com/uploads/event/28042020-staff-day.png", () => {
-                SlideContent.fromTo({day: "21", month: "mars", hour: 0, minute: 15}, {day: "25", month: "mars", hour: 16, minute: 30}, () => {
+                SlideContent.fromTo(VARS.HOURS.BEGIN, VARS.HOURS.SCENE_INTRO, () => {
                     SlideContent.hide();
-                    //TIMELINES.begin.play();
+                    TIMELINES.begin.play();
                 }, 3000)
             })
-        }, "red")
+        })
     }
 
 }

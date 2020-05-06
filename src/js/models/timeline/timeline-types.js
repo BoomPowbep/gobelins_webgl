@@ -3,7 +3,7 @@ const TIMELINE_TYPES = {
     SOUND_STOP : 'sound_stop',
     UI : 'ui',
     UI_HIDE : 'ui_hide',
-    MESSAGE : 'message', //todo
+    MESSAGE : 'message',
     FUNCTION : 'function',
     CONCLUSION : 'conclusion',
     PHONE : 'phone',
@@ -13,6 +13,7 @@ const TIMELINE_TYPES = {
     HOURS_SLIDE : 'hours_slide',
     HIDE_SLIDE : 'hide_slide',
     HOURS_HUD : 'hours_hud',
+    TEXT : 'text',
 };
 
 export default TIMELINE_TYPES;

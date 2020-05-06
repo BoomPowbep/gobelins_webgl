@@ -7,17 +7,21 @@
   bottom: 0;
   left: 0;
 
-  width: 100px;
+  width: 142px;
   height: 150px;
   z-index: 10;
   background-position: center;
   background-size: contain;
   cursor: pointer;
+  transform-origin: 0 100%;
+  transition: 1s;
 
-  transition: 0.5s;
+  &.not-opened {
+    transform: scale(1.4, 1.4);
+  }
 
   &.locked{
     left: -100px;
-    bottom: -150px;
+    bottom: -210px;
   }
 }

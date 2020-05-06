@@ -431,6 +431,7 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
+                        DATA.ui_manager.active('maps');
                         //show the final pointer on map only if everything is picked-up
                         let item = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-final");
                         item.visible = DATA.data_manager.letters.hasPickupAll();

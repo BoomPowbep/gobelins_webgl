@@ -1,3 +1,5 @@
+import VARS from "../../models/vars";
+
 class Rewind {
     static dateRewind(el, start, end, duration = 4000) {
         const DELAY = 10;
@@ -18,12 +20,14 @@ class Rewind {
         //On commence
         let begin = score_start;
 
+        let lastDay = start.weekDay;
+
         let interval = setInterval(function () {
             begin += addBy * progression;
             if((progression === 1 && begin >= score_end) || (progression === -1 && begin <= score_end))  {
                 //fin de l'interval, on clear l'interval et on set la date finale
                 clearInterval(interval);
-                el.innerHTML = `<span>${end.day} ${start.month}</span><br><span>${end.hour <= 9 ? `0${end.hour}`: end.hour}:${end.minute <= 9 ? `0${end.minute}`: end.minute}</span>`;
+                el.innerHTML = `<span>${end.hour <= 9 ? `0${end.hour}`: end.hour}:${end.minute <= 9 ? `0${end.minute}`: end.minute}</span><span>${VARS.DAYS[end.weekDay]} ${end.day} ${start.month}</span>`;
             }
             else {
                 //on calcule les jours, les heures et les minutes
@@ -31,7 +35,7 @@ class Rewind {
                 let hours = Math.floor((begin - (day*24*3600))/3600);
                 let minutes = Math.floor((begin - (day*24*3600) - (hours*3600))/60);
                 //on set en formattant
-                el.innerHTML = `<span>${day} ${start.month}</span><br><span>${hours <= 9 ? `0${hours}`: hours}:${minutes <= 9 ? `0${minutes}`: minutes}</span>`;
+                el.innerHTML = `<span>${hours <= 9 ? `0${hours}`: hours}:${minutes <= 9 ? `0${minutes}`: minutes}</span><span>${VARS.DAYS[start.weekDay + (day - start.day)]} ${day} ${start.month}</span>`;
             }
 
         }, DELAY);

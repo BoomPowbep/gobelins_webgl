@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../fonts/montserrat_medium-webfont.woff2') format('woff2'),
+  url('../../fonts/montserrat_medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../fonts/montserrat-semibold-webfont.woff2') format('woff2'),
+  url('../../fonts/montserrat-semibold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'Krungthep';
+  src: url('../../fonts/font-krungthep-webfont.woff2') format('woff2'),
+  url('../../fonts/font-krungthep-webfont.woff') format('woff');
+  font-style: normal;
+
+}
+
+
+
+$font : "Montserrat";
+$font_alt : "Krungthep";

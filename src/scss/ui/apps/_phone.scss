@@ -1,0 +1,31 @@
+#app_call.app{
+  background: $call-background;
+  .app-content{
+    flex-direction: column;
+    text-align: center;
+  }
+  .caller-name{
+    font-size: 24px;
+    line-height: 24px;
+    display: block;
+    margin-bottom: 15px;
+  }
+  .duration{
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .start-call, .stop-call{
+    margin-top: 350px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 15px;
+    img {
+      margin-bottom: 10px;
+    }
+  }
+
+  .stop-call{
+    display: none;
+  }
+}
