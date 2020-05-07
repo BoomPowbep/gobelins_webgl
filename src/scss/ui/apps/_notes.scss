@@ -17,4 +17,13 @@
   .pause{
     display: none;
   }
+  .no-records{
+    font-size: 14px;
+    text-align: center;
+    padding: 20px 0 18px;
+    border: 1px solid transparentize($grey, 0.5);
+    border-left: 0;
+    border-right: 0;
+    margin-bottom: 50px;
+  }
 }

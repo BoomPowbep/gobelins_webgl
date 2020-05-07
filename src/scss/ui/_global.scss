@@ -93,10 +93,11 @@ $app_height_name : 64px;
 
   .app-grid{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
     &-item{
       overflow: hidden;
+      border-radius: 5px;
       > img{
         height: 100%;
         transform: scale(1.1,1.1);
@@ -115,7 +116,7 @@ $app_height_name : 64px;
   }
 
   .slider{
-    overflow: scroll;
+    overflow: hidden;
     scroll-behavior: smooth;
     white-space: nowrap;
     .slide{

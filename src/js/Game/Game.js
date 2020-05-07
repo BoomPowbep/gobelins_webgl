@@ -63,7 +63,21 @@ export default class Game {
 
 
         let cover = document.getElementById("cover");
-        let date = cover.querySelector('.data-time');
+
+        let share = document.querySelectorAll(".share");
+        share.forEach(value => {
+            value.addEventListener('click', function (e) {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'MURDHER',
+                        text: 'Un crime a eu lieu... Résous l\'enquête !',
+                        url: 'https://murdher.debalme.dev',
+                    })
+                        .then(() => console.log('Successful share'))
+                        .catch((error) => console.log('Error sharing', error));
+                }
+            })
+        })
 
         /**
          * Evenement dispatch après avoir fermé une conclusion
@@ -523,7 +537,7 @@ export default class Game {
                 });
 
                 setTimeout(() => {
-                    SlideContent.introduction();
+              //      SlideContent.introduction();
                 }, 500);
             }
             else {

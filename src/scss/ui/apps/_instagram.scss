@@ -1,0 +1,46 @@
+#app_instagram{
+  .app-list-item{
+    border-bottom: 0;
+  }
+  .progression{
+    position: absolute;
+    background-color: rgba(10, 10, 10, 0.7);
+    right: 15px;
+    top: 90px;
+    font-size: 10px;
+    border-radius: 20px;
+    line-height: 11px;
+    padding: 5px 8px 3px;
+  }
+  .dots{
+    text-align: center;
+    padding: 5px 0;
+  }
+  .dot{
+    width: 6px;
+    height: 6px;
+    background: $grey;
+    border-radius: 3px;
+    margin: 3px;
+    display: inline-block;
+    &.active{
+      background: $red;
+    }
+  }
+  .footer{
+    margin-top: 15px;
+    position: relative;
+    img{
+      position: absolute;
+      top: 0;
+    }
+  }
+  .header{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    .header-content{
+      margin-left: 10px;
+    }
+  }
+}

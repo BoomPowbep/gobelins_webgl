@@ -1,3 +1,7 @@
+import gsap from 'gsap'
+import { ScrollToPlugin } from 'gsap/all'
+gsap.registerPlugin(ScrollToPlugin);
+
 class Conclusion {
     constructor(id, el) {
         this.id = id;
@@ -5,6 +9,8 @@ class Conclusion {
         this.played_once = false;
 
         this.init();
+
+        this.index = 0;
     }
 
     show() {
@@ -44,11 +50,36 @@ class Conclusion {
 
                 //slide using scrollLeft
                 if(delta >= 100)
-                    this.el.scrollTop += this.el.clientHeight;
+                    this.scroll(1);
                 if(delta <= -100)
-                    this.el.scrollTop -= this.el.clientHeight;
+                    this.scroll(-1);
             })
         }
+
+
+        let next = this.el.querySelector('button[data-next-conclusion]');
+        if(next)
+            next.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.scroll(1);
+            })
+    }
+    
+    scroll(direction = 1) {
+        this.index = Math.max(0, this.index+direction);
+        gsap.to(this.el, {scrollTo: {y:(this.index* this.el.clientHeight)}, onComplete: () => {
+            let next = this.el.querySelector('button[data-next-conclusion]');
+            if(this.index === 7) {
+                next.innerText = "Crédits";
+            }
+            else if(this.index === 8) {
+                gsap.to(next, {opacity: 0});
+            }
+            else {
+                next.innerText = "Suivant";
+            }
+
+        }});
     }
 }
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Three.js Starter</title>
+    <title>Murdher</title>
     <meta name="description" content="Three.js Starter pack.">
 
     <!-- TODO add og, canonical, robots -->
@@ -56,9 +56,9 @@
     <div class="conclude-block" data-conclusion="scene-1">
         <div class="conclude">
             <p>
-                La femme n'a pas de place dans les médias traditionnels quand on parle des féminicides.
+                La femme n'a pas de place dans les médias traditionnels quand on parle des <strong>féminicides</strong>.
             </p>
-            <button data-close-conclusion="scene-1">Close</button>
+            <button class="btn-secondary" data-close-conclusion="scene-1">Suivant</button>
         </div>
     </div>
     <div class="conclude-block" data-conclusion="scene-2">
@@ -66,7 +66,7 @@
             <p>
                 Pour dénoncer les féminicides, les femmes ont créé un nouveau média : les collages. Elles communiquent par Instagram pour rester dans l’anonymat.
             </p>
-            <button data-close-conclusion="scene-2">Close</button>
+            <button class="btn-secondary" data-close-conclusion="scene-2">Suivant</button>
         </div>
     </div>
     <div class="conclude-block" data-conclusion="scene-3">
@@ -74,28 +74,65 @@
             <p>
                 La faible visibilité dans les médias contribue au manque de sensibilisation et d'information d'un grand nombre de la population sur les féminicides.
             </p>
-            <button data-close-conclusion="scene-3">Close</button>
+            <button class="btn-secondary" data-close-conclusion="scene-3">Suivant</button>
         </div>
     </div>
-    <div class="conclude-block" data-conclusion="final">
+    <div class="conclude-block conc-final" data-conclusion="final">
         <div class="conclude">
-            <p>On décrit comme féminicide, le meurtre de personne(s) de sexe féminin </p>
+            <p>On décrit comme <strong>féminicide</strong>, le meurtre de personne(s) de sexe féminin </p>
         </div>
         <div class="conclude">
-            <p>Il y a souvent des signes qui indiquent la situation d'une victime. </p>
+            <p>Il y a souvent des <strong>signes</strong> qui indiquent la situation d'une victime. </p>
         </div>
         <div class="conclude">
-            <p>Pour aider les victimes et sauver des vies, prenez des nouvelles ou si vous entendez des cris et coups chez votre voisine, appelez le 17. </p>
+            <p>Pour aider les victimes et sauver des vies, prenez des nouvelles ou si vous entendez des cris et coups chez votre voisine, <strong>appelez le 17</strong>.</p>
         </div>
         <div class="conclude">
-            <p>Peu de féminicides sont abordés dans les médias et la population y est peu sensibilisée. </p>
+            <p>Peu de féminicides sont abordés dans les médias et la population y est <strong>peu sensibilisée</strong>. </p>
         </div>
         <div class="conclude">
-            <p>Depuis 2019, dans toute la France, les colleuses se mobilisent pour dénoncer les violences faites aux femmes grâce aux collages. Collage féminicide Instagram </p>
+            <p>Depuis 2019, dans toute la France, les <strong>colleuses</strong> se mobilisent pour dénoncer les violences faites aux femmes grâce aux collages.</p>
         </div>
         <div class="conclude">
-            <p>Depuis 2020, 27 femmes ont été tué par leur conjoint. Mais la prise d'initiative continue et doit se renforcer. Vous aussi vous pouvez aider en étant vigilant et en sensibilisant votre entourage. </p>
+            <p>Depuis 2020, <strong>31 femmes</strong> sont mortes par leur conjoint. </p>
         </div>
+        <div class="conclude">
+            <p class="alt">
+                Vous aussi, vous pouvez aider en sensibilisant votre entourage.
+            </p>
+            <a class="share btn" target="_blank">Partager</a>
+        </div>
+        <div class="conclude">
+            <p class="alt">
+                Découvrez le combat des femmes engagées contre les féminicides.
+            </p>
+            <a class="btn" target="_blank" href="https://www.instagram.com/collages_feminicides_paris/">@collage_feminicides_paris</a>
+            <a class="btn" target="_blank" href="https://www.instagram.com/noustoutesorg/">@noustoutesorg</a>
+        </div>
+        <div class="conclude">
+            <img src="images/logo-murdher.svg" class="logo">
+            <div class="team">
+                <div class="team-element">
+                    <span>Mickaël DEBALME</span>
+                    <span>Développeur</span>
+                </div>
+                <div class="team-element">
+                    <span>Loris PINNA</span>
+                    <span>Développeur</span>
+                </div>
+                <div class="team-element">
+                    <span>Clara FOGGETTI</span>
+                    <span>Designer</span>
+                </div>
+                <div class="team-element">
+                    <span>Sandra PEREIRA</span>
+                    <span>Designer</span>
+                </div>
+            </div>
+            <img class="credit-logo" src="images/credits/logo-gobelins.png">
+            <img class="credit-logo" src="images/credits/logo-cci-haute-savoie.png">
+        </div>
+        <button class="btn-secondary" data-next-conclusion="final">Suivant</button>
     </div>
 </div>
 
@@ -121,11 +158,14 @@
         </script>
         <script data-template="photo_el" type="text/html">
             <div class="app-grid-item" data-letter="{id}">
-                <img src="images/letters/test.png">
+                <img src="{texture}">
             </div>
         </script>
         <div class="app-content">
             <h2>Enregistrements</h2>
+            <div class="no-records">
+                Vous n'avez pas encore d'engistrement.
+            </div>
             <div class="app-list"></div>
             <h2>Documents</h2>
             <div class="app-grid"></div>
@@ -173,15 +213,27 @@
             <img src="images/icons/red.svg">
         </div>
         <script data-template="ig_el" type="text/html">
-            <div class="app-list-item" data-record="{id}">
+            <div class="app-list-item" data-ig="{id}">
                 <div    data-to-toggle="{name}">
-                    <p class="important">{name}</p>
-                    <div class="slider">
-                        <div class="slide"><img src="images/slides/slide_1.png"></div><div class="slide"><img src="images/slides/slide_2.png"></div><div class="slide"><img src="images/slides/slide_3.png"></div>
+                    <div class="header">
+                        <img src="images/icons/pdp.svg">
+                        <div class="header-content">
+                            <p class="important">{name}</p>
+                            <p class="small">France</p>
+                        </div>
                     </div>
-                    <span class="small o-60 f-r">{commentary}</span>
+                    <div class="progression">1 / 3</div>
+                    <div class="slider">
+                    </div>
+                    <div class="footer">
+                        <img src="images/icons/heart.svg">
+                        <div class="dots"></div>
+                    </div>
                 </div>
             </div>
+        </script>
+        <script data-template="ig_slide" type="text/html">
+            <div class="slide" data-index="{index}"><img src="{path}"></div>
         </script>
         <div class="app-content">
             <div class="app-list"></div>

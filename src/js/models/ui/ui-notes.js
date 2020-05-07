@@ -13,14 +13,18 @@ class UiNotes extends Ui {
 
     setupDOM() {
         super.setupDOM();
+
+        if(DATA.data_manager.records.countPicked() >= 1) {
+            this.element.querySelector('.no-records');
+        }
+
         let template = new Template("script[data-template='photo_el']");
         this.grid.innerHTML = "";
         DATA.data_manager.letters.items.forEach(value => {
-            if (value.isPicked()) {
                 template.append(this.grid, {
                     id: value.identifier,
+                    texture: value.getPhoneImage()
                 });
-            }
         });
 //
         let templateMemo = new Template("script[data-template='memo_el']");

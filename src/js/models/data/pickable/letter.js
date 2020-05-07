@@ -38,6 +38,13 @@ class Letter extends Pickable{
     getImage() {
         return `textures/letters/${this.letter}.png`;
     }
+
+    getPhoneImage() {
+        if(this.isPicked())
+            return `images/letters/mobile_${this.letter}.jpg`;
+        else
+            return `images/letters/_.jpg`;
+    }
 }
 
 export default Letter;
