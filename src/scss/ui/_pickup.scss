@@ -3,22 +3,58 @@
   transition: 1s;
   height: 100vh;
   opacity: 0;
-  background: black;
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   position: fixed;
   z-index: 1;
+  width: 100%;
+  padding: 30px 32px;
+  box-sizing: border-box;
   &.active{
     transform: translateY(0);
     opacity: 1;
   }
-  img{
-    max-width: 100%;
+  > img{
+    max-width: 33%;
+    margin-bottom: 70px;
   }
-  p {
+  > p {
     color: white;
-    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    height: 32px;
+    text-align: center;
+    margin-bottom: 30px;
+    max-width: 300px;
+  }
+  span.progression{
+    color: $red;
+    font-family: $font_alt;
+    right: $horizontal_gutter;
+    bottom: $vertical_gutter;
+    font-size: 20px;
+    line-height: 25px;
+    position: absolute;
+    z-index: 2;
+  }
+  .record{
+    background: $white;
+    position: relative;
+    padding: 10px 20px;
+    width: 100%;
+    margin-bottom: 70px;
+    box-sizing: border-box;
+    .important{
+      color: black;
+      margin-bottom: 5px;
+    }
+    img {
+      right: 20px;
+      top: 18px;
+      position: absolute;
+    }
   }
 }

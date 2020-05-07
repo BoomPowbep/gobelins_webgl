@@ -113,12 +113,19 @@ export default class Game {
             let letters = DATA.data_manager.letters;
 
             AudioManager.play("paper");
-            Pickup.show(`Vous avez ramassé 1 lettre manquante. Encore ${letters.count() - letters.countPicked()}`, letter.identifier);
+            Pickup.show( "letter", letter.identifier);
 
             if(letters.hasPickupAllInScene(letter.scene)) {
                 //todo : ajouter une pastille de notification sur la map et le téléphone
                 Notification.mapNotification();
             }
+        });
+
+        document.addEventListener("record", (e) => {
+            let record = e.detail;
+
+            AudioManager.play("paper");
+            Pickup.show("record", record.identifier);
         });
 
         /**
@@ -216,7 +223,7 @@ export default class Game {
             }
 
             // FIXME put elsewhere
-            document.querySelector("button[data-close-pickup]").addEventListener('click', () => {
+            document.querySelector("#pickup").addEventListener('click', () => {
                 document.getElementById("pickup").classList.remove("active");
             });
         });
@@ -537,7 +544,7 @@ export default class Game {
                 });
 
                 setTimeout(() => {
-              //      SlideContent.introduction();
+                    SlideContent.introduction();
                 }, 500);
             }
             else {

@@ -26,6 +26,12 @@ class Record  extends Pickable {
     getRecordName() {
         return this.record_name;
     }
+
+    pickedUp() {
+        super.pickedUp();
+        let event = new CustomEvent("record", {detail: this});
+        document.dispatchEvent(event);
+    }
 }
 
 export default Record;
