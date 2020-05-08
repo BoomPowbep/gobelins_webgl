@@ -33,6 +33,12 @@ class GameManager {
             this.lightingManager = null;
             this.sceneryManager = null;
 
+            // Scenery-specific attributes
+            this.bistroListening = false;
+            this.bistroListened = false;
+            this.bistroListenTimer = null;
+            this.bistroCircleAnimationTick = null;
+
             GameManager.instance = this;
 
             // Event listeners

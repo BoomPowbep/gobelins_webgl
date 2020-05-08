@@ -175,7 +175,7 @@ export default class GeometryManager {
     }
 
 
-    /**
+    /** 
      * Creates a basic shape.
      * @param identifier
      * @param size
@@ -238,7 +238,58 @@ export default class GeometryManager {
         return shape;
     }
 
+    /**
+     * Creates a circle geometry.
+     * @param identifier
+     * @param radius
+     * @param position
+     * @param rotation
+     * @param color
+     * @param visibility
+     * @returns {Mesh}
+     */
+    createCircleShape({
+                          identifier = "Unnamed",
+                          radius = 10,
+                          position = {x: 0, y: 0, z: 0},
+                          rotation = {x: 0, y: 0, z: 0},
+                          color = 0xffff00,
+                          visibility = true
+                      }) {
+        let geometry = new THREE.CircleGeometry(radius, 10, 0, Math.PI * 0.2);
+        let material = new THREE.MeshBasicMaterial({color: color});
+        let circle = new THREE.Mesh(geometry, material);
+        circle.identifier = identifier;
+        circle.position.set(position.x, position.y, position.z);
+        circle.rotation.set(rotation.x, rotation.y, rotation.z);
+        console.log("CIRLCE", circle);
+        return circle;
+    }
 
+
+    createPlaneWithTexture({
+                               identifier = "Unnamed",
+                               width = 10,
+                               height = 10,
+                               position = {x: 0, y: 0, z: 0},
+                               rotation = {x: 0, y: 0, z: 0},
+                               texture = "",
+                               visibility = true
+                           }) {
+        let geometry = new THREE.PlaneGeometry(width, height, 1, 1);
+
+        let textureLoaded = new THREE.TextureLoader().load(texture,
+            (loadedTexture) => {
+                let material = new THREE.MeshBasicMaterial({map: textureLoaded})
+                let plane = new THREE.Mesh(geometry, material);
+                plane.identifier = identifier;
+                plane.position.set(position.x, position.y, position.z);
+                plane.rotation.set(rotation.x, rotation.y, rotation.z);
+                return plane;
+            }
+        );
+    }
+ 
     /**
      * Register all created geometries.
      * @param geometriesArray

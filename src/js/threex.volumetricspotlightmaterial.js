@@ -6,9 +6,9 @@ var THREEx = THREEx || {}
  * from http://stemkoski.blogspot.fr/2013/07/shaders-in-threejs-glow-and-halo.html
  * @return {[type]} [description]
  */
-export function VolumetricSpotLightMaterial() {
+THREEx.VolumetricSpotLightMaterial = function () {
     //
-    var vertexShader = [
+    let vertexShader = [
         'varying vec3 vNormal;',
         'varying vec3 vWorldPosition;',
 
@@ -23,11 +23,13 @@ export function VolumetricSpotLightMaterial() {
         'gl_Position	= projectionMatrix * modelViewMatrix * vec4( position, 1.0 );',
         '}',
     ].join('\n')
-    var fragmentShader = [
+    let fragmentShader = [
         'varying vec3		vNormal;',
         'varying vec3		vWorldPosition;',
 
         'uniform vec3		lightColor;',
+
+        'uniform float      attenuationFactor;',
 
         'uniform vec3		spotPosition;',
 
@@ -40,7 +42,7 @@ export function VolumetricSpotLightMaterial() {
         //////////////////////////////////////////////////////////
         // distance attenuation					//
         //////////////////////////////////////////////////////////
-        'intensity	= distance(vWorldPosition, spotPosition)/attenuation;',
+        'intensity	= distance(vWorldPosition, spotPosition)/(attenuation * attenuationFactor);',
         'intensity	= 1.0 - clamp(intensity, 0.0, 1.0);',
 
         //////////////////////////////////////////////////////////
@@ -62,7 +64,7 @@ export function VolumetricSpotLightMaterial() {
 
     // create custom material from the shader code above
     //   that is within specially labeled script tags
-    var material = new THREE.ShaderMaterial({
+    let material = new THREE.ShaderMaterial({
         uniforms: {
             attenuation: {
                 type: "f",
@@ -80,6 +82,10 @@ export function VolumetricSpotLightMaterial() {
                 type: "c",
                 value: new THREE.Color('cyan')
             },
+            attenuationFactor: {
+                type: "f",
+                value: 20.0
+            },
         },
         vertexShader: vertexShader,
         fragmentShader: fragmentShader,
@@ -88,5 +94,8 @@ export function VolumetricSpotLightMaterial() {
         transparent: true,
         depthWrite: false,
     });
-    return material
+    return material;
 }
+
+
+export default THREEx;
