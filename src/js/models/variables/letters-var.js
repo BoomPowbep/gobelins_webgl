@@ -2,7 +2,7 @@ import {toRad} from "../../Game/Util/Helpers";
 
 const LETTERS_VAR = {
     'letter-1': {
-        scene: 1,
+        scene: 0,
         letter: "L",
         dragRotate: {x: toRad(20), y: toRad(10), z: toRad(5)},
         dragPos: {x:-10, y:-18, z:-25},
@@ -17,7 +17,7 @@ const LETTERS_VAR = {
     }, //M
 
     'letter-3': {
-        scene: 2,
+        scene: 1,
         letter: "C",
         dragRotate: {x: toRad(20), y: toRad(10), z: toRad(5)},
         dragPos: {x:-4, y:-18, z:-25},

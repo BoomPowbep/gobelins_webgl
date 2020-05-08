@@ -1,5 +1,5 @@
 class Message {
-    static message(message, autoHideDelay = 10000) {
+    static message(message, autoHideDelay = 4000) {
         let messageElement = document.querySelector('#message');
         messageElement.classList.add('active');
         messageElement.innerText = message;

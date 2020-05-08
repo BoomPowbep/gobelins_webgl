@@ -23,6 +23,7 @@ import VARS from "../models/vars";
 import UserHand from "./UserHand";
 import ControlsManager from "./ControlsManager/ControlsManager";
 import Rewind from "./Util/Rewind";
+import {gui} from "dat.gui";
 
 
 export default class Game {
@@ -62,7 +63,7 @@ export default class Game {
         this._raycasterManager = new RaycasterManager(this._debugMode);
 
 
-        let cover = document.getElementById("cover");
+        let cover = document.querySelector("#cover button");
 
         let share = document.querySelectorAll(".share");
         share.forEach(value => {
@@ -159,7 +160,7 @@ export default class Game {
             if (this._debugMode) {
 
 
-                Object.entries(DATA.ui_manager.ui_list).forEach(value => GameBrain.gui.add({
+                /*Object.entries(DATA.ui_manager.ui_list).forEach(value => GameBrain.gui.add({
                     add: () => {
                         DATA.ui_manager.get(value[0]).show()
                     }
@@ -176,7 +177,7 @@ export default class Game {
                         let el = DATA.data_manager.get('letter', value.identifier);
                         el.pickedUp();
                     }
-                }, 'add').name('letter:' + value.identifier));
+                }, 'add').name('letter:' + value.identifier));*/
 
 
                 const sceneriesIdentifiers = [
@@ -191,7 +192,7 @@ export default class Game {
                         tp: () => {
                             GameBrain.sceneryManager.startSceneryTransition(identifier);
                         }
-                    }, 'tp').name('to ' + identifier);
+                    }, 'tp').name('to ' + identifier.replace("Scenery",""));
                 });
             }
         });
@@ -199,7 +200,7 @@ export default class Game {
         // On user click, start game
         cover.addEventListener("click", () => {
             AudioManager.init();
-            cover.remove();
+            cover.parentElement.remove();
 
             //Setup audio list here
             // AudioManager.play("birds");
@@ -281,6 +282,16 @@ export default class Game {
                 identifier: 'StreetEnvironment',
                 path: 'models/FBX/Street.fbx',
                 initialScaleFactor: 1
+            }),
+            new Model({
+                identifier: 'letter-1',
+                path: 'models/FBX/Boulette_Red.fbx',
+                initialScaleFactor: 0.01,
+                initialPosition: {
+                    x: 120,
+                    y: 50,
+                    z: 260
+                }
             })
         ];
 
@@ -308,6 +319,9 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive : (scene) => {
+                        let item = GameBrain.geometryManager.getGeometryReferenceByIdentifier("button");
+                        item.visible = DATA.data_manager.letters.hasPickupAll();
+
                         scene.add( GameBrain.cameraManager.camera );
                     }
                 }
@@ -318,25 +332,6 @@ export default class Game {
         geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "ColleusesSkybox"), // Skybox
 
-            // Letters
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "letter-1",
-                position: {x: 0, y: 0, z: -120},
-                size: {x: 30, y: 30, z: 30},
-                color: 0x28BDF5,
-            }),
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "letter-2",
-                position: {x: 0, y: 0, z: 120},
-                size: {x: 30, y: 30, z: 30},
-                color: 0x28BDC5,
-            }),
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "letter-3",
-                position: {x: -120, y: 0, z: 0},
-                size: {x: 30, y: 30, z: 30},
-                color: 0x28FDF5,
-            }),
             GameBrain.geometryManager.createBasicShape({
                 identifier: "letter-4",
                 position: {x: 120, y: 0, z: 0},
@@ -354,6 +349,26 @@ export default class Game {
                     x: 0,
                     y: toRad(90),
                     z: 0
+                }
+            }),
+            new Model({
+                identifier: 'letter-4',
+                path: 'models/FBX/Boulette_Red.fbx',
+                initialScaleFactor: 0.01,
+                initialPosition: {
+                    x: 38,
+                    y: 21,
+                    z: 27
+                }
+            }),
+            new Model({
+                identifier: 'letter-5',
+                path: 'models/FBX/Boulette_Red.fbx',
+                initialScaleFactor: 0.01,
+                initialPosition: {
+                    x: 38,
+                    y: 21,
+                    z: 27
                 }
             }),
         ];
@@ -476,31 +491,26 @@ export default class Game {
         models = [
             new Model({identifier: 'BistroEnvironment', path: 'models/FBX/Bar.fbx', initialScaleFactor: 1}),
 
-            // Letters
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "letter-1",
-                position: {x: 0, y: 0, z: -120},
-                size: {x: 30, y: 30, z: 30},
-                color: 0x28BDF5,
+            new Model({
+                identifier: 'letter-2',
+                path: 'models/FBX/Boulette_Red.fbx',
+                initialScaleFactor: 0.01,
+                initialPosition: {
+                    x: 38,
+                    y: 21,
+                    z: 27
+                }
             }),
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "letter-2",
-                position: {x: 0, y: 0, z: 120},
-                size: {x: 30, y: 30, z: 30},
-                color: 0x28BDC5,
-            }),
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "letter-3",
-                position: {x: -120, y: 0, z: 0},
-                size: {x: 30, y: 30, z: 30},
-                color: 0x28FDF5,
-            }),
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "letter-4",
-                position: {x: 120, y: 0, z: 0},
-                size: {x: 30, y: 30, z: 30},
-                color: 0x2FFFF5,
-            }),
+            new Model({
+                identifier: 'letter-3',
+                path: 'models/FBX/Boulette_Red.fbx',
+                initialScaleFactor: 0.01,
+                initialPosition: {
+                    x: -4,
+                    y: 15,
+                    z: 87
+                }
+            })
         ];
 
         lights = [
@@ -532,6 +542,46 @@ export default class Game {
             )
         );
 
+        function setupDatGUIModels() {
+            let editedElement = GameBrain.modelManager.getModelReferenceByIdentifier('letter-1');
+            let identifier = {model:""};
+            let elementSelector = GameBrain.gui.add(identifier, 'model', ['letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8']);
+
+            let x_element = null;
+            let y_element = null;
+            let z_element = null;
+
+            function makeSliderFor(el) {
+                if(x_element !== null) {
+                    GameBrain.gui.remove(x_element);
+                    GameBrain.gui.remove(y_element);
+                    GameBrain.gui.remove(z_element);
+                }
+
+                x_element =  GameBrain.gui.add(el.position, 'x', el.position.x - 100, el.position.x + 100);
+                y_element =  GameBrain.gui.add(el.position, 'y', el.position.y - 30, el.position.y + 30);
+                z_element =  GameBrain.gui.add(el.position, 'z', el.position.z - 100, el.position.z + 100);
+            }
+
+            makeSliderFor(editedElement);
+
+            elementSelector.onChange((value) => {
+                //si la réf par model existe
+                let toEdit = GameBrain.modelManager.getModelReferenceByIdentifier(value);
+                if(toEdit !== null) {
+                    editedElement = toEdit;
+                    makeSliderFor(editedElement);
+                    return;
+                }
+                //si la réf par geometry existe
+                let toEditGeometry = GameBrain.geometryManager.getGeometryReferenceByIdentifier(value);
+                if(toEditGeometry !== null) {
+                    editedElement = toEditGeometry;
+                    makeSliderFor(editedElement);
+                    return;
+                }
+            });
+        }
         function checkElementsReady() {
             const duration = 1;
             let total =  GameBrain.sceneryManager._sceneries.length;
@@ -543,8 +593,10 @@ export default class Game {
                     autoAlpha: 0
                 });
 
+                setupDatGUIModels();
+
                 setTimeout(() => {
-                    SlideContent.introduction();
+                   // SlideContent.introduction();
                 }, 500);
             }
             else {
@@ -684,11 +736,11 @@ export default class Game {
     _loop() {
         requestAnimationFrame(this._loop.bind(this));
 
-        this._debugMode && this.stats.begin();
+        //this._debugMode && this.stats.begin();
 
         GameBrain.controlsManager.controls.update(this._clock.getDelta()); // Only for device orientation controls
         GameBrain.renderer.render(GameBrain.sceneManager.scene, GameBrain.cameraManager.camera);
 
-        this._debugMode && this.stats.end();
+        //this._debugMode && this.stats.end();
     }
 }

@@ -6,9 +6,12 @@ html {
   body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
     font-family: $font;
     background-color: $black-color;
+    position:relative;
 
     touch-action: manipulation;
 
@@ -138,8 +141,8 @@ html {
   z-index: 2;
   position: absolute;
   top: 0;
-  right: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%) translateZ(0);
   width: 200px;
   height: 80%;
   flex-direction: column;
