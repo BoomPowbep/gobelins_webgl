@@ -6,9 +6,9 @@ var THREEx = THREEx || {}
  * from http://stemkoski.blogspot.fr/2013/07/shaders-in-threejs-glow-and-halo.html
  * @return {[type]} [description]
  */
-THREEx.VolumetricSpotLightMaterial	= function(){
+THREEx.VolumetricSpotLightMaterial = function () {
     //
-    var vertexShader	= [
+    let vertexShader = [
         'varying vec3 vNormal;',
         'varying vec3 vWorldPosition;',
 
@@ -23,11 +23,13 @@ THREEx.VolumetricSpotLightMaterial	= function(){
         'gl_Position	= projectionMatrix * modelViewMatrix * vec4( position, 1.0 );',
         '}',
     ].join('\n')
-    var fragmentShader	= [
+    let fragmentShader = [
         'varying vec3		vNormal;',
         'varying vec3		vWorldPosition;',
 
         'uniform vec3		lightColor;',
+
+        'uniform float      attenuationFactor;',
 
         'uniform vec3		spotPosition;',
 
@@ -40,7 +42,7 @@ THREEx.VolumetricSpotLightMaterial	= function(){
         //////////////////////////////////////////////////////////
         // distance attenuation					//
         //////////////////////////////////////////////////////////
-        'intensity	= distance(vWorldPosition, spotPosition)/attenuation;',
+        'intensity	= distance(vWorldPosition, spotPosition)/(attenuation * attenuationFactor);',
         'intensity	= 1.0 - clamp(intensity, 0.0, 1.0);',
 
         //////////////////////////////////////////////////////////
@@ -62,33 +64,37 @@ THREEx.VolumetricSpotLightMaterial	= function(){
 
     // create custom material from the shader code above
     //   that is within specially labeled script tags
-    var material	= new THREE.ShaderMaterial({
+    let material = new THREE.ShaderMaterial({
         uniforms: {
-            attenuation	: {
-                type	: "f",
-                value	: 5.0
+            attenuation: {
+                type: "f",
+                value: 5.0
             },
-            anglePower	: {
-                type	: "f",
-                value	: 1.2
+            anglePower: {
+                type: "f",
+                value: 1.2
             },
-            spotPosition		: {
-                type	: "v3",
-                value	: new THREE.Vector3( 0, 0, 0 )
+            spotPosition: {
+                type: "v3",
+                value: new THREE.Vector3(0, 0, 0)
             },
-            lightColor	: {
-                type	: "c",
-                value	: new THREE.Color('cyan')
+            lightColor: {
+                type: "c",
+                value: new THREE.Color('cyan')
+            },
+            attenuationFactor: {
+                type: "f",
+                value: 20.0
             },
         },
-        vertexShader	: vertexShader,
-        fragmentShader	: fragmentShader,
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader,
         // side		: THREE.DoubleSide,
         // blending	: THREE.AdditiveBlending,
-        transparent	: true,
-        depthWrite	: false,
+        transparent: true,
+        depthWrite: false,
     });
-    return material
+    return material;
 }
 
 

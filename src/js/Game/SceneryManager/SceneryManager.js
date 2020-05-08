@@ -101,10 +101,20 @@ class SceneryManager {
                 light.target.position.y += queued.basePosition.y;
                 light.target.position.z += queued.basePosition.z;
 
-                if(this._debugMode) {
-                    let spotLightHelper = new THREE.SpotLightHelper(light);
-                    spotLightHelper.identifier = light.identifier + "-helper";
-                    GameBrain.lightingManager.lights.push(spotLightHelper);
+                // Apply position on helper
+                // if(this._debugMode) {
+                //     let spotLightHelper = new THREE.SpotLightHelper(light);
+                //     spotLightHelper.identifier = light.identifier + "-helper";
+                //     GameBrain.lightingManager.lights.push(spotLightHelper);
+                // }
+
+                // Apply position on volumetry
+                let volumetric = GameBrain.lightingManager.getLightReferenceByIdentifier(light.identifier + "-volumetry");
+                if(volumetric) {
+                    volumetric.material.uniforms.spotPosition.value = light.position;
+                    volumetric.position.x += queued.basePosition.x;
+                    volumetric.position.y += queued.basePosition.y;
+                    volumetric.position.z += queued.basePosition.z;
                 }
             });
 

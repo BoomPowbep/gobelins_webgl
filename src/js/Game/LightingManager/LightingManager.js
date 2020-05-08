@@ -28,6 +28,7 @@ export default class LightingManager {
      * @param color
      * @param intensity
      * @param position
+     * @param rotation
      * @param target
      * @param angle
      * @param distance
@@ -43,20 +44,22 @@ export default class LightingManager {
                         angle = .05,
                         distance = 1000,
                         penumbra = .7,
-                        decay = 1.2
+                        decay = 1.2,
+                        radiusTop = 2,
+                        attenuationFactor = 20.0
                     }) {
 
         // add spot light
-        // var geometry	= new THREE.CylinderGeometry( .5, 10, 200, 32*16, 40, false);
-        var geometry	= new THREE.CylinderGeometry( 0.1, 5*Math.cos(Math.PI/3)/1.5, 10, 32*2, 20, true);
-        geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -geometry.parameters.height/2, 0 ) );
-        geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI / 2 ) );
-        var material	= new THREEx.VolumetricSpotLightMaterial()
-        var mesh	= new THREE.Mesh( geometry, material );
-        mesh.position.set(80,3035,-190);
-        mesh.lookAt(new THREE.Vector3(0,0, 0));
-        material.uniforms.lightColor.value.set('white')
-        material.uniforms.spotPosition.value	= mesh.position
+        let geometry = new THREE.CylinderGeometry(radiusTop, angle * 150, distance, 32 * 4, 10, true);
+        geometry.applyMatrix4(new THREE.Matrix4().makeTranslation(0, -geometry.parameters.height / 2, 0));
+        geometry.applyMatrix4(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
+        let material = new THREEx.VolumetricSpotLightMaterial()
+        let mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(position.x, position.y + 4.5, position.z);
+        mesh.lookAt(new THREE.Vector3(target.x, target.y, target.z));
+        material.uniforms.lightColor.value.set('white');
+        material.uniforms.spotPosition.value = mesh.position;
+        material.uniforms.attenuationFactor.value = attenuationFactor;
 
         mesh.identifier = identifier + "-volumetry";
 
@@ -67,17 +70,13 @@ export default class LightingManager {
         // Adding identifier property
         spotLight.identifier = identifier;
 
-        spotLight.position.copy(mesh.position)
-        spotLight.color		= mesh.material.uniforms.lightColor.value
-        spotLight.exponent	= 30
-        spotLight.angle		= angle;
-        spotLight.intensity	= 5
+        spotLight.position.set(position.x, position.y, position.z);
 
-        // spotLight.rotation.set(0, 0, 0);
+        spotLight.angle = angle;
 
         spotLight.distance = distance;
-        // spotLight.penumbra = penumbra;
-        // spotLight.decay = decay;
+        spotLight.penumbra = penumbra;
+        spotLight.decay = decay;
 
         this._registerLight(spotLight);
 
