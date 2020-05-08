@@ -12,6 +12,9 @@ const DATA = {
     data_manager : null,
     ui_manager : null,
     conclusion_manager : null,
+    is_gluing: true, //il est en train de reconstituer le collage
+    drag_start_y: null,
+    drag_element: null,
 
     //Setup all managers
     setupManagers: () => {

@@ -13,23 +13,27 @@ $app_height_name : 64px;
   pointer-events: initial;
 
   .app-close {
-    background: green;
     position: absolute;
-    right: 12px;
-    top: 12px;
-    width: 40px;
-    height: 40px;
+    left: 32px;
+    top: 23px;
+    width: 29px;
+    height: 20px;
     cursor: pointer;
+    pointer-events: auto;
     &_bottom{
       top: unset;
-      bottom: 50px;
       left: 50%;
       transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      bottom: 100px;
     }
   }
 
   &.app_title-only {
     height: $app_height_name;
+    background: transparent;
+    pointer-events: none;
   }
   &.display{
     display: block;
@@ -48,7 +52,15 @@ $app_height_name : 64px;
   .app-content {
     height: calc(100% - #{$app_height_name});
     overflow: auto;
+    margin-top: $app_height_name;
+    padding: 0 30px;
+    h2{
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 29px;
+    }
     &_full{
+      margin-top: 0;
       height: 100%;
     }
     &_center{
@@ -63,8 +75,9 @@ $app_height_name : 64px;
     grid-template-columns: 1fr;
 
     &-item{
-      padding: 10px 15px;
-      border-bottom: 1px solid rgba(255,255,255,0.5);
+      padding: 10px 0px;
+      border-bottom: 1px solid transparentize($grey, 0.5);
+      position: relative;
     }
   }
 
@@ -80,10 +93,11 @@ $app_height_name : 64px;
 
   .app-grid{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
     &-item{
       overflow: hidden;
+      border-radius: 5px;
       > img{
         height: 100%;
         transform: scale(1.1,1.1);
@@ -102,7 +116,7 @@ $app_height_name : 64px;
   }
 
   .slider{
-    overflow: scroll;
+    overflow: hidden;
     scroll-behavior: smooth;
     white-space: nowrap;
     .slide{
@@ -117,21 +131,24 @@ $app_height_name : 64px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 120px;
   }
   .app-icon{
     max-width: 80px;
-    background: pink;
     cursor: pointer;
     border-radius: 100%;
-    margin-bottom: 50px;
+    margin-bottom: 120px;
     position: relative;
+    transition: 1s;
+    &:hover{
+      transform: scale(1.2, 1.2);
+    }
     &:nth-child(odd){
       margin-bottom: 0;
-      margin-top: 50px;
+      margin-top: 120px;
     }
     img{
       width: 100%;
-      padding: 10px;
       box-sizing: border-box;
     }
   }

@@ -4,26 +4,35 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: #000000;
+  background: $fog-background ;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 3;
 
-  img {
-    max-width: 100%;
+  img.logo {
+    max-width: 55%;
+    margin: 20vh 0;
+  }
+
+  img.icon{
+    margin-bottom: 25px;
   }
 
   p {
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 20px;
+    height: 30px;
+    width: 200px;
+    color: $white;
+    font-family: $font;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 15px;
+    text-align: center;
   }
 
-  h1 {
-    color: #FFFFFF;
-    text-align: center;
-    font-size: 5rem;
+  button{
+    margin-top: 30px;
   }
 }

@@ -34,10 +34,7 @@ export default class ControlsManager {
      * @param camera
      */
     initDeviceOrientation(camera) {
-        this._controls = new DeviceOrientationControls(camera, {});
-        setTimeout(() => {
-            // this._controls.rotateAndFreeze({rotation: {x: 50, y:100, z:300}});
-        }, 5000)
+        this._controls = new DeviceOrientationControls(camera, {}); 
     }
 
     /**

@@ -1,6 +1,8 @@
-// Common
+ // Common
 @import 'resources/variables';
 @import 'resources/mixins';
+@import 'common/fonts';
+@import 'common/vars';
 
 // Main
 @import 'main/main';
@@ -19,9 +21,10 @@
 @import "ui/apps/notes";
 @import "ui/apps/pictures";
 @import "ui/apps/phone";
+@import "ui/apps/instagram";
 
 //Conclusion
-@import "ui/conclusion/conclusion";
+@import "ui/conclusion";
 @import "ui/pickup";
 
 //Cover

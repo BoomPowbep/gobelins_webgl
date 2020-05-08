@@ -7,10 +7,12 @@ class Record  extends Pickable {
     /**
      * @param {string} identifier
      * @param {AudioFile} audio_file
+     * @param record_name
      */
-    constructor(identifier, audio_file) {
+    constructor(identifier, audio_file, record_name = "???") {
         super(identifier);
         this.audio_file = audio_file;
+        this.record_name = record_name;
     }
 
     /**
@@ -19,6 +21,16 @@ class Record  extends Pickable {
      */
     getAudioFile() {
         return this.audio_file;
+    }
+
+    getRecordName() {
+        return this.record_name;
+    }
+
+    pickedUp() {
+        super.pickedUp();
+        let event = new CustomEvent("record", {detail: this});
+        document.dispatchEvent(event);
     }
 }
 

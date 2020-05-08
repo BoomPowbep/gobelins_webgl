@@ -9,7 +9,7 @@ class UiCall extends Ui {
     setupGlobalEvents() {
         super.setupGlobalEvents();
 
-        let call_button = this.element.querySelector('button');
+        let call_button = this.element.querySelector('.start-call');
         call_button.addEventListener('click', (e) => {
             e.preventDefault();
             TIMELINES.call.play();

@@ -1,0 +1,15 @@
+{
+  "short_name": "MURDHER",
+  "name": "MURDHER",
+  "description": "MURDHER",
+  "icons": [
+    {
+      "src": "/images/icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "background_color": "#3367D6",
+  "display": "fullscreen",
+  "theme_color": "#3367D6"
+}

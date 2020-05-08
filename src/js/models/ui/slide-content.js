@@ -1,30 +1,48 @@
 import gsap from "gsap";
 import TIMELINES from "../timeline/timeline-configs";
+import Rewind from "../../Game/Util/Rewind";
+import VARS from "../vars";
 
 class SlideContent {
-    static show(html, callback = () => SlideContent.hide()) {
+    static show(html, callback = () => SlideContent.hide(), event = true) {
         let el = document.querySelector('#slide-content');
         let content = el.querySelector('div');
         content.innerHTML = html;
 
-        el.addEventListener("click", function (e) {
-            e.preventDefault();
-            console.log("TOUCH");
-            callback();
-        }, {once: true});
+        if(event) {
+            el.addEventListener("click", function (e) {
+                e.preventDefault();
+                callback();
+            }, {once: true});
 
-        el.classList.add('clickable');
+            el.classList.add('clickable');
+        }
 
         gsap.to(el, {opacity: 1});
         gsap.fromTo(content, {opacity: 0}, {opacity: 1});
     }
 
-    static date(day, hour, callback = undefined, color = "white") {
-        SlideContent.show(`<div class='date' style="color:${color}">${hour}<br>${day}</div>`, callback);
+    static date(date, callback = undefined, color = "white", event = true) {
+        SlideContent.show(`<div class='date' style="color:${color}"><span>${date.hour}:${date.minute}</span><span>${VARS.DAYS[date.weekDay]} ${date.day} ${date.month}</span></div>`, callback, event);
     }
 
-    static image(image, callback = undefined) {
-        SlideContent.show(`<img src='${image}'>`, callback);
+    static fromTo(start_date, end_date, callback = undefined, duration=5000, color = "white", event = true) {
+        SlideContent.show(`<div class='date' style="color:${color}"><span>${start_date.hour}:${start_date.minute}</span><span>${VARS.DAYS[start_date.weekDay]} ${start_date.day} ${start_date.month}</span></div>`, callback, event);
+        let el = document.querySelector('#slide-content');
+        let date = el.querySelector('.date');
+
+        setTimeout(function () {
+            Rewind.dateRewind(
+                date,
+                start_date,
+                end_date,
+                duration
+            );
+        }, 1000)
+    }
+
+    static image(image, callback = undefined, event = true) {
+        SlideContent.show(`<img src='${image}'>`, callback, event);
     }
 
     static hide() {
@@ -37,14 +55,14 @@ class SlideContent {
 
     //Special Slide Content
     static introduction() {
-        SlideContent.date("21 mars", "00:15", () => {
+        SlideContent.date(VARS.HOURS.BEGIN, () => {
             SlideContent.image("https://pokexp.com/uploads/event/28042020-staff-day.png", () => {
-                SlideContent.date("25 mars", "16:20", () => {
+                SlideContent.fromTo(VARS.HOURS.BEGIN, VARS.HOURS.SCENE_INTRO, () => {
                     SlideContent.hide();
                     TIMELINES.begin.play();
-                })
+                }, 3000)
             })
-        }, "red")
+        })
     }
 
 }

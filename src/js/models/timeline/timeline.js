@@ -3,6 +3,9 @@ import AudioManager from "../audio/audio-manager";
 import Mobile from "../ui/mobile/pickup";
 import Message from "../ui/mobile/message";
 import Notification from "../ui/mobile/notification";
+import SlideContent from "../ui/slide-content";
+import GameBrain from "../../Game/GameManager/GameManager";
+import Dates from "../ui/dates/dates";
 
 class Timeline {
     constructor(timeline_content) {
@@ -50,10 +53,34 @@ class Timeline {
                         Message.message(value.content);
                         break;
                     }
+                    case TIMELINE_TYPES.CAMERA : {
+                        GameBrain.controlsManager.controls.rotateAndFreeze({rotation:  value.content});
+                        break;
+                    }
+                    case TIMELINE_TYPES.HOURS_SLIDE : {
+                        SlideContent.fromTo(value.content.start, value.content.end, () => {}, value.content.duration, "#fff", false);
+                        break;
+                    }
+                    case TIMELINE_TYPES.HOURS_HUD : {
+                        Dates.fromObject(value.content);
+                        break;
+                    }
+                    case TIMELINE_TYPES.TEXT : {
+                        let el = document.querySelector(value.content.el);
+                        el.innerText = value.content.text;
+                        break;
+                    }
+                    case TIMELINE_TYPES.HIDE_SLIDE : {
+                        SlideContent.hide();
+                        break;
+                    }
                     case TIMELINE_TYPES.PHONE : {
                         Mobile.unlock();
-                        document.querySelector("#phone-opener").addEventListener("touchend", () => {
+                        let opener = document.querySelector("#phone-opener");
+                        opener.addEventListener("touchend", () => {
                             DATA.ui_manager.get("phone").show()
+                            opener.classList.remove('not-opened');
+                            Mobile.bubble(false);
                         });
                         break;
                     }

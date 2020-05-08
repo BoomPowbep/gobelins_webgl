@@ -32,6 +32,7 @@ class ConclusionManager {
             let data = value.getAttribute('data-close-conclusion');
             value.addEventListener("click", (e) => {
                 this.hide(data);
+                document.dispatchEvent(new CustomEvent('close-conc', {detail: data}));
             })
         })
     }

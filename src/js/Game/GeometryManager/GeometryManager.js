@@ -127,7 +127,9 @@ export default class GeometryManager {
      * @param identifier
      * @param size
      * @param position
+     * @param rotation
      * @param color
+     * @param texture
      * @param castShadow
      * @param doubleSided
      * @param visibility
@@ -137,17 +139,31 @@ export default class GeometryManager {
                          identifier = "Unnamed",
                          size = {x: 1, y: 1, z: 1},
                          position = {x: 0, y: 0, z: 0},
+                         rotation = {x: 0, y: 0, z: 0},
+                         texture = null,
                          color = 0x00ff00,
                          castShadow = false,
                          doubleSided = false,
                          visibility = true
                      }) {
         let geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-        let material = new THREE.MeshBasicMaterial({color: color});
+
+        let material = null;
+
+        if(texture !== null && texture !== undefined) {
+            let loadedTexture = new THREE.TextureLoader().load( texture );
+            material = new THREE.MeshBasicMaterial({map: loadedTexture});
+        }
+        else
+            material = new THREE.MeshBasicMaterial({color: color});
+
         let cube = new THREE.Mesh(geometry, material);
         cube.position.x = position.x;
         cube.position.y = position.y;
         cube.position.z = position.z;
+        cube.rotation.x = rotation.x;
+        cube.rotation.y = rotation.y;
+        cube.rotation.z = rotation.z;
         cube.visible = visibility;
         cube.identifier = identifier;
 
@@ -158,6 +174,69 @@ export default class GeometryManager {
         return cube;
     }
 
+
+    /** 
+     * Creates a basic shape.
+     * @param identifier
+     * @param size
+     * @param position
+     * @param rotation
+     * @param color
+     * @param facingCamera
+     * @param texture
+     * @param castShadow
+     * @param visibility
+     * @returns {Mesh|Sprite}
+     */
+    createBasicSprite({
+                         identifier = "Unnamed",
+                         size = {x: 1, y: 1, z: 1},
+                         position = {x: 0, y: 0, z: 0},
+                         rotation = {x: 0, y: 0, z: 0},
+                         texture = null,
+                         facingCamera = true,
+                         color = 0x00ff00,
+                         castShadow = false,
+                         visibility = true
+                     }) {
+
+        console.log("SPRITE");
+
+        let material = null;
+        let shape = null;
+        if(facingCamera) {
+            material = new THREE.SpriteMaterial({
+                map:  new THREE.TextureLoader().load( texture ),
+                transparent: true
+            });
+            shape = new THREE.Sprite(material);
+        }
+        else {
+            let geometry = new THREE.PlaneBufferGeometry(size.x, size.y, 50);
+            material = new THREE.MeshLambertMaterial({
+                map:  new THREE.TextureLoader().load( texture ),
+                transparent: true,
+                side: THREE.DoubleSide
+            });
+            shape = new THREE.Mesh(geometry, material);
+        }
+
+        shape.position.x = position.x;
+        shape.position.y = position.y;
+        shape.position.z = position.z;
+        shape.scale.x = size.x;
+        shape.scale.y = size.y;
+        shape.scale.z = size.z;
+        shape.rotation.x = rotation.x;
+        shape.rotation.y = rotation.y;
+        shape.rotation.z = rotation.z;
+        shape.visible = visibility;
+        shape.identifier = identifier;
+        shape.castShadow = castShadow;
+        shape.doubleSided = true;
+
+        return shape;
+    }
 
     /**
      * Creates a circle geometry.
@@ -210,7 +289,7 @@ export default class GeometryManager {
             }
         );
     }
-
+ 
     /**
      * Register all created geometries.
      * @param geometriesArray
