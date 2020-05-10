@@ -200,14 +200,13 @@ export default class GeometryManager {
                          visibility = true
                      }) {
 
-        console.log("SPRITE");
-
         let material = null;
         let shape = null;
         if(facingCamera) {
             material = new THREE.SpriteMaterial({
                 map:  new THREE.TextureLoader().load( texture ),
-                transparent: true
+                transparent: true,
+                needsUpdate: true
             });
             shape = new THREE.Sprite(material);
         }
@@ -216,7 +215,8 @@ export default class GeometryManager {
             material = new THREE.MeshLambertMaterial({
                 map:  new THREE.TextureLoader().load( texture ),
                 transparent: true,
-                side: THREE.DoubleSide
+                side: THREE.DoubleSide,
+                needsUpdate: true
             });
             shape = new THREE.Mesh(geometry, material);
         }

@@ -433,7 +433,7 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
-                        // SCENE_EVENTS_VARS.sceneColleuse();
+                         SCENE_EVENTS_VARS.sceneColleuse();
                     }
                 }
             )
@@ -506,9 +506,15 @@ export default class Game {
                         let item = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-final");
                         item.visible = DATA.data_manager.letters.hasPickupAll();
 
+                        //a ramassé le papier de la scène intro
+                        let item_interest1 = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-1");
+                        item_interest1.visible = DATA.data_manager.letters.hasPickupAllInScene(0);
+
+                        //a ramassé les 2 papiers de la scène du bar
                         let item_interest2 = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-2");
                         item_interest2.visible = DATA.data_manager.letters.hasPickupAllInScene(1);
 
+                        //a ramassé les 2 papiers de la scène colleuse
                         let item_interest3 = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-3");
                         item_interest3.visible = DATA.data_manager.letters.hasPickupAllInScene(2);
                     }
@@ -575,7 +581,6 @@ export default class Game {
                     onLoadDone: () => {
                         ready++;
                         GameBrain.sceneryManager.loadScenery("ComissariatScenery");
-                        DATA.data_manager.get("instagram", "post-1").pickedUp();
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
@@ -702,7 +707,7 @@ export default class Game {
                         }
                     },
                     onSceneActive: (scene) => {
-
+                        SCENE_EVENTS_VARS.scenePolice();
                     }
                 }
             )
