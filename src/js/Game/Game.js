@@ -18,13 +18,13 @@ import {getRandomInt, toRad} from "./Util/Helpers";
 import TIMELINES from "../models/timeline/timeline-configs";
 import Notification from "../models/ui/mobile/notification";
 import SlideContent from "../models/ui/slide-content";
-import SCENE_EVENTS_VARS from "../models/scene-events-vars"; 
+import SCENE_EVENTS_VARS from "../models/scene-events-vars";
 import VARS from "../models/vars";
 import UserHand from "./UserHand";
 import ControlsManager from "./ControlsManager/ControlsManager";
 import Rewind from "./Util/Rewind";
-import {gui} from "dat.gui"; 
-import THREEx from "../threex.volumetricspotlightmaterial"; 
+import {gui} from "dat.gui";
+import THREEx from "../threex.volumetricspotlightmaterial";
 
 
 export default class Game {
@@ -115,7 +115,7 @@ export default class Game {
             let letters = DATA.data_manager.letters;
 
             AudioManager.play("paper");
-            Pickup.show( "letter", letter.identifier);
+            Pickup.show("letter", letter.identifier);
 
             if (letters.hasPickupAllInScene(letter.scene)) {
                 //todo : ajouter une pastille de notification sur la map et le téléphone
@@ -194,7 +194,7 @@ export default class Game {
                         tp: () => {
                             GameBrain.sceneryManager.startSceneryTransition(identifier);
                         }
-                    }, 'tp').name('to ' + identifier.replace("Scenery",""));
+                    }, 'tp').name('to ' + identifier.replace("Scenery", ""));
                 });
             }
         });
@@ -267,12 +267,12 @@ export default class Game {
         let geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "StreetSkybox"), // Skybox,
             GameBrain.geometryManager.createBasicSprite({
-                identifier : "button",
+                identifier: "button",
                 texture: "textures/button.png",
                 facingCamera: false,
-                size: {x:4, y:2, z:0.1},
-                rotation : {x: toRad(0), y: toRad(-90), z: toRad(0)},
-                position: {x: 120, y: 65, z:270}
+                size: {x: 4, y: 2, z: 0.1},
+                rotation: {x: toRad(0), y: toRad(-90), z: toRad(0)},
+                position: {x: 120, y: 65, z: 270}
             })
         ];
 
@@ -316,11 +316,11 @@ export default class Game {
                         UserHand.createElements();
                         GameBrain.sceneryManager.loadScenery("ColleusesScenery");
                         checkElementsReady();
-                    }, 
+                    },
                     onSceneActive: (scene) => {
                         let item = GameBrain.geometryManager.getGeometryReferenceByIdentifier("button");
                         item.visible = DATA.data_manager.letters.hasPickupAll();
-                        scene.add( GameBrain.cameraManager.camera );
+                        scene.add(GameBrain.cameraManager.camera);
                     }
                 }
             )
@@ -329,13 +329,13 @@ export default class Game {
         // -- Scenery 3 - Colleuses
         geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "ColleusesSkybox"), // Skybox
- 
+
             GameBrain.geometryManager.createBasicShape({
                 identifier: "letter-4",
                 position: {x: 120, y: 0, z: 0},
                 size: {x: 30, y: 30, z: 30},
                 color: 0x2FFFF5,
-            }), 
+            }),
         ];
 
         models = [
@@ -348,7 +348,7 @@ export default class Game {
                     y: toRad(90),
                     z: 0
                 }
-            }), 
+            }),
             new Model({
                 identifier: 'letter-4',
                 path: 'models/FBX/Boulette_Red.fbx',
@@ -367,7 +367,7 @@ export default class Game {
                     x: 38,
                     y: 21,
                     z: 27
-                }  
+                }
             }),
         ];
 
@@ -529,7 +529,7 @@ export default class Game {
 
             GameBrain.geometryManager.createCircleShape({
                 identifier: "BistroConversationGauge",
-                radius: .5,
+                radius: 1,
                 position: {x: -10, y: 38, z: 1},
                 rotation: {x: 0, y: toRad(90), z: 0},
                 color: 0xFF3333
@@ -589,10 +589,10 @@ export default class Game {
                 }
             )
         );
- 
+
         function setupDatGUIModels() {
             let editedElement = GameBrain.modelManager.getModelReferenceByIdentifier('letter-1');
-            let identifier = {model:""};
+            let identifier = {model: ""};
             let elementSelector = GameBrain.gui.add(identifier, 'model', ['letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8']);
 
             let x_element = null;
@@ -600,15 +600,15 @@ export default class Game {
             let z_element = null;
 
             function makeSliderFor(el) {
-                if(x_element !== null) {
+                if (x_element !== null) {
                     GameBrain.gui.remove(x_element);
                     GameBrain.gui.remove(y_element);
                     GameBrain.gui.remove(z_element);
                 }
 
-                x_element =  GameBrain.gui.add(el.position, 'x', el.position.x - 100, el.position.x + 100);
-                y_element =  GameBrain.gui.add(el.position, 'y', el.position.y - 30, el.position.y + 30);
-                z_element =  GameBrain.gui.add(el.position, 'z', el.position.z - 100, el.position.z + 100);
+                x_element = GameBrain.gui.add(el.position, 'x', el.position.x - 100, el.position.x + 100);
+                y_element = GameBrain.gui.add(el.position, 'y', el.position.y - 30, el.position.y + 30);
+                z_element = GameBrain.gui.add(el.position, 'z', el.position.z - 100, el.position.z + 100);
             }
 
             makeSliderFor(editedElement);
@@ -616,20 +616,21 @@ export default class Game {
             elementSelector.onChange((value) => {
                 //si la réf par model existe
                 let toEdit = GameBrain.modelManager.getModelReferenceByIdentifier(value);
-                if(toEdit !== null) {
+                if (toEdit !== null) {
                     editedElement = toEdit;
                     makeSliderFor(editedElement);
                     return;
                 }
                 //si la réf par geometry existe
                 let toEditGeometry = GameBrain.geometryManager.getGeometryReferenceByIdentifier(value);
-                if(toEditGeometry !== null) {
+                if (toEditGeometry !== null) {
                     editedElement = toEditGeometry;
                     makeSliderFor(editedElement);
                     return;
                 }
             });
-        } 
+        }
+
         // -- Scenery 5 - Comissariat
         geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 2000, "ComissariatSkybox"), // Skybox
@@ -712,7 +713,7 @@ export default class Game {
                 }
             )
         );
- 
+
         function checkElementsReady() {
             const duration = 1;
             let total = GameBrain.sceneryManager._sceneries.length;
@@ -726,7 +727,7 @@ export default class Game {
 
                 setupDatGUIModels();
 
-                setTimeout(() => { 
+                setTimeout(() => {
                     // SlideContent.introduction(); 
                 }, 500);
             } else {
@@ -795,7 +796,7 @@ export default class Game {
      */
     postStartTouchEventAction(identifier, posX, posY) {
         //Drag'n'Drop
-        if(DATA.is_gluing) {
+        if (DATA.is_gluing) {
             DATA.drag_start_y = posY;
             DATA.drag_element = identifier;
         }
@@ -850,13 +851,13 @@ export default class Game {
      */
     postEndTouchEventAction(identifier, posX, posY) {
         //Drag'n'Drop
-        if(DATA.is_gluing) {
+        if (DATA.is_gluing) {
             let delta = posY - DATA.drag_start_y;
-            if(delta >= VARS.DRAG_N_DROP_DELTA) {
+            if (delta >= VARS.DRAG_N_DROP_DELTA) {
                 //On execute une action de drag'n'drop (on recolle le papier)
                 this._debugMode && this._debuglogs.addLog("Drag'n'Drop");
 
-                if(UserHand.isDragable(DATA.drag_element)) {
+                if (UserHand.isDragable(DATA.drag_element)) {
                     UserHand.putOnScene(DATA.drag_element);
                 }
 
@@ -895,29 +896,26 @@ export default class Game {
                 break;
         }
 
-        // Listen
-        if (identifier === "BistroConversationGauge") {
+        // Ecoute terminée
+        if (GameBrain.bistroListened && GameBrain.bistroListening) {
             GameBrain.bistroListening = false;
-
-            // Ecoute terminée
-            if (GameBrain.bistroListened) {
-                // TODO
-            }
-            // Ecoute avortée
-            else {
-                // Stop timer
-                clearTimeout(GameBrain.bistroListenTimer);
-                // Stop animation
-                clearInterval(GameBrain.bistroCircleAnimationTick);
-                // Reset theta
-                let bistroGauge = GameBrain.geometryManager.getGeometryReferenceByIdentifier("BistroConversationGauge");
-                bistroGauge.geometry = new THREE.CircleGeometry(bistroGauge.geometry.parameters.radius,
-                    bistroGauge.geometry.parameters.segments,
-                    0,
-                    Math.PI * 0.2);
-                // Stop sound
-                // TODO
-            }
+            // TODO
+        }
+        // Ecoute avortée
+        else if (!GameBrain.bistroListened && GameBrain.bistroListening) {
+            GameBrain.bistroListening = false;
+            // Stop timer
+            clearTimeout(GameBrain.bistroListenTimer);
+            // Stop animation
+            clearInterval(GameBrain.bistroCircleAnimationTick);
+            // Reset theta
+            let bistroGauge = GameBrain.geometryManager.getGeometryReferenceByIdentifier("BistroConversationGauge");
+            bistroGauge.geometry = new THREE.CircleGeometry(bistroGauge.geometry.parameters.radius,
+                bistroGauge.geometry.parameters.segments,
+                0,
+                Math.PI * 0.2);
+            // Stop sound
+            // TODO
         }
     }
 
