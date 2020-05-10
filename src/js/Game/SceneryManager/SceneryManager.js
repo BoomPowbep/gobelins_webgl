@@ -2,6 +2,7 @@ import GameBrain from "../GameManager/GameManager";
 import * as THREE from 'three';
 import gsap from "gsap";
 import {Model} from "../ModelManager/ModelManager";
+import VARS from "../../models/vars";
 
 class Scenery {
     constructor({
@@ -18,6 +19,7 @@ class Scenery {
                     ambiantSoundIdentifier = "Default",
                     orbitControls = true,
                     onLoadDone = () => null,
+                    updateLastScenery = true, //si false, ca actualise pas le activeScenery.
                     onSceneActive = (scene) => null,
                 }) {
         this.identifier = identifier;
@@ -34,6 +36,7 @@ class Scenery {
         this.orbitControls = orbitControls;
         this.onLoadDone = onLoadDone;
         this.onSceneActive = onSceneActive;
+        this.updateLastScenery = updateLastScenery;
         this.loaded = false;
     }
 }
@@ -54,6 +57,8 @@ class SceneryManager {
         this._sceneries = [];
 
         this.activeScenery = "None";
+
+        this.lastScenery = VARS.SCENERIES.STREET;
     };
 
     // ------------------------------------------------------------------- MAKE
@@ -170,6 +175,14 @@ class SceneryManager {
         return this.getSceneryReferenceByIdentifier(this.activeScenery);
     }
 
+    getActiveScenery() {
+        return (this.activeScenery);
+    }
+
+    getLastScenery() {
+        return (this.lastScenery);
+    }
+
     /**
      * Set the active scenery.
      * @param sceneryIdentifier
@@ -178,6 +191,9 @@ class SceneryManager {
         const scenery = this.getSceneryReferenceByIdentifier(sceneryIdentifier);
 
         this.activeScenery = sceneryIdentifier;
+
+        if(scenery.updateLastScenery)
+            this.lastScenery = sceneryIdentifier;
 
         if (scenery.loaded) {
             // Set controls

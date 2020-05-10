@@ -29,12 +29,20 @@ class Timeline {
                         AudioManager.getAudio(value.content).pause();
                         break;
                     }
+                    case TIMELINE_TYPES.SOUND_STOP_ALL : {
+                        AudioManager.stopAll();
+                        break;
+                    }
                     case TIMELINE_TYPES.UI : {
                         DATA.ui_manager.active(value.content);
                         break;
                     }
                     case TIMELINE_TYPES.UI_HIDE : {
                         DATA.ui_manager.get(value.content).hide();
+                        break;
+                    }
+                    case TIMELINE_TYPES.STOP_PREVIOUS_TIMELINE : {
+                        TIMELINES.stopAll();
                         break;
                     }
                     case TIMELINE_TYPES.CONCLUSION : {
@@ -47,6 +55,10 @@ class Timeline {
                     }
                     case TIMELINE_TYPES.NOTIFICATION_HIDE : {
                         Notification.hide(value.content);
+                        break
+                    }
+                    case TIMELINE_TYPES.ALLOW_PICKING : {
+                        DATA.can_pick = value.content;
                         break
                     }
                     case TIMELINE_TYPES.MESSAGE : {

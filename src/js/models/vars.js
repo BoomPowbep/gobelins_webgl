@@ -16,7 +16,13 @@ const VARS = {
         'Vendredi',
         'Samedi',
         'Dimanche'
-    ]
+    ],
+    SCENERIES : {
+        BAR : 'BistroScenery',
+        POLICE : 'ComissariatScenery',
+        STREET : 'StreetScenery',
+        COLLEUSE : 'ColleusesScenery',
+    }
 };
 
 export default VARS;

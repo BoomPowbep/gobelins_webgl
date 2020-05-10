@@ -33,3 +33,11 @@
 .dg.ac{
   z-index: 1000 !important;
 }
+
+ * {
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: -moz-none;
+   -o-user-select: none;
+   user-select: none;
+ }

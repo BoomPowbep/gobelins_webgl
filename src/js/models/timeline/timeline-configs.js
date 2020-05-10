@@ -37,12 +37,45 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.PHONE, null, 21000),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 21000),
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 21000),
+        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, true, 21000),
     ]),
     end: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.STOP_PREVIOUS_TIMELINE, null, 0),
         new TimelineItem(TIMELINE_TYPES.CAMERA,  {x: (1.5), y:(36), z:(-44)}, 5000),
         new TimelineItem(TIMELINE_TYPES.HOURS_SLIDE, {start: VARS.HOURS.SCENE_FINAL, end: VARS.HOURS.BEGIN, duration: 4000}, 7000),
         new TimelineItem(TIMELINE_TYPES.HIDE_SLIDE, null, 15000),
         new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 15000)
+    ]),
+    sceneBistro: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.STOP_PREVIOUS_TIMELINE, null, 0),
+        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, false, 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND_STOP_ALL, null, 0),
+    ]),
+    sceneColleuse: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, false, 0),
+        new TimelineItem(TIMELINE_TYPES.STOP_PREVIOUS_TIMELINE, null, 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND_STOP_ALL, null, 0) ,
+        new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-1', 0)
+    ]),
+    scenePolice: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.STOP_PREVIOUS_TIMELINE, null, 0),
+        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, false, 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND_STOP_ALL, null, 0),
+        new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-2', 0)
+    ]),
+    sceneFinal: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.STOP_PREVIOUS_TIMELINE, null, 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND_STOP_ALL, null, 0),
+        new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-3', 0)
+    ]),
+    postListenBistro : new Timeline([
+        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, true, 0),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "instagram", 30000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 30000)
+    ]),
+    mapNotification: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "maps", 10000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 10000)
     ]),
     stopAll() {
         //On sait jamais si y'a des trucs qui trainent

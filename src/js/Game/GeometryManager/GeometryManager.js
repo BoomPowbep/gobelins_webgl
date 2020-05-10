@@ -202,9 +202,10 @@ export default class GeometryManager {
 
         let material = null;
         let shape = null;
+
         if(facingCamera) {
             material = new THREE.SpriteMaterial({
-                map:  new THREE.TextureLoader().load( texture ),
+                map: (typeof texture === "string") ? (new THREE.TextureLoader().load( texture )) : texture,
                 transparent: true,
                 needsUpdate: true
             });
@@ -213,7 +214,7 @@ export default class GeometryManager {
         else {
             let geometry = new THREE.PlaneBufferGeometry(size.x, size.y, 50);
             material = new THREE.MeshLambertMaterial({
-                map:  new THREE.TextureLoader().load( texture ),
+                map: (typeof texture === "string") ? (new THREE.TextureLoader().load( texture )) : texture,
                 transparent: true,
                 side: THREE.DoubleSide,
                 needsUpdate: true
@@ -262,7 +263,6 @@ export default class GeometryManager {
         circle.identifier = identifier;
         circle.position.set(position.x, position.y, position.z);
         circle.rotation.set(rotation.x, rotation.y, rotation.z);
-        console.log("CIRLCE", circle);
         return circle;
     }
 
