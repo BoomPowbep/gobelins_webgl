@@ -38,7 +38,7 @@ class SlideContent {
                 end_date,
                 duration
             );
-        }, 1000)
+        }, 500)
     }
 
     static image(image, callback = undefined, event = true) {
@@ -60,7 +60,7 @@ class SlideContent {
                 SlideContent.fromTo(VARS.HOURS.BEGIN, VARS.HOURS.SCENE_INTRO, () => {
                     SlideContent.hide();
                     TIMELINES.begin.play();
-                }, 3000)
+                }, 2000)
             })
         })
     }

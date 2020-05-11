@@ -51,6 +51,13 @@ class AudioManager {
             }
         }, 50)
     }
+
+    /**
+     * Stop all sounds
+     */
+    static stopAll() {
+        AUDIO_LIST.forEach(value => value.pause());
+    }
 }
 
 export default AudioManager;

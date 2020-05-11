@@ -1,6 +1,7 @@
 import DATA from "./data";
 import Notification from "./ui/mobile/notification";
 import Dates from "./ui/dates/dates";
+import VARS from "./vars";
 
 const SCENE_EVENTS_VARS = {
     introduction: () => {
@@ -8,32 +9,44 @@ const SCENE_EVENTS_VARS = {
         Dates.fromDateHour("mars", 25, 16, 30);
     },
     sceneBistro: () => {
+        TIMELINES.stopTimeline.play();
+        setTimeout(() => TIMELINES.sceneBistro.play(), 1);
+
+        DATA.data_manager.get("instagram", "post-1").pickedUp();
         //Notif instagram
         Notification.instagramNotification();
         //heures
-        Dates.fromDateHour("mars", 25, 19, 20);
+        Dates.fromObject(VARS.HOURS.SCENE_1);
     },
     sceneColleuse: () => {
-        //On lance la conclusion de la scène précédente
-        DATA.conclusion_manager.show("scene-1");
+        TIMELINES.stopTimeline.play();
+        setTimeout(() => TIMELINES.sceneColleuse.play(), 1);
+
+        DATA.data_manager.get("instagram", "post-2").pickedUp();
         //Notif instagram
         Notification.instagramNotification();
         //Heures
-        Dates.fromDateHour("mars", 25, 22, 40);
+        Dates.fromObject(VARS.HOURS.SCENE_2);
     },
     scenePolice : () => {
-        //On lance la conclusion de la scène précédente
-        DATA.conclusion_manager.show("scene-2");
+        TIMELINES.stopTimeline.play();
+        setTimeout(() => TIMELINES.scenePolice.play(), 1);
+
+        DATA.data_manager.get("instagram", "post-3").pickedUp();
         //Notif instagram
         Notification.instagramNotification();
         //Heures
-        Dates.fromDateHour("mars", 25, 23, 50);
+        Dates.fromObject(VARS.HOURS.SCENE_3);
+
     },
     end : () => {
-        //On lance la conclusion de la scène précédente
-        DATA.conclusion_manager.show("scene-3")
-        //Heures
-        Dates.fromDateHour("mars", 26, "01", 15);
+        if(DATA.data_manager.letters.hasPickupAll()) {
+            //On lance la conclusion de la scène précédente
+            TIMELINES.stopTimeline.play();
+            setTimeout(() => TIMELINES.sceneFinal.play(), 1);
+            //Heures
+            Dates.fromObject(VARS.HOURS.SCENE_FINAL);
+        }
     }
 };
 

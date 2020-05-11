@@ -36,7 +36,7 @@ class UiInstagram extends Ui {
         //slide instagram
         let items = this.list.querySelectorAll('.app-list-item');
         items.forEach(value => {
-            let dots = document.querySelector('.dots');
+            let dots = value.querySelector('.dots');
             //on récup l'attribut
             let post = value.getAttribute('data-ig');
 

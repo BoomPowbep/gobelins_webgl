@@ -3,7 +3,7 @@ import TIMELINES from "../timeline/timeline-configs";
 
 class UiCall extends Ui {
     constructor() {
-        super("#app_call");
+        super("#app_call", false);
     }
 
     setupGlobalEvents() {

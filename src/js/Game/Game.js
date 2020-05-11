@@ -53,9 +53,9 @@ export default class Game {
         // Init debug elements
         if (this._debugMode) {
             // Init Stats.js
-            this.stats = new Stats();
-            this.stats.showPanel(0); // 0 = print fps
-            document.body.appendChild(this.stats.dom);
+            /*this.stats = new Stats();
+            this.stats.showPanel(0); // 0 = print fps*/
+            //document.body.appendChild(this.stats.dom);
 
             this._debuglogs = new DebugLogs();
         }
@@ -89,19 +89,19 @@ export default class Game {
                 case "scene-1" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_1, VARS.HOURS.SCENE_2, () => {
                         SlideContent.hide();
-                    }, 2000);
+                    }, 1500);
                     break;
                 }
                 case "scene-2" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_2, VARS.HOURS.SCENE_3, () => {
                         SlideContent.hide();
-                    }, 2000);
+                    }, 1500);
                     break;
                 }
                 case "scene-3" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_3, VARS.HOURS.SCENE_FINAL, () => {
                         SlideContent.hide();
-                    }, 2000);
+                    }, 1500);
                     break;
                 }
             }
@@ -118,8 +118,7 @@ export default class Game {
             Pickup.show("letter", letter.identifier);
 
             if (letters.hasPickupAllInScene(letter.scene)) {
-                //todo : ajouter une pastille de notification sur la map et le téléphone
-                Notification.mapNotification();
+                TIMELINES.mapNotification.play();
             }
         });
 
@@ -321,6 +320,8 @@ export default class Game {
                         let item = GameBrain.geometryManager.getGeometryReferenceByIdentifier("button");
                         item.visible = DATA.data_manager.letters.hasPickupAll();
                         scene.add(GameBrain.cameraManager.camera);
+
+                        SCENE_EVENTS_VARS.end();
                     }
                 }
             )
@@ -329,13 +330,6 @@ export default class Game {
         // -- Scenery 3 - Colleuses
         geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "ColleusesSkybox"), // Skybox
-
-            GameBrain.geometryManager.createBasicShape({
-                identifier: "letter-4",
-                position: {x: 120, y: 0, z: 0},
-                size: {x: 30, y: 30, z: 30},
-                color: 0x2FFFF5,
-            }),
         ];
 
         models = [
@@ -351,7 +345,7 @@ export default class Game {
             }),
             new Model({
                 identifier: 'letter-4',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
                     x: 38,
@@ -361,7 +355,7 @@ export default class Game {
             }),
             new Model({
                 identifier: 'letter-5',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
                     x: 38,
@@ -433,7 +427,7 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
-                        // SCENE_EVENTS_VARS.sceneColleuse();
+                         SCENE_EVENTS_VARS.sceneColleuse();
                     }
                 }
             )
@@ -443,28 +437,32 @@ export default class Game {
         geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "MapSkybox"), // Skybox
 
-            GameBrain.geometryManager.createBasicShape({
+            GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-1",
-                position: {x: -12, y: 1, z: 0},
-                color: 0xF033FF,
+                position: {x: -12, y: 2, z: 0},
+                size: {x: 2, y:2, z:2},
+                texture: GameBrain.mapSprites.here
             }),
 
-            GameBrain.geometryManager.createBasicShape({
+            GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-2",
                 position: {x: -3, y: 1, z: 8},
-                color: 0xF033FF,
+                size: {x: 2, y:2, z:2},
+                texture: GameBrain.mapSprites.here
             }),
 
-            GameBrain.geometryManager.createBasicShape({
+            GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-3",
                 position: {x: -30, y: 1, z: -21},
-                color: 0xF033FF,
+                size: {x: 2, y:2, z:2},
+                texture: GameBrain.mapSprites.here
             }),
 
-            GameBrain.geometryManager.createBasicShape({
+            GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-final",
                 position: {x: -6, y: 1, z: -21},
-                color: 0xFF0000,
+                size: {x: 2, y:2, z:2},
+                texture: GameBrain.mapSprites.here
             }),
         ];
 
@@ -490,6 +488,7 @@ export default class Game {
                     basePosition: {x: 3000, y: 0, z: 0},
                     geometries: geometries,
                     models: models,
+                    updateLastScenery: false,
                     lights: lights,
                     cameraPosition: {x: 50, y: 40, z: 50},
                     cameraLimits: {minX: 2970, maxX: 3000, minZ: -30, maxZ: 0},
@@ -502,15 +501,48 @@ export default class Game {
                     },
                     onSceneActive: (scene) => {
                         DATA.ui_manager.active('maps');
+
+                        let pickupAll = DATA.data_manager.letters.hasPickupAll();
+                        let introductionFinish =DATA.data_manager.letters.hasPickupAllInScene(0);
+                        let barFinish =DATA.data_manager.letters.hasPickupAllInScene(1);
+                        let colleuseFinish =DATA.data_manager.letters.hasPickupAllInScene(2);
+                        let policeFinish =DATA.data_manager.letters.hasPickupAllInScene(3);
+
+                        let active = GameBrain.sceneryManager.getLastScenery();
+
                         //show the final pointer on map only if everything is picked-up
                         let item = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-final");
-                        item.visible = DATA.data_manager.letters.hasPickupAll();
-
+                        let item_interest1 = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-1");
                         let item_interest2 = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-2");
-                        item_interest2.visible = DATA.data_manager.letters.hasPickupAllInScene(1);
-
                         let item_interest3 = GameBrain.geometryManager.getGeometryReferenceByIdentifier("map-interest-3");
+
+                        //Affichage conditionel des pointeurs
+                        item_interest1.visible = DATA.data_manager.letters.hasPickupAllInScene(0);
+                        item_interest2.visible = DATA.data_manager.letters.hasPickupAllInScene(1);
                         item_interest3.visible = DATA.data_manager.letters.hasPickupAllInScene(2);
+
+                        //Contneud des pointeurs
+                        item_interest1.material.map = (active === VARS.SCENERIES.BAR) ?
+                            GameBrain.mapSprites.here :
+                            ((barFinish) ?
+                                GameBrain.mapSprites.green :
+                                GameBrain.mapSprites.red);
+                        item_interest2.material.map = (active === VARS.SCENERIES.COLLEUSE) ?
+                            GameBrain.mapSprites.here :
+                            ((colleuseFinish) ?
+                                GameBrain.mapSprites.green :
+                                GameBrain.mapSprites.red);
+                        item_interest3.material.map = (active === VARS.SCENERIES.POLICE) ?
+                            GameBrain.mapSprites.here :
+                            ((policeFinish) ?
+                                GameBrain.mapSprites.green :
+                                GameBrain.mapSprites.red);
+
+                        item.material.map = (active === VARS.SCENERIES.STREET) ?
+                            GameBrain.mapSprites.here :
+                            ((introductionFinish && !policeFinish) ? // si il a pas fini la police on le garde vert, sinon il doit y retourner
+                                GameBrain.mapSprites.green :
+                                GameBrain.mapSprites.red);
                     }
                 }
             )
@@ -526,7 +558,15 @@ export default class Game {
                 radius: 1,
                 position: {x: -10, y: 38, z: 1},
                 rotation: {x: 0, y: toRad(90), z: 0},
-                color: 0xFF3333
+                color: 0xFFFFFF
+            }),
+            GameBrain.geometryManager.createBasicSprite({
+                identifier: "BistroConversationSprite",
+                position: {x: -9.9, y: 38, z: 1},
+                size: {x: 1.5, y: 1.5, z: 1},
+                rotation: {x: 0, y: toRad(90), z: 0},
+                facingCamera: false,
+                texture: GameBrain.mapSprites.vocal
             }),
         ];
 
@@ -535,7 +575,7 @@ export default class Game {
 
             new Model({
                 identifier: 'letter-2',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
                     x: 38,
@@ -545,7 +585,7 @@ export default class Game {
             }),
             new Model({
                 identifier: 'letter-3',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
                     x: -4,
@@ -575,7 +615,6 @@ export default class Game {
                     onLoadDone: () => {
                         ready++;
                         GameBrain.sceneryManager.loadScenery("ComissariatScenery");
-                        DATA.data_manager.get("instagram", "post-1").pickedUp();
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
@@ -588,7 +627,7 @@ export default class Game {
         function setupDatGUIModels() {
             let editedElement = GameBrain.modelManager.getModelReferenceByIdentifier('letter-1');
             let identifier = {model: ""};
-            let elementSelector = GameBrain.gui.add(identifier, 'model', ['letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8']);
+            let elementSelector = GameBrain.gui.add(identifier, 'model', ['letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final"]);
 
             let x_element = null;
             let y_element = null;
@@ -638,6 +677,30 @@ export default class Game {
                 initialScaleFactor: 1
             }),
 
+            new Model({
+                identifier: 'letter-6',
+                path: 'models/FBX/Boulette.fbx',
+                initialScaleFactor: 0.01,
+                initialPosition: {
+                    x: 5.5, y: -55, z: -62
+                }
+            }),
+            new Model({
+                identifier: 'letter-7',
+                path: 'models/FBX/Boulette.fbx',
+                initialScaleFactor: 0.01,
+                initialPosition: {
+                    x: 60, y: -15, z: 4
+                }
+            }),
+            new Model({
+                identifier: 'letter-8',
+                path: 'models/FBX/Boulette.fbx',
+                initialScaleFactor: 0.01,
+                initialPosition: {
+                    x: -96, y: -15, z: -100
+                }
+            })
             // new Model({
             //     identifier: 'Kangoo',
             //     path: 'models/FBX/Kangoo.fbx',
@@ -663,7 +726,7 @@ export default class Game {
         GameBrain.sceneryManager.addScenery(
             new Scenery({
                     identifier: "ComissariatScenery",
-                    basePosition: {x: 0, y: -3000, z: 0},
+                    basePosition: {x: 0, y: 0, z: -3000},
                     geometries: geometries,
                     models: models,
                     lights: lights,
@@ -703,7 +766,7 @@ export default class Game {
                         }
                     },
                     onSceneActive: (scene) => {
-
+                        SCENE_EVENTS_VARS.scenePolice();
                     }
                 }
             )
@@ -714,7 +777,8 @@ export default class Game {
             let total = GameBrain.sceneryManager._sceneries.length;
 
             if (ready === total) {
-                GameBrain.sceneryManager.startSceneryTransition("BistroScenery", duration);
+                GameBrain.sceneryManager.startSceneryTransition("StreetScenery", duration);
+               // GameBrain.sceneryManager.startSceneryTransition("MapScenery", duration);
                 gsap.to("#loading", {
                     duration: duration / 2,
                     autoAlpha: 0
@@ -723,7 +787,7 @@ export default class Game {
                 setupDatGUIModels();
 
                 setTimeout(() => {
-                    // SlideContent.introduction(); 
+                    SlideContent.introduction();
                 }, 500);
             } else {
                 gsap.to("#loading .progress-bar div", {
@@ -796,46 +860,11 @@ export default class Game {
             DATA.drag_element = identifier;
         }
 
-        //Listening
-        if (identifier === "BistroConversationGauge") {
-            if (!GameBrain.bistroListened) {
-
-                GameBrain.bistroListening = true;
-
-                const duration = 3000;
-                GameBrain.bistroListenTimer = setTimeout(() => {
-                    // Ecoute terminée
-                    GameBrain.bistroListened = true;
-                }, duration);
-
-                let bistroGauge = GameBrain.geometryManager.getGeometryReferenceByIdentifier("BistroConversationGauge");
-                bistroGauge.geometry = new THREE.CircleGeometry(bistroGauge.geometry.parameters.radius,
-                    bistroGauge.geometry.parameters.segments,
-                    0,
-                    1.6 * Math.PI);
-
-                // Gauge animationk
-                const tick = duration / 100;
-                const twoPi = 2 * Math.PI;
-                let executions = 0;
-                GameBrain.bistroCircleAnimationTick = setInterval(() => {
-                    executions++;
-                    const elapsedTime = executions * tick;
-                    if (GameBrain.bistroListened) {
-                        console.log("kjghdkgfhfdkjghdfkjgh");
-                        clearInterval(GameBrain.bistroCircleAnimationTick);
-                    }
-
-                    const angle = elapsedTime * twoPi / duration;
-
-                    bistroGauge.geometry = new THREE.CircleGeometry(bistroGauge.geometry.parameters.radius,
-                        bistroGauge.geometry.parameters.segments,
-                        0,
-                        angle);
-
-                }, tick);
+        GameBrain.listenings.forEach(value => {
+            if(value.starter_geometry_id === identifier) {
+                value.touchStart();
             }
-        }
+        });
     }
 
     /**
@@ -860,27 +889,32 @@ export default class Game {
             }
         }
 
-        //if we touch a letter
-        if (identifier.match(new RegExp("^(letter-)"))) {
-            let letter = DATA.data_manager.get("letter", identifier);
-            if (letter != null) {
-                letter.pickedUp();
+        if(DATA.can_pick) {
+            //if we touch a letter
+            if (identifier.match(new RegExp("^(letter-)"))) {
+                let letter = DATA.data_manager.get("letter", identifier);
+                if (letter != null) {
+                    letter.pickedUp();
 
-                // Delete object from scene
-                GameBrain.sceneManager.scene.remove(GameBrain.geometryManager.getGeometryReferenceByIdentifier(identifier));
+                    // Delete object from scene
+                    GameBrain.sceneManager.scene.remove(GameBrain.modelManager.getModelReferenceByIdentifier(identifier));
+                }
             }
         }
 
         // Map
         switch (identifier) {
+            case "map-interest-final":
+                GameBrain.sceneryManager.startSceneryTransition(VARS.SCENERIES.STREET);
+                break;
             case "map-interest-1":
-                GameBrain.sceneryManager.startSceneryTransition("StreetScenery");
+                GameBrain.sceneryManager.startSceneryTransition(VARS.SCENERIES.BAR);
                 break;
             case "map-interest-2":
-                GameBrain.sceneryManager.startSceneryTransition("ColleusesScenery");
+                GameBrain.sceneryManager.startSceneryTransition(VARS.SCENERIES.COLLEUSE);
                 break;
             case "map-interest-3":
-                GameBrain.sceneryManager.startSceneryTransition("BistroScenery");
+                GameBrain.sceneryManager.startSceneryTransition(VARS.SCENERIES.POLICE);
                 break;
             case "button":
                 GameBrain.sceneManager.scene.remove(GameBrain.geometryManager.getGeometryReferenceByIdentifier("button"));
@@ -891,27 +925,9 @@ export default class Game {
                 break;
         }
 
-        // Ecoute terminée
-        if (GameBrain.bistroListened && GameBrain.bistroListening) {
-            GameBrain.bistroListening = false;
-            // TODO
-        }
-        // Ecoute avortée
-        else if (!GameBrain.bistroListened && GameBrain.bistroListening) {
-            GameBrain.bistroListening = false;
-            // Stop timer
-            clearTimeout(GameBrain.bistroListenTimer);
-            // Stop animation
-            clearInterval(GameBrain.bistroCircleAnimationTick);
-            // Reset theta
-            let bistroGauge = GameBrain.geometryManager.getGeometryReferenceByIdentifier("BistroConversationGauge");
-            bistroGauge.geometry = new THREE.CircleGeometry(bistroGauge.geometry.parameters.radius,
-                bistroGauge.geometry.parameters.segments,
-                0,
-                Math.PI * 0.2);
-            // Stop sound
-            // TODO
-        }
+        GameBrain.listenings.forEach(value => {
+                value.touchEnd();
+        });
     }
 
     // ------------------------------------------------------------------- RENDER

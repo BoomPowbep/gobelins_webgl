@@ -200,23 +200,24 @@ export default class GeometryManager {
                          visibility = true
                      }) {
 
-        console.log("SPRITE");
-
         let material = null;
         let shape = null;
+
         if(facingCamera) {
             material = new THREE.SpriteMaterial({
-                map:  new THREE.TextureLoader().load( texture ),
-                transparent: true
+                map: (typeof texture === "string") ? (new THREE.TextureLoader().load( texture )) : texture,
+                transparent: true,
+                needsUpdate: true
             });
             shape = new THREE.Sprite(material);
         }
         else {
             let geometry = new THREE.PlaneBufferGeometry(size.x, size.y, 50);
             material = new THREE.MeshLambertMaterial({
-                map:  new THREE.TextureLoader().load( texture ),
+                map: (typeof texture === "string") ? (new THREE.TextureLoader().load( texture )) : texture,
                 transparent: true,
-                side: THREE.DoubleSide
+                side: THREE.DoubleSide,
+                needsUpdate: true
             });
             shape = new THREE.Mesh(geometry, material);
         }
@@ -245,6 +246,7 @@ export default class GeometryManager {
      * @param position
      * @param rotation
      * @param color
+     * @param length
      * @param visibility
      * @returns {Mesh}
      */
@@ -254,15 +256,15 @@ export default class GeometryManager {
                           position = {x: 0, y: 0, z: 0},
                           rotation = {x: 0, y: 0, z: 0},
                           color = 0xffff00,
+                          length = Math.PI * 2,
                           visibility = true
                       }) {
-        let geometry = new THREE.CircleGeometry(radius, 10, 0, Math.PI * 0.2);
+        let geometry = new THREE.CircleGeometry(radius, 20, 0, length);
         let material = new THREE.MeshBasicMaterial({color: color});
         let circle = new THREE.Mesh(geometry, material);
         circle.identifier = identifier;
         circle.position.set(position.x, position.y, position.z);
         circle.rotation.set(rotation.x, rotation.y, rotation.z);
-        console.log("CIRLCE", circle);
         return circle;
     }
 

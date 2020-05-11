@@ -5,15 +5,10 @@ import {ModelManager} from "../ModelManager/ModelManager";
 import ControlsManager from "../ControlsManager/ControlsManager";
 import GeometryManager from "../GeometryManager/GeometryManager";
 import LightingManager from "../LightingManager/LightingManager";
-import AudioManager from "../../models/audio/audio-manager";
 import {SceneryManager} from "../SceneryManager/SceneryManager";
 
-import DataManager from "../../models/data/data-manager";
-import UiManager from "../../models/ui/ui-manager";
-import UiNotes from "../../models/ui/ui-notes";
-import UiMaps from "../../models/ui/ui-maps";
-import UiInstagram from "../../models/ui/ui-instagram";
 import * as dat from "dat.gui";
+import Listening from "../../models/listening/listening";
 
 class GameManager {
     /**
@@ -38,6 +33,14 @@ class GameManager {
             this.bistroListened = false;
             this.bistroListenTimer = null;
             this.bistroCircleAnimationTick = null;
+
+            this.listenings = [
+                new Listening("bistro", 3000, "", "BistroConversationGauge", "BistroConversationSprite", () => {
+                    TIMELINES.postListenBistro.play();
+                })
+            ];
+
+            this.mapSprites = {};
 
             GameManager.instance = this;
 
@@ -83,6 +86,15 @@ class GameManager {
 
         /* -- Set default controls -- */
         GameBrain.controlsManager.initDeviceOrientation(GameBrain.cameraManager.camera);
+
+
+        let loader =  new THREE.TextureLoader();
+        this.mapSprites = {
+            red:   loader.load(`textures/pins/red.png`),
+            here:  loader.load(`textures/pins/user.png`),
+            green:   loader.load(`textures/pins/green.png`),
+            vocal:   loader.load(`textures/vocal_icon.png`),
+        };
     }
 
     // ----------------------------------------------------------------------- CALLBACKS
