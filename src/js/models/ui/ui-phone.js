@@ -31,7 +31,7 @@ class UiPhone extends Ui {
 
         Notification.hide("phone");
 
-        document.querySelector("#hud").style.display = "block";
+        document.querySelector("#hud").classList.remove("hide_hud");
     }
 
     setupEvents() {

@@ -89,19 +89,19 @@ export default class Game {
                 case "scene-1" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_1, VARS.HOURS.SCENE_2, () => {
                         SlideContent.hide();
-                    }, 2000);
+                    }, 1500);
                     break;
                 }
                 case "scene-2" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_2, VARS.HOURS.SCENE_3, () => {
                         SlideContent.hide();
-                    }, 2000);
+                    }, 1500);
                     break;
                 }
                 case "scene-3" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_3, VARS.HOURS.SCENE_FINAL, () => {
                         SlideContent.hide();
-                    }, 2000);
+                    }, 1500);
                     break;
                 }
             }

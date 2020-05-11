@@ -161,6 +161,9 @@ class SceneryManager {
                 // Set active scenery
                 this.setActiveScenery(sceneryIdentifier);
 
+                //hud
+                document.querySelector("#hud").classList.remove("hide_hud");
+
                 // Fade out
                 gsap.to("#transition", {
                     autoAlpha: 0,

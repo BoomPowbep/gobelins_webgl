@@ -10,13 +10,15 @@ class UiMaps extends Ui {
     setupDOM() {
         super.setupDOM();
         Notification.hide("maps");
-
-
-        document.querySelector("#hud").style.display = "none";
     }
 
     setupEvents() {
         super.setupEvents();
+    }
+
+    show() {
+        super.show();
+        document.querySelector("#hud").classList.add("hide_hud");
     }
 
     hide() {

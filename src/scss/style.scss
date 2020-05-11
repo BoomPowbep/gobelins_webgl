@@ -41,3 +41,12 @@
    -o-user-select: none;
    user-select: none;
  }
+
+ #hud{
+   opacity: 1;
+   transition: 0.5s opacity;
+   &.hide_hud{
+     pointer-events: none;
+     opacity: 0;
+   }
+ }

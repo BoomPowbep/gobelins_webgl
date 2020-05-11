@@ -38,6 +38,7 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 21000),
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 21000),
         new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, true, 21000),
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "Trouve les morceaux manquants du collage", 31000),
     ]),
     end: new Timeline([
         new TimelineItem(TIMELINE_TYPES.CAMERA,  {x: (1.5), y:(36), z:(-44)}, 5000),
@@ -46,6 +47,7 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 15000)
     ]),
     sceneBistro: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "Ecoute la conversation du bar", 10000),
     ]),
     sceneColleuse: new Timeline([
         new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-1', 0)
@@ -59,7 +61,8 @@ const TIMELINES = {
     postListenBistro : new Timeline([
         new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, true, 0),
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "instagram", 30000),
-        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 30000)
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 30000),
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu ne trouves pas tout ? Regarde Instagram pour t'aider",  40000),
     ]),
     mapNotification: new Timeline([
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "maps", 10000),
