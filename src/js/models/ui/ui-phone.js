@@ -4,7 +4,7 @@ import Notification from "../ui/mobile/notification";
 
 class UiPhone extends Ui {
     constructor() {
-        super("#app_phone");
+        super("#app_phone", false);
     }
 
     setupGlobalEvents() {
@@ -30,6 +30,8 @@ class UiPhone extends Ui {
         super.setupDOM();
 
         Notification.hide("phone");
+
+        document.querySelector("#hud").style.display = "block";
     }
 
     setupEvents() {

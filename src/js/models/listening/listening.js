@@ -23,8 +23,6 @@ class Listening {
 
             const duration = this.duration;
             this.listen_timer = setTimeout(() => {
-                // Ecoute terminée
-                this.listened = true;
             }, duration);
 
             let gauge_geometry = GameBrain.geometryManager.getGeometryReferenceByIdentifier(this.gauge_geometry_id);
@@ -40,14 +38,21 @@ class Listening {
            this.animation_tick = setInterval(() => {
                 executions++;
                 const elapsedTime = executions * tick;
+
+                if(elapsedTime >= duration) {
+                    this.listened = true;
+                    this.callback();
+                }
+
                 if (this.listened) {
                     //exec at end
-                    this.callback();
                     console.log("kjghdkgfhfdkjghdfkjgh");
                     clearInterval(this.animation_tick);
                 }
 
                 const angle = elapsedTime * twoPi / duration;
+
+                console.log(elapsedTime, duration, angle);
 
                 gauge_geometry.geometry = new THREE.CircleGeometry(gauge_geometry.geometry.parameters.radius,
                     gauge_geometry.geometry.parameters.segments,

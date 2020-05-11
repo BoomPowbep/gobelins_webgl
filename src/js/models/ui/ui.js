@@ -6,11 +6,13 @@ class Ui {
     /**
      * Create a new UI
      * @param element_id
+     * @param open_phone_on_hide
      */
-    constructor(element_id) {
+    constructor(element_id, open_phone_on_hide = true) {
         this.element_id = element_id;
         this.element = document.querySelector(element_id);
         this.active = false;
+        this.open_phone_on_hide = open_phone_on_hide;
 
         this.setupGlobalEvents();
     }
@@ -57,6 +59,9 @@ class Ui {
     hide() {
         this.element.classList.remove("display");
         this.active = false;
+
+        if(this.open_phone_on_hide)
+            DATA.ui_manager.active("phone");
     }
 }
 

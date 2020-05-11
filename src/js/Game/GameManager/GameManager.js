@@ -35,7 +35,7 @@ class GameManager {
             this.bistroCircleAnimationTick = null;
 
             this.listenings = [
-                new Listening("bistro", 3000, "", "BistroConversationGauge", "BistroConversationGauge", () => {
+                new Listening("bistro", 3000, "", "BistroConversationGauge", "BistroConversationSprite", () => {
                     TIMELINES.postListenBistro.play();
                 })
             ];
@@ -93,6 +93,7 @@ class GameManager {
             red:   loader.load(`textures/pins/red.png`),
             here:  loader.load(`textures/pins/user.png`),
             green:   loader.load(`textures/pins/green.png`),
+            vocal:   loader.load(`textures/vocal_icon.png`),
         };
     }
 

@@ -345,7 +345,7 @@ export default class Game {
             }),
             new Model({
                 identifier: 'letter-4',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
                     x: 38,
@@ -355,7 +355,7 @@ export default class Game {
             }),
             new Model({
                 identifier: 'letter-5',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
                     x: 38,
@@ -558,7 +558,15 @@ export default class Game {
                 radius: 1,
                 position: {x: -10, y: 38, z: 1},
                 rotation: {x: 0, y: toRad(90), z: 0},
-                color: 0xFF3333
+                color: 0xFFFFFF
+            }),
+            GameBrain.geometryManager.createBasicSprite({
+                identifier: "BistroConversationSprite",
+                position: {x: -9.9, y: 38, z: 1},
+                size: {x: 1.5, y: 1.5, z: 1},
+                rotation: {x: 0, y: toRad(90), z: 0},
+                facingCamera: false,
+                texture: GameBrain.mapSprites.vocal
             }),
         ];
 
@@ -567,7 +575,7 @@ export default class Game {
 
             new Model({
                 identifier: 'letter-2',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
                     x: 38,
@@ -577,7 +585,7 @@ export default class Game {
             }),
             new Model({
                 identifier: 'letter-3',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
                     x: -4,
@@ -671,32 +679,26 @@ export default class Game {
 
             new Model({
                 identifier: 'letter-6',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
-                    x: -4,
-                    y: 15,
-                    z: 87
+                    x: 5.5, y: -55, z: -62
                 }
             }),
             new Model({
                 identifier: 'letter-7',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
-                    x: -4,
-                    y: 15,
-                    z: 87
+                    x: 60, y: -15, z: 4
                 }
             }),
             new Model({
                 identifier: 'letter-8',
-                path: 'models/FBX/Boulette_Red.fbx',
+                path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
-                    x: -4,
-                    y: 15,
-                    z: 87
+                    x: -96, y: -15, z: -100
                 }
             })
             // new Model({
@@ -724,7 +726,7 @@ export default class Game {
         GameBrain.sceneryManager.addScenery(
             new Scenery({
                     identifier: "ComissariatScenery",
-                    basePosition: {x: 0, y: -3000, z: 0},
+                    basePosition: {x: 0, y: 0, z: -3000},
                     geometries: geometries,
                     models: models,
                     lights: lights,
