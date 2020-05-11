@@ -427,7 +427,7 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
-                         SCENE_EVENTS_VARS.sceneColleuse();
+                        SCENE_EVENTS_VARS.sceneColleuse();
                     }
                 }
             )
@@ -440,28 +440,28 @@ export default class Game {
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-1",
                 position: {x: -12, y: 2, z: 0},
-                size: {x: 2, y:2, z:2},
+                size: {x: 2, y: 2, z: 2},
                 texture: GameBrain.mapSprites.here
             }),
 
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-2",
                 position: {x: -3, y: 1, z: 8},
-                size: {x: 2, y:2, z:2},
+                size: {x: 2, y: 2, z: 2},
                 texture: GameBrain.mapSprites.here
             }),
 
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-3",
                 position: {x: -30, y: 1, z: -21},
-                size: {x: 2, y:2, z:2},
+                size: {x: 2, y: 2, z: 2},
                 texture: GameBrain.mapSprites.here
             }),
 
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-final",
                 position: {x: -6, y: 1, z: -21},
-                size: {x: 2, y:2, z:2},
+                size: {x: 2, y: 2, z: 2},
                 texture: GameBrain.mapSprites.here
             }),
         ];
@@ -503,10 +503,10 @@ export default class Game {
                         DATA.ui_manager.active('maps');
 
                         let pickupAll = DATA.data_manager.letters.hasPickupAll();
-                        let introductionFinish =DATA.data_manager.letters.hasPickupAllInScene(0);
-                        let barFinish =DATA.data_manager.letters.hasPickupAllInScene(1);
-                        let colleuseFinish =DATA.data_manager.letters.hasPickupAllInScene(2);
-                        let policeFinish =DATA.data_manager.letters.hasPickupAllInScene(3);
+                        let introductionFinish = DATA.data_manager.letters.hasPickupAllInScene(0);
+                        let barFinish = DATA.data_manager.letters.hasPickupAllInScene(1);
+                        let colleuseFinish = DATA.data_manager.letters.hasPickupAllInScene(2);
+                        let policeFinish = DATA.data_manager.letters.hasPickupAllInScene(3);
 
                         let active = GameBrain.sceneryManager.getLastScenery();
 
@@ -616,6 +616,19 @@ export default class Game {
                         ready++;
                         GameBrain.sceneryManager.loadScenery("ComissariatScenery");
                         checkElementsReady();
+
+                        // Change windows material
+                        // let sceneModel = GameBrain.modelManager.getModelReferenceByIdentifier("BistroEnvironment");
+                        // if (sceneModel) {
+                        //     sceneModel.children.map((child) => {
+                        //         if (child.isMesh) {
+                        //             if(child.name.includes("Vitre")) {
+                        //                 child.material.emissive = 0x111111;
+                        //                 child.material.envMap = GameBrain.cameraManager.camera.renderTarget;
+                        //             }
+                        //         }
+                        //     });
+                        // }
                     },
                     onSceneActive: (scene) => {
                         SCENE_EVENTS_VARS.sceneBistro();
@@ -700,27 +713,27 @@ export default class Game {
                 initialPosition: {
                     x: -96, y: -15, z: -100
                 }
-            })
-            // new Model({
-            //     identifier: 'Kangoo',
-            //     path: 'models/FBX/Kangoo.fbx',
-            //     initialScaleFactor: .8,
-            //     initialPosition: {x: 36, y: 30, z: -5},
-            //     initialRotation: {x: 0, y: toRad(-90), z: 0}
-            // }),
+            }),
+            new Model({
+                identifier: 'Kangoo',
+                path: 'models/FBX/Kangoo.fbx',
+                initialScaleFactor: 4,
+                initialPosition: {x: 0, y: -100000, z: 0},
+                initialRotation: {x: 0, y: toRad(-90), z: 0}
+            }),
         ];
 
         lights = [
-            GameBrain.lightingManager.createSpotLight({
-                identifier: "ComissariatSpotLight-0",
-                position: {x: 38, y: 41, z: 10},
-                target: {x: 38, y: 0, z: 10},
-                intensity: 100,
-                angle: .03,
-                distance: 15,
-                radiusTop: .6,
-                attenuationFactor: 3.0,
-            }),
+            // GameBrain.lightingManager.createSpotLight({
+            //     identifier: "ComissariatSpotLight-0",
+            //     position: {x: 38, y: 41, z: 10},
+            //     target: {x: 38, y: 0, z: 10},
+            //     intensity: 100,
+            //     angle: .03,
+            //     distance: 15,
+            //     radiusTop: .6,
+            //     attenuationFactor: 3.0,
+            // }),
         ];
 
         GameBrain.sceneryManager.addScenery(
@@ -732,35 +745,31 @@ export default class Game {
                     lights: lights,
                     cameraPosition: {x: 0, y: 40, z: 0},
                     fog: false,
-                    onLoadDone: () => {
+                    onLoadDone: (scenery) => {
                         ready++;
                         checkElementsReady();
 
-                        // let kangoo = GameBrain.modelManager.getModelReferenceByIdentifier("Kangoo");
-                        // let i;
-                        //
-                        // for (i = 0; i < 10; i++) {
-                        //     let clone = kangoo.clone();
-                        //     clone.identifier = kangoo.identifier + "-" + i + 1;
-                        //     clone.position.z += i * 6.1;
-                        //     clone.rotation.y = getRandomInt(2) ? toRad(90) : toRad(-90);
-                        //     GameBrain.sceneManager.scene.add(clone);
-                        // }
-
                         let sceneModel = GameBrain.modelManager.getModelReferenceByIdentifier("ComissariatEnvironment");
+                        let kangoo = GameBrain.modelManager.getModelReferenceByIdentifier("Kangoo");
 
                         if (sceneModel) {
                             sceneModel.children.map((child) => {
-                                if (child.isMesh && child.name === "Cone") {
-                                    child.material = new THREEx.VolumetricSpotLightMaterial();
-                                    child.material.uniforms.lightColor.value.set('white');
-                                    child.material.uniforms.spotPosition.value = child.position;
-                                    child.material.uniforms.attenuationFactor.value = 0.0;
-
-                                    // let light = GameBrain.lightingManager.getLightReferenceByIdentifier("ComissariatSpotLight-0");
-                                    // light.position = child.position;
-                                    // light.target = child.position;
-                                    // light.target.y = 0;
+                                if (child.isMesh) {
+                                    if (child.name.includes("Cone")) {
+                                        child.material = new THREEx.VolumetricSpotLightMaterial();
+                                        child.material.uniforms.lightColor.value.set('white');
+                                        child.material.uniforms.spotPosition.value = child.position;
+                                        child.material.uniforms.attenuationFactor.value = 800.0;
+                                    } else if (child.name.includes("Cube")) {
+                                        child.material.transparent = true;
+                                        child.material.opacity = 0.3;
+                                        let newKangoo = kangoo.clone();
+                                        newKangoo.identifier = kangoo.identifier;
+                                        newKangoo.position.x = child.position.x + scenery.basePosition.x - 75;
+                                        newKangoo.position.y = child.position.y + scenery.basePosition.y;
+                                        newKangoo.position.z = child.position.z + scenery.basePosition.z + 20;
+                                        GameBrain.sceneManager.scene.add(newKangoo);
+                                    }
                                 }
                             });
                         }
@@ -778,7 +787,7 @@ export default class Game {
 
             if (ready === total) {
                 GameBrain.sceneryManager.startSceneryTransition("StreetScenery", duration);
-               // GameBrain.sceneryManager.startSceneryTransition("MapScenery", duration);
+
                 gsap.to("#loading", {
                     duration: duration / 2,
                     autoAlpha: 0
@@ -861,7 +870,7 @@ export default class Game {
         }
 
         GameBrain.listenings.forEach(value => {
-            if(value.starter_geometry_id === identifier) {
+            if (value.starter_geometry_id === identifier) {
                 value.touchStart();
             }
         });
@@ -889,7 +898,7 @@ export default class Game {
             }
         }
 
-        if(DATA.can_pick) {
+        if (DATA.can_pick) {
             //if we touch a letter
             if (identifier.match(new RegExp("^(letter-)"))) {
                 let letter = DATA.data_manager.get("letter", identifier);
@@ -926,7 +935,7 @@ export default class Game {
         }
 
         GameBrain.listenings.forEach(value => {
-                value.touchEnd();
+            value.touchEnd();
         });
     }
 
