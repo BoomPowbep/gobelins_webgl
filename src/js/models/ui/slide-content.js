@@ -23,11 +23,11 @@ class SlideContent {
     }
 
     static date(date, callback = undefined, color = "white", event = true) {
-        SlideContent.show(`<div class='date' style="color:${color}"><span>${date.hour}:${date.minute}</span><span>${VARS.DAYS[date.weekDay]} ${date.day} ${date.month}</span></div>`, callback, event);
+        SlideContent.show(`<div class='date' style="color:${color}"><span>${date.hour <= 9 ? `0${date.hour}`: date.hour}:${date.minute}</span><span>${VARS.DAYS[date.weekDay]} ${date.day} ${date.month}</span></div>`, callback, event);
     }
 
     static fromTo(start_date, end_date, callback = undefined, duration=5000, color = "white", event = true) {
-        SlideContent.show(`<div class='date' style="color:${color}"><span>${start_date.hour}:${start_date.minute}</span><span>${VARS.DAYS[start_date.weekDay]} ${start_date.day} ${start_date.month}</span></div>`, callback, event);
+        SlideContent.show(`<div class='date' style="color:${color}"><span>${start_date.hour <= 9 ? `0${start_date.hour}`: start_date.hour}:${start_date.minute}</span><span>${VARS.DAYS[start_date.weekDay]} ${start_date.day} ${start_date.month}</span></div>`, callback, event);
         let el = document.querySelector('#slide-content');
         let date = el.querySelector('.date');
 

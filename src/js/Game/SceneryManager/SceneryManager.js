@@ -162,7 +162,10 @@ class SceneryManager {
                 this.setActiveScenery(sceneryIdentifier);
 
                 //hud
-                document.querySelector("#hud").classList.remove("hide_hud");
+                if(sceneryIdentifier !== VARS.SCENERIES.MAP) {
+                    document.querySelector("#hud").classList.remove("hide_hud");
+                    DATA.ui_manager.get('maps').hide();
+                }
 
                 // Fade out
                 gsap.to("#transition", {

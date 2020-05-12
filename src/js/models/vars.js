@@ -22,6 +22,7 @@ const VARS = {
         POLICE : 'ComissariatScenery',
         STREET : 'StreetScenery',
         COLLEUSE : 'ColleusesScenery',
+        MAP : 'MapScenery',
     }
 };
 
