@@ -89,19 +89,19 @@ export default class Game {
                 case "scene-1" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_1, VARS.HOURS.SCENE_2, () => {
                         SlideContent.hide();
-                    }, 1500);
+                    }, 1500, "white", true, 0);
                     break;
                 }
                 case "scene-2" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_2, VARS.HOURS.SCENE_3, () => {
                         SlideContent.hide();
-                    }, 1500);
+                    }, 1500, "white", true, 0);
                     break;
                 }
                 case "scene-3" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_3, VARS.HOURS.SCENE_FINAL, () => {
                         SlideContent.hide();
-                    }, 1500);
+                    }, 1500, "white", true, 0);
                     break;
                 }
             }
@@ -188,13 +188,20 @@ export default class Game {
                     "ComissariatScenery"
                 ];
 
+                let map_folder = GameBrain.gui.addFolder('Map');
                 sceneriesIdentifiers.map((identifier) => {
-                    GameBrain.gui.add({
+                    map_folder.add({
                         tp: () => {
                             GameBrain.sceneryManager.startSceneryTransition(identifier);
                         }
                     }, 'tp').name('to ' + identifier.replace("Scenery", ""));
                 });
+
+
+                let camera_folder = GameBrain.gui.addFolder('Camera');
+                camera_folder.add( GameBrain.cameraManager.camera.position , 'x', -500, 500 ).step(5);
+                camera_folder.add( GameBrain.cameraManager.camera.position , 'y', 20, 70 ).step(1);
+                camera_folder.add( GameBrain.cameraManager.camera.position , 'z', -3500, -2500 ).step(5);
             }
         });
 
@@ -419,7 +426,7 @@ export default class Game {
                     geometries: geometries,
                     models: models,
                     lights: lights,
-                    cameraPosition: {x: 0, y: -25, z: 40},
+                    cameraPosition: {x: 110, y: -25, z: 20},
                     fog: true,
                     onLoadDone: () => {
                         ready++;
@@ -500,6 +507,8 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
+                        let focused_element = null;
+
                         DATA.ui_manager.active('maps');
 
                         let pickupAll = DATA.data_manager.letters.hasPickupAll();
@@ -543,6 +552,21 @@ export default class Game {
                             ((introductionFinish && !policeFinish) ? // si il a pas fini la police on le garde vert, sinon il doit y retourner
                                 GameBrain.mapSprites.green :
                                 GameBrain.mapSprites.red);
+
+                        //on cherche sur quel élément on focus la map
+                        if(!introductionFinish)
+                            focused_element = item;
+                        else if(!barFinish)
+                            focused_element = item_interest1;
+                        else if(!colleuseFinish)
+                            focused_element = item_interest2;
+                        else if(!policeFinish)
+                            focused_element = item_interest3;
+                        else
+                            focused_element = item;
+
+                        //on target l'élément
+                        GameBrain.controlsManager.targetTo(focused_element.identifier);
                     }
                 }
             )
@@ -610,7 +634,7 @@ export default class Game {
                     geometries: geometries,
                     models: models,
                     lights: lights,
-                    cameraPosition: {x: 0, y: 40, z: 0},
+                    cameraPosition: {x: -20, y: 26, z: -55},
                     fog: false,
                     onLoadDone: () => {
                         ready++;
@@ -743,7 +767,7 @@ export default class Game {
                     geometries: geometries,
                     models: models,
                     lights: lights,
-                    cameraPosition: {x: 0, y: 40, z: 0},
+                    cameraPosition: {x: -30, y: 20, z: -10},
                     fog: false,
                     onLoadDone: (scenery) => {
                         ready++;
@@ -796,7 +820,7 @@ export default class Game {
                 setupDatGUIModels();
 
                // setTimeout(() => {
-                    SlideContent.introduction();
+                  //  SlideContent.introduction();
                 //}, 500);
             } else {
                 gsap.to("#loading .progress-bar div", {

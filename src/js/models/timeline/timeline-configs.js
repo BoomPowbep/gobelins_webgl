@@ -36,7 +36,6 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.UI_HIDE, "call", 21000),
         new TimelineItem(TIMELINE_TYPES.PHONE, null, 21000),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 21000),
-        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 21000),
         new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, true, 21000),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Oh on dirait qu’un morceau de collage est juste là", 31000),
     ]),
@@ -63,6 +62,8 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "instagram", 30000),
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 30000),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu ne trouves pas tout ? Regarde Instagram pour t'aider",  40000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "instagram", 180000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 180000),
     ]),
     mapNotification: new Timeline([
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "maps", 0),

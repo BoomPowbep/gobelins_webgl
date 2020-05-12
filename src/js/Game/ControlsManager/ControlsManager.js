@@ -78,7 +78,15 @@ export default class ControlsManager {
      */
     targetTo(identifier) {
         const target = GameBrain.modelManager.getModelReferenceByIdentifier(identifier);
-        this._controls.target = new Vector3(target.position.x, target.position.y, target.position.z);
+        if(target !== null) {
+            this._controls.target = new Vector3(target.position.x, target.position.y, target.position.z);
+        }
+        else {
+            const target_geometry = GameBrain.geometryManager.getGeometryReferenceByIdentifier(identifier);
+            if(target_geometry !== null) {
+                this._controls.target = new Vector3(target_geometry.position.x, target_geometry.position.y, target_geometry.position.z);
+            }
+        }
     }
 
     // ------------------------------------------------------------------- GETTERS
