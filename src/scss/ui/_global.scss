@@ -147,6 +147,10 @@ $app_height_name : 64px;
       margin-bottom: 0;
       margin-top: 120px;
     }
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
     img{
       width: 100%;
       box-sizing: border-box;

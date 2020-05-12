@@ -89,19 +89,19 @@ export default class Game {
                 case "scene-1" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_1, VARS.HOURS.SCENE_2, () => {
                         SlideContent.hide();
-                    }, 1500);
+                    }, 1500, "white", true, 0);
                     break;
                 }
                 case "scene-2" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_2, VARS.HOURS.SCENE_3, () => {
                         SlideContent.hide();
-                    }, 1500);
+                    }, 1500, "white", true, 0);
                     break;
                 }
                 case "scene-3" : {
                     SlideContent.fromTo(VARS.HOURS.SCENE_3, VARS.HOURS.SCENE_FINAL, () => {
                         SlideContent.hide();
-                    }, 1500);
+                    }, 1500, "white", true, 0);
                     break;
                 }
             }
@@ -188,13 +188,20 @@ export default class Game {
                     "ComissariatScenery"
                 ];
 
+                let map_folder = GameBrain.gui.addFolder('Map');
                 sceneriesIdentifiers.map((identifier) => {
-                    GameBrain.gui.add({
+                    map_folder.add({
                         tp: () => {
                             GameBrain.sceneryManager.startSceneryTransition(identifier);
                         }
                     }, 'tp').name('to ' + identifier.replace("Scenery", ""));
                 });
+
+
+                let camera_folder = GameBrain.gui.addFolder('Camera');
+                camera_folder.add( GameBrain.cameraManager.camera.position , 'x', -500, 500 ).step(5);
+                camera_folder.add( GameBrain.cameraManager.camera.position , 'y', 20, 70 ).step(1);
+                camera_folder.add( GameBrain.cameraManager.camera.position , 'z', -3500, -2500 ).step(5);
             }
         });
 
@@ -419,7 +426,7 @@ export default class Game {
                     geometries: geometries,
                     models: models,
                     lights: lights,
-                    cameraPosition: {x: 0, y: -25, z: 40},
+                    cameraPosition: {x: 110, y: -25, z: 20},
                     fog: true,
                     onLoadDone: () => {
                         ready++;
@@ -500,6 +507,8 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
+                        let focused_element = null;
+
                         DATA.ui_manager.active('maps');
 
                         let pickupAll = DATA.data_manager.letters.hasPickupAll();
@@ -543,6 +552,21 @@ export default class Game {
                             ((introductionFinish && !policeFinish) ? // si il a pas fini la police on le garde vert, sinon il doit y retourner
                                 GameBrain.mapSprites.green :
                                 GameBrain.mapSprites.red);
+
+                        //on cherche sur quel élément on focus la map
+                        if(!introductionFinish)
+                            focused_element = item;
+                        else if(!barFinish)
+                            focused_element = item_interest1;
+                        else if(!colleuseFinish)
+                            focused_element = item_interest2;
+                        else if(!policeFinish)
+                            focused_element = item_interest3;
+                        else
+                            focused_element = item;
+
+                        //on target l'élément
+                        GameBrain.controlsManager.targetTo(focused_element.identifier);
                     }
                 }
             )
@@ -555,15 +579,15 @@ export default class Game {
 
             GameBrain.geometryManager.createCircleShape({
                 identifier: "BistroConversationGauge",
-                radius: 1,
-                position: {x: -10, y: 38, z: 1},
+                radius: 2,
+                position: {x: -44, y: 24, z: -31},
                 rotation: {x: 0, y: toRad(90), z: 0},
                 color: 0xFFFFFF
             }),
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "BistroConversationSprite",
-                position: {x: -9.9, y: 38, z: 1},
-                size: {x: 1.5, y: 1.5, z: 1},
+                position: {x: -43.9, y: 24, z: -31},
+                size: {x: 2, y: 2, z: 1},
                 rotation: {x: 0, y: toRad(90), z: 0},
                 facingCamera: false,
                 texture: GameBrain.mapSprites.vocal
@@ -577,21 +601,19 @@ export default class Game {
                 identifier: 'letter-2',
                 path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
-                initialPosition: {
-                    x: 38,
-                    y: 21,
-                    z: 27
-                }
+                initialPosition: {x: 33, y: 7, z: -8},
+                visible: false
             }),
             new Model({
                 identifier: 'letter-3',
                 path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
-                    x: -4,
+                    x: 1,
                     y: 15,
-                    z: 87
-                }
+                    z: -113
+                },
+                visible: false
             })
         ];
 
@@ -610,7 +632,7 @@ export default class Game {
                     geometries: geometries,
                     models: models,
                     lights: lights,
-                    cameraPosition: {x: 0, y: 40, z: 0},
+                    cameraPosition: {x: -20, y: 26, z: -55},
                     fog: false,
                     onLoadDone: () => {
                         ready++;
@@ -640,7 +662,7 @@ export default class Game {
         function setupDatGUIModels() {
             let editedElement = GameBrain.modelManager.getModelReferenceByIdentifier('letter-1');
             let identifier = {model: ""};
-            let elementSelector = GameBrain.gui.add(identifier, 'model', ['letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final"]);
+            let elementSelector = GameBrain.gui.add(identifier, 'model', ['letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final", "BistroConversationGauge"]);
 
             let x_element = null;
             let y_element = null;
@@ -695,7 +717,7 @@ export default class Game {
                 path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
-                    x: 5.5, y: -55, z: -62
+                    x: 20, y: -20, z: -52
                 }
             }),
             new Model({
@@ -743,7 +765,7 @@ export default class Game {
                     geometries: geometries,
                     models: models,
                     lights: lights,
-                    cameraPosition: {x: 0, y: 40, z: 0},
+                    cameraPosition: {x: -30, y: 20, z: -10},
                     fog: false,
                     onLoadDone: (scenery) => {
                         ready++;
@@ -795,9 +817,9 @@ export default class Game {
 
                 setupDatGUIModels();
 
-                setTimeout(() => {
+               // setTimeout(() => {
                     SlideContent.introduction();
-                }, 500);
+                //}, 500);
             } else {
                 gsap.to("#loading .progress-bar div", {
                     duration: duration / 2,

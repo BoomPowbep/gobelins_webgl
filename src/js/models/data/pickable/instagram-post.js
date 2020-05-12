@@ -17,6 +17,11 @@ class InstagramPost  extends Pickable {
         this._images = images;
     }
 
+    pickedUp() {
+        super.pickedUp();
+        //On active l'icon instagram au premier post
+        document.querySelector('.app-icon[data-open="instagram"]').classList.remove('disabled');
+    }
 
     getName() {
         return this._name;

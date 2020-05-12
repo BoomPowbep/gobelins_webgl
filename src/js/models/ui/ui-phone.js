@@ -17,13 +17,23 @@ class UiPhone extends Ui {
                 e.preventDefault();
                 this.hide();
                 if(value.getAttribute("data-open") === "maps") {
-                    GameBrain.sceneryManager.startSceneryTransition("MapScenery");
+                    GameBrain.sceneryManager.startSceneryTransition("MapScenery", 0);
                 }
                 else {
                     DATA.ui_manager.active(value.getAttribute("data-open"));
                 }
             })
         })
+    }
+
+    hide() {
+        super.hide();
+
+        //on fait un check pour savoir si on joue une TIMELINE spéciale à la fermeture du tél ou non
+        if (DATA.firstPhoneOpen) {
+            DATA.firstPhoneOpen = false;
+            TIMELINES.firstPhoneOpen.play();
+        }
     }
 
     setupDOM() {

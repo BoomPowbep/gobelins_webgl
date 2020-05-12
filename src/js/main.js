@@ -3,6 +3,8 @@ import App from './App';
 window.addEventListener('DOMContentLoaded', () => {
         let app = new App();
         app.init();
+        if(window.screen && window.screen.orientation)
+                screen.orientation.lock("portrait");
 });
 
 //on cancel les mouvements de swipe back sur mobile

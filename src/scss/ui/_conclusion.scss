@@ -6,12 +6,14 @@
   top: 0;
   left: 0;
   z-index: 100;
-  transform: translateY(100%) translateZ(0);
-  transition: 2s transform;
+  opacity: 0;
+  pointer-events: none;
+  transition: 1s opacity;
   color: white;
   text-align: center;
   &.active{
-    transform: translateY(0%) translateZ(0);
+    opacity: 1;
+    pointer-events: initial;
   }
   .conclude-block, .conclude {
     width: 100%;

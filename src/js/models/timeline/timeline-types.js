@@ -17,6 +17,8 @@ const TIMELINE_TYPES = {
     TEXT : 'text',
     ALLOW_PICKING : 'allow_picking',
     STOP_PREVIOUS_TIMELINE : 'stop_previous_timeline',
+    STOP_TIMELINE : 'stop_timeline',
+    SHOW_3D_MODEL : 'SHOW_3D_MODEL'
 };
 
 export default TIMELINE_TYPES;

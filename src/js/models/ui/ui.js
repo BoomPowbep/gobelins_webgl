@@ -53,12 +53,16 @@ class Ui {
         this.active = true;
     }
 
+    hideOnly() {
+        this.element.classList.remove("display");
+        this.active = false;
+    }
+
     /**
      * Hide the UI
      */
     hide() {
-        this.element.classList.remove("display");
-        this.active = false;
+        this.hideOnly();
 
         if(this.open_phone_on_hide)
             DATA.ui_manager.active("phone");

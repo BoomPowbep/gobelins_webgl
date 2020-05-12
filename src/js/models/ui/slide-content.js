@@ -4,7 +4,7 @@ import Rewind from "../../Game/Util/Rewind";
 import VARS from "../vars";
 
 class SlideContent {
-    static show(html, callback = () => SlideContent.hide(), event = true) {
+    static show(html, callback = () => SlideContent.hide(), event = true, duration = 0.5) {
         let el = document.querySelector('#slide-content');
         let content = el.querySelector('div');
         content.innerHTML = html;
@@ -18,16 +18,16 @@ class SlideContent {
             el.classList.add('clickable');
         }
 
-        gsap.to(el, {opacity: 1});
+        gsap.to(el, {opacity: 1, duration: duration});
         gsap.fromTo(content, {opacity: 0}, {opacity: 1});
     }
 
     static date(date, callback = undefined, color = "white", event = true) {
-        SlideContent.show(`<div class='date' style="color:${color}"><span>${date.hour}:${date.minute}</span><span>${VARS.DAYS[date.weekDay]} ${date.day} ${date.month}</span></div>`, callback, event);
+        SlideContent.show(`<div class='date' style="color:${color}"><span>${date.hour <= 9 ? `0${date.hour}`: date.hour}:${date.minute}</span><span>${VARS.DAYS[date.weekDay]} ${date.day} ${date.month}</span></div>`, callback, event);
     }
 
-    static fromTo(start_date, end_date, callback = undefined, duration=5000, color = "white", event = true) {
-        SlideContent.show(`<div class='date' style="color:${color}"><span>${start_date.hour}:${start_date.minute}</span><span>${VARS.DAYS[start_date.weekDay]} ${start_date.day} ${start_date.month}</span></div>`, callback, event);
+    static fromTo(start_date, end_date, callback = undefined, duration=5000, color = "white", event = true, open_duration = 0.5) {
+        SlideContent.show(`<div class='date' style="color:${color}"><span>${start_date.hour <= 9 ? `0${start_date.hour}`: start_date.hour}:${start_date.minute}</span><span>${VARS.DAYS[start_date.weekDay]} ${start_date.day} ${start_date.month}</span></div>`, callback, event, open_duration);
         let el = document.querySelector('#slide-content');
         let date = el.querySelector('.date');
 
