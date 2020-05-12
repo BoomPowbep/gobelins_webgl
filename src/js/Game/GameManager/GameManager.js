@@ -9,6 +9,7 @@ import {SceneryManager} from "../SceneryManager/SceneryManager";
 
 import * as dat from "dat.gui";
 import Listening from "../../models/listening/listening";
+import AudioManager from "../../models/audio/audio-manager";
 
 class GameManager {
     /**
@@ -35,8 +36,10 @@ class GameManager {
             this.bistroCircleAnimationTick = null;
 
             this.listenings = [
-                new Listening("bistro", 3000, "", "BistroConversationGauge", "BistroConversationSprite", () => {
+                new Listening("bistro", 3000, "vocal_1", "BistroConversationGauge", "BistroConversationSprite", () => {
                     TIMELINES.postListenBistro.play();
+                    let vocal = DATA.data_manager.get("record", "vocal-1");
+                    vocal.pickedUp();
                 })
             ];
 

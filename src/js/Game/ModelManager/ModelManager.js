@@ -14,6 +14,7 @@ class Model {
      * @param initialScaleFactor
      * @param initialPosition
      * @param initialRotation
+     * @param visible
      */
     constructor(
         {
@@ -25,7 +26,8 @@ class Model {
                 y: 0,
                 z: 0
             },
-            initialRotation = {x: 0, y: 0, z: 0}
+            initialRotation = {x: 0, y: 0, z: 0},
+            visible = true
         }) {
         this.identifier = identifier;
         this.path = path;
@@ -33,6 +35,7 @@ class Model {
         this.initialPosition = initialPosition;
         this.initialRotation = initialRotation;
         this.loaded = false;
+        this.visible = visible;
     }
 }
 
@@ -99,6 +102,8 @@ class ModelManager {
                     target.rotation.x = model.initialRotation.x;
                     target.rotation.y = model.initialRotation.y;
                     target.rotation.z = model.initialRotation.z;
+
+                    target.visible = model.visible;
 
                     // Add identifier
                     target.identifier = model.identifier;

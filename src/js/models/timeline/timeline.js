@@ -45,6 +45,14 @@ class Timeline {
                         TIMELINES.stopAll();
                         break;
                     }
+                    case TIMELINE_TYPES.STOP_TIMELINE : {
+                        TIMELINES[value.content].stop();
+                        break;
+                    }
+                    case TIMELINE_TYPES.SHOW_3D_MODEL : {
+                        GameBrain.modelManager.getModelReferenceByIdentifier(value.content).visible = true;
+                        break;
+                    }
                     case TIMELINE_TYPES.CONCLUSION : {
                         DATA.conclusion_manager.show(value.content);
                         break;

@@ -26,6 +26,16 @@ class UiPhone extends Ui {
         })
     }
 
+    hide() {
+        super.hide();
+
+        //on fait un check pour savoir si on joue une TIMELINE spéciale à la fermeture du tél ou non
+        if (DATA.firstPhoneOpen) {
+            DATA.firstPhoneOpen = false;
+            TIMELINES.firstPhoneOpen.play();
+        }
+    }
+
     setupDOM() {
         super.setupDOM();
 

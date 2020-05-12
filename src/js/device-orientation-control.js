@@ -3,6 +3,7 @@
  * @author WestLangley / http://github.com/WestLangley
  * W3C Device Orientation control (http://w3c.github.io/deviceorientation/spec-source-orientation.html)
  */
+import {toRad} from "./Game/Util/Helpers";
 
 var THREE = require("three");
 import gsap from "gsap";
@@ -19,7 +20,7 @@ var DeviceOrientationControls = function( object, {freeze = false, rotation = {x
     this.screenOrientation = 0;
 
     this.alpha = 0;
-    this.alphaOffsetAngle = 0;
+    this.alphaOffsetAngle = -toRad(90);
 
     this.rotation = rotation;
     this.rotationDuration = rotationDuration;

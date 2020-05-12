@@ -579,15 +579,15 @@ export default class Game {
 
             GameBrain.geometryManager.createCircleShape({
                 identifier: "BistroConversationGauge",
-                radius: 1,
-                position: {x: -10, y: 38, z: 1},
+                radius: 2,
+                position: {x: -44, y: 24, z: -31},
                 rotation: {x: 0, y: toRad(90), z: 0},
                 color: 0xFFFFFF
             }),
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "BistroConversationSprite",
-                position: {x: -9.9, y: 38, z: 1},
-                size: {x: 1.5, y: 1.5, z: 1},
+                position: {x: -43.9, y: 24, z: -31},
+                size: {x: 2, y: 2, z: 1},
                 rotation: {x: 0, y: toRad(90), z: 0},
                 facingCamera: false,
                 texture: GameBrain.mapSprites.vocal
@@ -601,21 +601,19 @@ export default class Game {
                 identifier: 'letter-2',
                 path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
-                initialPosition: {
-                    x: 38,
-                    y: 21,
-                    z: 27
-                }
+                initialPosition: {x: 33, y: 7, z: -8},
+                visible: false
             }),
             new Model({
                 identifier: 'letter-3',
                 path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
-                    x: -4,
+                    x: 1,
                     y: 15,
-                    z: 87
-                }
+                    z: -113
+                },
+                visible: false
             })
         ];
 
@@ -664,7 +662,7 @@ export default class Game {
         function setupDatGUIModels() {
             let editedElement = GameBrain.modelManager.getModelReferenceByIdentifier('letter-1');
             let identifier = {model: ""};
-            let elementSelector = GameBrain.gui.add(identifier, 'model', ['letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final"]);
+            let elementSelector = GameBrain.gui.add(identifier, 'model', ['letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final", "BistroConversationGauge"]);
 
             let x_element = null;
             let y_element = null;
@@ -719,7 +717,7 @@ export default class Game {
                 path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.01,
                 initialPosition: {
-                    x: 5.5, y: -55, z: -62
+                    x: 20, y: -20, z: -52
                 }
             }),
             new Model({
@@ -820,7 +818,7 @@ export default class Game {
                 setupDatGUIModels();
 
                // setTimeout(() => {
-                  //  SlideContent.introduction();
+                    SlideContent.introduction();
                 //}, 500);
             } else {
                 gsap.to("#loading .progress-bar div", {

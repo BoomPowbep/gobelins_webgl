@@ -16,6 +16,7 @@ const DATA = {
     drag_start_y: null,
     drag_element: null,
     can_pick: false,
+    firstPhoneOpen : true,
 
     //Setup all managers
     setupManagers: () => {
