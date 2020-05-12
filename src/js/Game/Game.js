@@ -816,7 +816,7 @@ export default class Game {
                 });
 
                 setupDatGUIModels();
-
+                
                // setTimeout(() => {
                     SlideContent.introduction();
                 //}, 500);
