@@ -18,7 +18,7 @@ class Scenery {
                     canMove = true,
                     ambiantSoundIdentifier = "Default",
                     orbitControls = true,
-                    onLoadDone = () => null,
+                    onLoadDone = (scenery) => null,
                     updateLastScenery = true, //si false, ca actualise pas le activeScenery.
                     onSceneActive = (scene) => null,
                 }) {
@@ -142,7 +142,7 @@ class SceneryManager {
                 GameBrain.sceneManager.addThings(GameBrain.lightingManager.lights);
 
                 queued.loaded = true;
-                queued.onLoadDone();
+                queued.onLoadDone(queued);
             }
 
         } else {
