@@ -291,7 +291,7 @@ export default class Game {
             new Model({
                 identifier: 'letter-1',
                 path: 'models/FBX/Boulette_Red.fbx',
-                initialScaleFactor: 0.01,
+                initialScaleFactor: 0.02,
                 initialPosition: {
                     x: 120,
                     y: 50,
@@ -353,7 +353,7 @@ export default class Game {
             new Model({
                 identifier: 'letter-4',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.01,
+                initialScaleFactor: 0.02,
                 initialPosition: {
                     x: 38,
                     y: 21,
@@ -363,7 +363,7 @@ export default class Game {
             new Model({
                 identifier: 'letter-5',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.01,
+                initialScaleFactor: 0.02,
                 initialPosition: {
                     x: 38,
                     y: 21,
@@ -600,18 +600,18 @@ export default class Game {
             new Model({
                 identifier: 'letter-2',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.01,
-                initialPosition: {x: 33, y: 7, z: -8},
+                initialScaleFactor: 0.02,
+                initialPosition: {x: 28, y: 13.3, z: -33},
                 visible: false
             }),
             new Model({
                 identifier: 'letter-3',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.01,
+                initialScaleFactor: 0.02,
                 initialPosition: {
-                    x: 1,
-                    y: 15,
-                    z: -113
+                    x: -10,
+                    y: 5,
+                    z: -90
                 },
                 visible: false
             })
@@ -715,7 +715,7 @@ export default class Game {
             new Model({
                 identifier: 'letter-6',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.01,
+                initialScaleFactor: 0.02,
                 initialPosition: {
                     x: 20, y: -20, z: -52
                 }
@@ -723,7 +723,7 @@ export default class Game {
             new Model({
                 identifier: 'letter-7',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.01,
+                initialScaleFactor: 0.02,
                 initialPosition: {
                     x: 60, y: -15, z: 4
                 }
@@ -731,7 +731,7 @@ export default class Game {
             new Model({
                 identifier: 'letter-8',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.01,
+                initialScaleFactor: 0.02,
                 initialPosition: {
                     x: -96, y: -15, z: -100
                 }

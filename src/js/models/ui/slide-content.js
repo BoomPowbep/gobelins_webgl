@@ -38,7 +38,7 @@ class SlideContent {
                 end_date,
                 duration
             );
-        }, 500)
+        }, 1200)
     }
 
     static image(image, callback = undefined, event = true) {
@@ -56,7 +56,7 @@ class SlideContent {
     //Special Slide Content
     static introduction() {
         SlideContent.date(VARS.HOURS.BEGIN, () => {
-            SlideContent.image("https://pokexp.com/uploads/event/28042020-staff-day.png", () => {
+            SlideContent.image("/images/cuisine.png", () => {
                 SlideContent.fromTo(VARS.HOURS.BEGIN, VARS.HOURS.SCENE_INTRO, () => {
                     SlideContent.hide();
                     TIMELINES.begin.play();
