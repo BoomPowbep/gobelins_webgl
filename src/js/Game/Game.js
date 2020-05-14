@@ -199,9 +199,9 @@ export default class Game {
 
 
                 let camera_folder = GameBrain.gui.addFolder('Camera');
-                camera_folder.add( GameBrain.cameraManager.camera.position , 'x', -500, 500 ).step(5);
-                camera_folder.add( GameBrain.cameraManager.camera.position , 'y', 20, 70 ).step(1);
-                camera_folder.add( GameBrain.cameraManager.camera.position , 'z', -3500, -2500 ).step(5);
+                camera_folder.add(GameBrain.cameraManager.camera.position, 'x', -500, 500).step(5);
+                camera_folder.add(GameBrain.cameraManager.camera.position, 'y', 20, 70).step(1);
+                camera_folder.add(GameBrain.cameraManager.camera.position, 'z', -3500, -2500).step(5);
             }
         });
 
@@ -373,50 +373,50 @@ export default class Game {
         ];
 
         lights = [
-            GameBrain.lightingManager.createSpotLight({
-                identifier: "ColleusesSpotLight-0",
-                position: {x: 80, y: 35, z: -480},
-                target: {x: 78, y: 0, z: -480},
-                intensity: 10,
-                angle: .4,
-                distance: 210
-            }),
-
-            GameBrain.lightingManager.createSpotLight({
-                identifier: "ColleusesSpotLight-1",
-                position: {x: 80, y: 35, z: -195},
-                target: {x: 78, y: 0, z: -195},
-                intensity: 10,
-                angle: .4,
-                distance: 210
-            }),
-
-            GameBrain.lightingManager.createSpotLight({
-                identifier: "ColleusesSpotLight-2",
-                position: {x: 80, y: 35, z: 0},
-                target: {x: 78, y: 0, z: 0},
-                intensity: 10,
-                angle: .4,
-                distance: 210
-            }),
-
-            GameBrain.lightingManager.createSpotLight({
-                identifier: "ColleusesSpotLight-3",
-                position: {x: 80, y: 35, z: 195},
-                target: {x: 78, y: 0, z: 195},
-                intensity: 10,
-                angle: .4,
-                distance: 210
-            }),
-
-            GameBrain.lightingManager.createSpotLight({
-                identifier: "ColleusesSpotLight-4",
-                position: {x: 80, y: 35, z: 480},
-                target: {x: 78, y: 0, z: 480},
-                intensity: 10,
-                angle: .4,
-                distance: 210
-            }),
+            // GameBrain.lightingManager.createSpotLight({
+            //     identifier: "ColleusesSpotLight-0",
+            //     position: {x: 80, y: 35, z: -480},
+            //     target: {x: 78, y: 0, z: -480},
+            //     intensity: 10,
+            //     angle: .4,
+            //     distance: 210
+            // }),
+            //
+            // GameBrain.lightingManager.createSpotLight({
+            //     identifier: "ColleusesSpotLight-1",
+            //     position: {x: 80, y: 35, z: -195},
+            //     target: {x: 78, y: 0, z: -195},
+            //     intensity: 10,
+            //     angle: .4,
+            //     distance: 210
+            // }),
+            //
+            // GameBrain.lightingManager.createSpotLight({
+            //     identifier: "ColleusesSpotLight-2",
+            //     position: {x: 80, y: 35, z: 0},
+            //     target: {x: 78, y: 0, z: 0},
+            //     intensity: 10,
+            //     angle: .4,
+            //     distance: 210
+            // }),
+            //
+            // GameBrain.lightingManager.createSpotLight({
+            //     identifier: "ColleusesSpotLight-3",
+            //     position: {x: 80, y: 35, z: 195},
+            //     target: {x: 78, y: 0, z: 195},
+            //     intensity: 10,
+            //     angle: .4,
+            //     distance: 210
+            // }),
+            //
+            // GameBrain.lightingManager.createSpotLight({
+            //     identifier: "ColleusesSpotLight-4",
+            //     position: {x: 80, y: 35, z: 480},
+            //     target: {x: 78, y: 0, z: 480},
+            //     intensity: 10,
+            //     angle: .4,
+            //     distance: 210
+            // }),
         ];
 
         GameBrain.sceneryManager.addScenery(
@@ -434,7 +434,22 @@ export default class Game {
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
-                        SCENE_EVENTS_VARS.sceneColleuse();
+                        let sceneModel = GameBrain.modelManager.getModelReferenceByIdentifier("ColleusesEnvironment");
+
+                        console.log("SCENE", sceneModel);
+                        if (sceneModel) {
+                            sceneModel.children.map((child) => {
+                                if (child.isMesh) {
+                                    if (child.name.includes("Cone")) {
+                                        child.material = new THREEx.VolumetricSpotLightMaterial();
+                                        child.material.uniforms.lightColor.value.set('white');
+                                        child.material.uniforms.spotPosition.value = child.position;
+                                        child.material.uniforms.attenuationFactor.value = 800.0;
+                                    }
+                                }
+                            });
+                            SCENE_EVENTS_VARS.sceneColleuse();
+                        }
                     }
                 }
             )
@@ -554,13 +569,13 @@ export default class Game {
                                 GameBrain.mapSprites.red);
 
                         //on cherche sur quel élément on focus la map
-                        if(!introductionFinish)
+                        if (!introductionFinish)
                             focused_element = item;
-                        else if(!barFinish)
+                        else if (!barFinish)
                             focused_element = item_interest1;
-                        else if(!colleuseFinish)
+                        else if (!colleuseFinish)
                             focused_element = item_interest2;
-                        else if(!policeFinish)
+                        else if (!policeFinish)
                             focused_element = item_interest3;
                         else
                             focused_element = item;
@@ -817,8 +832,8 @@ export default class Game {
 
                 setupDatGUIModels();
 
-               // setTimeout(() => {
-                    SlideContent.introduction();
+                // setTimeout(() => {
+                SlideContent.introduction();
                 //}, 500);
             } else {
                 gsap.to("#loading .progress-bar div", {
