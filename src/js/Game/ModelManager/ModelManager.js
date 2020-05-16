@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 import {Vector3} from "three";
+import GameBrain from "../GameManager/GameManager";
 
 class Model {
 
@@ -52,6 +53,9 @@ class ModelManager {
 
         // Array containing all geometries.
         this._models = [];
+
+        this.fbxLoader = new FBXLoader();
+        this.gltfLoader = new GLTFLoader();
     };
 
     // ------------------------------------------------------------------- DEBUG
@@ -81,53 +85,83 @@ class ModelManager {
 
             let loader;
             if (type === ".glb") {
-                loader = new GLTFLoader();
+                loader = this.gltfLoader;
             } else if (type === ".fbx") {
-                loader = new FBXLoader();
+                loader = this.fbxLoader;
             }
 
-            loader.load(model.path,
-                // On loaded
-                (object) => {
-                    console.log("Loaded model from " + model.path, object);
+            try {
+                loader.load(model.path,
+                    // On loaded
+                    (object) => {
+                        console.log("Loaded model from " + model.path, object);
 
-                    const target = (type === ".glb") ? object.scene : object;
+                        const target = (type === ".glb") ? object.scene : object;
 
-                    target.scale.set(model.initialScaleFactor, model.initialScaleFactor, model.initialScaleFactor);
+                        target.scale.set(model.initialScaleFactor, model.initialScaleFactor, model.initialScaleFactor);
 
-                    target.position.x = model.initialPosition.x;
-                    target.position.y = model.initialPosition.y;
-                    target.position.z = model.initialPosition.z;
+                        target.position.x = model.initialPosition.x;
+                        target.position.y = model.initialPosition.y;
+                        target.position.z = model.initialPosition.z;
 
-                    target.rotation.x = model.initialRotation.x;
-                    target.rotation.y = model.initialRotation.y;
-                    target.rotation.z = model.initialRotation.z;
+                        target.rotation.x = model.initialRotation.x;
+                        target.rotation.y = model.initialRotation.y;
+                        target.rotation.z = model.initialRotation.z;
 
-                    target.visible = model.visible;
+                        target.visible = model.visible;
 
-                    // Add identifier
-                    target.identifier = model.identifier;
+                        // Add identifier
+                        target.identifier = model.identifier;
 
-                    this._enableBackfaceCulling(target);
+                        this._enableBackfaceCulling(target);
 
-                    this._registerModel(target);
+                        this._registerModel(target);
 
-                    loadedCount++;
+                        loadedCount++;
 
-                    // If everything is loaded, execute callback
-                    loadedCount === targetCount && callback()
-                },
-                // On progress
-                (status) => {
-                    let progress = [status.loaded, status.total];
-                    // Progress bar...
-                },
-                // On error
-                (error) => {
-                    console.error(`Object loading error [model = ${model.path}]: `, error);
-                });
+                        // If everything is loaded, execute callback
+                        loadedCount === targetCount && callback()
+                    },
+                    // On progress
+                    (status) => {
+                        let progress = [status.loaded, status.total];
+                    },
+                    // On error
+                    (error) => {
+                        console.warn(`Object loading error [model = ${model.path}]: `, error);
+                    });
+            }
+            catch (e) {
+                console.log(e);
+            }
         });
 
+    }
+
+    /**
+     *
+     * @param {Object3D} model
+     */
+    playFirstAnimation(model) {
+        let mixer = new THREE.AnimationMixer(model);
+        let clips = model.animations;
+
+        if(clips.length === 0) {
+            console.log("Animation missing in " + model.identifier);
+            return;
+        }
+
+        let action = mixer.clipAction(clips[0]);
+
+        action.play();
+
+        GameBrain.mixers.push(mixer);
+    }
+
+    playFirstAnimationByIdentifier(identifier) {
+        let model = this.getModelReferenceByIdentifier(identifier);
+        console.log("MODEL - ", identifier, model);
+        this.playFirstAnimation(model);
     }
 
     _enableBackfaceCulling(target) {

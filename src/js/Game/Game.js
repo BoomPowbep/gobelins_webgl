@@ -611,8 +611,8 @@ export default class Game {
 
         models = [
             new Model({identifier: 'BistroEnvironment', path: 'models/FBX/Bar.fbx', initialScaleFactor: 1}),
-           // new Model({identifier: 'BarBarman', path: 'models/FBX/Bar_Barman.fbx', initialScaleFactor: 1}),
-         //   new Model({identifier: 'BarClient', path: 'models/FBX/Bar_Client.fbx', initialScaleFactor: 1}),
+            new Model({identifier: 'BarBarman', path: 'models/FBX/Bar_Barman.fbx', initialScaleFactor:  0.15, initialPosition: {x: -96, y: 16, z: 31}, initialRotation: {x:0, y: toRad(180), z:0}}),
+            new Model({identifier: 'BarClient', path: 'models/FBX/Bar_Client.fbx', initialScaleFactor: 0.15, initialPosition: {x: -83, y: 11, z: 10}}),
 
             new Model({
                 identifier: 'letter-2',
@@ -653,8 +653,13 @@ export default class Game {
                     fog: false,
                     onLoadDone: () => {
                         ready++;
+                        GameBrain.modelManager.playFirstAnimationByIdentifier("BarClient");
+                        GameBrain.modelManager.playFirstAnimationByIdentifier("BarBarman");
+
                         GameBrain.sceneryManager.loadScenery("ComissariatScenery");
+
                         checkElementsReady();
+
 
                         /*let sceneModel = GameBrain.modelManager.getModelReferenceByIdentifier("BistroEnvironment");
                         if (sceneModel) {
@@ -695,7 +700,7 @@ export default class Game {
         function setupDatGUIModels() {
             let editedElement = GameBrain.modelManager.getModelReferenceByIdentifier('letter-1');
             let identifier = {model: ""};
-            let elementSelector = GameBrain.gui.add(identifier, 'model', ['letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final", "BistroConversationGauge"]);
+            let elementSelector = GameBrain.gui.add(identifier, 'model', ['BarClient', 'BarBarman', 'letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final", "BistroConversationGauge"]);
 
             let x_element = null;
             let y_element = null;
@@ -1005,6 +1010,7 @@ export default class Game {
 
         //this._debugMode && this.stats.begin();
 
+        GameBrain.mixers.forEach(value => value.update(this._clock.getDelta()));
         GameBrain.controlsManager.controls.update(this._clock.getDelta()); // Only for device orientation controls
         GameBrain.renderer.render(GameBrain.sceneManager.scene, GameBrain.cameraManager.camera);
 

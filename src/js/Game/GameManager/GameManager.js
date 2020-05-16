@@ -45,6 +45,8 @@ class GameManager {
                 })
             ];
 
+            this.mixers = [];
+
             this.mapSprites = {};
 
             GameManager.instance = this;
