@@ -8,10 +8,11 @@
   z-index: 100;
   opacity: 0;
   pointer-events: none;
-  transition: 1s opacity;
   color: white;
   text-align: center;
+  transition: 1s opacity;
   &.active{
+    transition: 0s opacity;
     opacity: 1;
     pointer-events: initial;
   }

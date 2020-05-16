@@ -40,6 +40,8 @@ class GameManager {
                     TIMELINES.postListenBistro.play();
                     let vocal = DATA.data_manager.get("record", "vocal-1");
                     vocal.pickedUp();
+                }, () => {
+                    TIMELINES.preListenBistro.play();
                 })
             ];
 
@@ -97,6 +99,7 @@ class GameManager {
             here:  loader.load(`textures/pins/user.png`),
             green:   loader.load(`textures/pins/green.png`),
             vocal:   loader.load(`textures/vocal_icon.png`),
+            vocal_listened:   loader.load(`textures/vocal_icon_green.png`),
         };
     }
 

@@ -8,12 +8,21 @@ import GameBrain from "../../Game/GameManager/GameManager";
 import Dates from "../ui/dates/dates";
 
 class Timeline {
-    constructor(timeline_content) {
+    constructor(timeline_content, timeline_id = null, multiple_play = true) {
         this.timeline_content = timeline_content;
         this.timeout_id = [];
+        this.multiple_play =multiple_play;
+        this.timeline_id =timeline_id;
     }
 
     play() {
+        if(!this.multiple_play && DATA.playedTimeline.includes(this.timeout_id)) {
+            return;
+        }
+        else {
+            DATA.playedTimeline.push(this.timeout_id)
+        }
+
         this.timeline_content.forEach(value => {
             let timeout = setTimeout(() => {
                 switch (value.type) {

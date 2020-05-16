@@ -9,14 +9,14 @@ class SlideContent {
         let content = el.querySelector('div');
         content.innerHTML = html;
 
-        if(event) {
+        setTimeout(() => {
             el.addEventListener("click", function (e) {
                 e.preventDefault();
                 callback();
             }, {once: true});
 
             el.classList.add('clickable');
-        }
+        }, event === true ? 0 : event);
 
         gsap.to(el, {opacity: 1, duration: duration});
         gsap.fromTo(content, {opacity: 0}, {opacity: 1});
@@ -60,7 +60,7 @@ class SlideContent {
                 SlideContent.fromTo(VARS.HOURS.BEGIN, VARS.HOURS.SCENE_INTRO, () => {
                     SlideContent.hide();
                     TIMELINES.begin.play();
-                }, 2000)
+                }, 2000, undefined, 6000)
             })
         })
     }

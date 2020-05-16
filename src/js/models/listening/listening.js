@@ -11,14 +11,16 @@ class Listening {
      * @param gauge_geometry_id
      * @param starter_geometry_id
      * @param callback
+     * @param start_callback
      */
-    constructor(identifier, duration, audio_file, gauge_geometry_id, starter_geometry_id, callback = () => {}) {
+    constructor(identifier, duration, audio_file, gauge_geometry_id, starter_geometry_id, callback = () => {}, start_callback = () => {}) {
         this.identifier = identifier;
         this.duration = duration;
         this.audio_file = audio_file;
         this.gauge_geometry_id = gauge_geometry_id;
         this.starter_geometry_id = starter_geometry_id;
         this.callback = callback;
+        this.start_callback = start_callback;
 
         this.listening = false;
         this.listened = false;
@@ -30,11 +32,11 @@ class Listening {
 
         const duration = this.duration;
 
-        let gauge_geometry = GameBrain.geometryManager.getGeometryReferenceByIdentifier(this.gauge_geometry_id);
-        gauge_geometry.geometry = new THREE.CircleGeometry(gauge_geometry.geometry.parameters.radius,
+       let gauge_geometry = GameBrain.geometryManager.getGeometryReferenceByIdentifier(this.gauge_geometry_id);
+        /*gauge_geometry.geometry = new THREE.CircleGeometry(gauge_geometry.geometry.parameters.radius,
             gauge_geometry.geometry.parameters.segments,
             0,
-            1.6 * Math.PI);
+            1.6 * Math.PI);*/
 
 
 
@@ -45,6 +47,8 @@ class Listening {
 
         AudioManager.getAudio(this.audio_file).play(0);
 
+        this.start_callback();
+
        this.animation_tick = setInterval(() => {
             executions++;
             const elapsedTime = executions * tick;
@@ -53,6 +57,7 @@ class Listening {
                 //première écoute
                 if (!this.listened) {
                     this.callback();
+                    GameBrain.geometryManager.getGeometryReferenceByIdentifier(this.starter_geometry_id).material.map = GameBrain.mapSprites.vocal_listened;
                 }
                 this.listened = true;
                 AudioManager.getAudio(this.audio_file).pause();

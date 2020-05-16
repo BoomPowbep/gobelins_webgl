@@ -29,6 +29,7 @@ class UiInstagram extends Ui {
                     id: value.identifier,
                     name: value.getName(),
                     commentary: value.getCommentary(),
+                    total: value.getImages().length
                 });
             }
         });
@@ -88,7 +89,7 @@ class UiInstagram extends Ui {
             //slider scroll
             let scrollTo = (new_index) => {
                 index = Math.min(slides.length-1, Math.max(0, new_index));
-                let item = document.querySelector(`.slide[data-index="${index}"]`);
+                let item = value.querySelector(`.slide[data-index="${index}"]`);
                 if(item)
                     gsap.to(slider, {scrollTo: {x: item}, ease: Power0.easeNone, onComplete: () => {
                         //on change la progression
@@ -105,22 +106,25 @@ class UiInstagram extends Ui {
 
             //Start X Position
             let startCl = 0;
-            slider.addEventListener('touchstart', (e) => {
-                startCl = e.touches[0].clientX;
-            });
-            slider.addEventListener('touchend', (e) => {
-                //Get End X position (in changedTouches, it's not in touches in this case)
-                let endCl = e.changedTouches[0].clientX;
 
-                //calc the difference between the touch position
-                let delta = startCl - endCl;
+            if(slider !== null) {
+                slider.addEventListener('touchstart', (e) => {
+                    startCl = e.touches[0].clientX;
+                });
+                slider.addEventListener('touchend', (e) => {
+                    //Get End X position (in changedTouches, it's not in touches in this case)
+                    let endCl = e.changedTouches[0].clientX;
 
-                //slide using scrollLeft
-                if(delta >= 100)
-                    scrollTo(index+1);
-                if(delta <= -100)
-                    scrollTo(index-1);
-            })
+                    //calc the difference between the touch position
+                    let delta = startCl - endCl;
+
+                    //slide using scrollLeft
+                    if (delta >= 100)
+                        scrollTo(index + 1);
+                    if (delta <= -100)
+                        scrollTo(index - 1);
+                })
+            }
         });
     }
 }

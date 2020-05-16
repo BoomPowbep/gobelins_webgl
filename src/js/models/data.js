@@ -17,6 +17,7 @@ const DATA = {
     drag_element: null,
     can_pick: false,
     firstPhoneOpen : true,
+    playedTimeline: [],
 
     //Setup all managers
     setupManagers: () => {

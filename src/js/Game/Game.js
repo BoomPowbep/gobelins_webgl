@@ -200,7 +200,7 @@ export default class Game {
 
                 let camera_folder = GameBrain.gui.addFolder('Camera');
                 camera_folder.add(GameBrain.cameraManager.camera.position, 'x', -500, 500).step(5);
-                camera_folder.add(GameBrain.cameraManager.camera.position, 'y', 20, 70).step(1);
+                camera_folder.add(GameBrain.cameraManager.camera.position, 'y', 0, 70).step(1);
                 camera_folder.add(GameBrain.cameraManager.camera.position, 'z', -3500, -2500).step(5);
             }
         });
@@ -353,21 +353,21 @@ export default class Game {
             new Model({
                 identifier: 'letter-4',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.02,
+                initialScaleFactor: 0.03,
                 initialPosition: {
-                    x: 38,
-                    y: 21,
-                    z: 27
+                    x: 94,
+                    y: -70,
+                    z: -6
                 }
             }),
             new Model({
                 identifier: 'letter-5',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.02,
+                initialScaleFactor: 0.03,
                 initialPosition: {
-                    x: 38,
-                    y: 21,
-                    z: 27
+                    x: 21,
+                    y: -70,
+                    z: 83
                 }
             }),
         ];
@@ -475,7 +475,7 @@ export default class Game {
 
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-3",
-                position: {x: -30, y: 1, z: -21},
+                position: {x: -11, y: 2.7, z: -11},
                 size: {x: 2, y: 2, z: 2},
                 texture: GameBrain.mapSprites.here
             }),
@@ -601,7 +601,7 @@ export default class Game {
             }),
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "BistroConversationSprite",
-                position: {x: -43.9, y: 24, z: -31},
+                position: {x: -43.95, y: 24, z: -31},
                 size: {x: 2, y: 2, z: 1},
                 rotation: {x: 0, y: toRad(90), z: 0},
                 facingCamera: false,
@@ -669,6 +669,11 @@ export default class Game {
                     },
                     onSceneActive: (scene) => {
                         SCENE_EVENTS_VARS.sceneBistro();
+
+                        let gauge = GameBrain.geometryManager.getGeometryReferenceByIdentifier("BistroConversationGauge");
+                        let sprite = GameBrain.geometryManager.getGeometryReferenceByIdentifier("BistroConversationSprite");
+                        gauge.lookAt( GameBrain.cameraManager.camera.position );
+                        sprite.lookAt( GameBrain.cameraManager.camera.position );
                     }
                 }
             )
@@ -730,25 +735,25 @@ export default class Game {
             new Model({
                 identifier: 'letter-6',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.02,
+                initialScaleFactor: 0.03,
                 initialPosition: {
-                    x: 20, y: -20, z: -52
+                    x: 26, y: -21, z: -59
                 }
             }),
             new Model({
                 identifier: 'letter-7',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.02,
+                initialScaleFactor: 0.03,
                 initialPosition: {
-                    x: 60, y: -15, z: 4
+                    x: 100, y: -22, z: 42
                 }
             }),
             new Model({
                 identifier: 'letter-8',
                 path: 'models/FBX/Boulette.fbx',
-                initialScaleFactor: 0.02,
+                initialScaleFactor: 0.03,
                 initialPosition: {
-                    x: -96, y: -15, z: -100
+                    x: -129, y: -15, z: -120
                 }
             }),
             new Model({
@@ -780,7 +785,7 @@ export default class Game {
                     geometries: geometries,
                     models: models,
                     lights: lights,
-                    cameraPosition: {x: -30, y: 20, z: -10},
+                    cameraPosition: {x: -30, y: 5, z: -10},
                     fog: false,
                     onLoadDone: (scenery) => {
                         ready++;
