@@ -60,7 +60,7 @@ class SlideContent {
                 SlideContent.fromTo(VARS.HOURS.BEGIN, VARS.HOURS.SCENE_INTRO, () => {
                     SlideContent.hide();
                     TIMELINES.begin.play();
-                }, 2000, undefined, 6000)
+                }, 2000, undefined, 5000)
             })
         })
     }

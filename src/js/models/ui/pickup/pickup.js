@@ -21,7 +21,7 @@ class Pickup {
 
             let letter = DATA.data_manager.get("letter", identifier);
             image.setAttribute('src', letter.getPhoneImage());
-            progression.innerText = DATA.data_manager.letters.countPicked() + " / " + DATA.data_manager.letters.count();
+            progression.innerText = DATA.data_manager.letters.countPickedOnScene(letter.scene) + " / " + DATA.data_manager.letters.countOnScene(letter.scene) ;
 
             image.style.display = "block";
             record.style.display = "none";
