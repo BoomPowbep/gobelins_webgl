@@ -35,7 +35,7 @@ class UiNotes extends Ui {
                     id: value.identifier,
                     duration:  (value.audio_file.duration),
                     duration_text: Converter.durationToTime(value.audio_file.duration),
-                    name: value.identifier,
+                    name: value.getRecordName(),
                     date: "Aujourd'hui"
                 });
             }
