@@ -271,7 +271,7 @@ export default class Game {
 
         // -- Scenery 2 - Rue
         let geometries = [
-            GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "StreetSkybox"), // Skybox,
+            GameBrain.geometryManager.createColorSkybox(0x4b7694, 2500, "StreetSkybox"), // Skybox,
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "button",
                 texture: "textures/button.png",
@@ -317,13 +317,53 @@ export default class Game {
                     lights: lights,
                     cameraPosition: {x: 100, y: 70, z: 260},
                     fog: true,
-                    onLoadDone: () => {
+                    fogColor: 0x4b7694,
+                    onLoadDone: (scenery) => {
                         ready++;
                         UserHand.createElements();
+
+                        let clone = GameBrain.modelManager.getModelReferenceByIdentifier("StreetEnvironment").clone();
+                        clone.identifier += "1";
+                        clone.position.z += 900 + scenery.basePosition.z;
+                        GameBrain.sceneManager.scene.add(clone);
+
+                        clone = GameBrain.modelManager.getModelReferenceByIdentifier("StreetEnvironment").clone();
+                        clone.identifier += "2";
+                        clone.position.z -= 900 + scenery.basePosition.z;
+                        GameBrain.sceneManager.scene.add(clone);
+
+                        clone = GameBrain.modelManager.getModelReferenceByIdentifier("StreetEnvironment").clone();
+                        clone.identifier += "3";
+                        clone.position.x += 1500 + scenery.basePosition.x;
+                        GameBrain.sceneManager.scene.add(clone);
+
+                        clone = GameBrain.modelManager.getModelReferenceByIdentifier("StreetEnvironment").clone();
+                        clone.identifier += "4";
+                        clone.position.x -= 1500 + scenery.basePosition.z;
+                        GameBrain.sceneManager.scene.add(clone);
+
+                        // console.log(GameBrain.modelManager.getModelReferenceByIdentifier("StreetEnvironment").position);
+
                         GameBrain.sceneryManager.loadScenery("ColleusesScenery");
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
+
+                        // Si toutes les lettres ont été récupérées au moment de charger cette scène
+                        if (DATA.data_manager.letters.hasPickupAll()) {
+                            // Passer la scène en nuit
+                            let scenery = GameBrain.sceneryManager.getSceneryReferenceByIdentifier("StreetScenery");
+                            // If fog is blue, make it black and reload the scenery
+                            if (scenery.fogColor === 0x4b7694) {
+                                scenery.fogColor = 0x000000;
+                                GameBrain.sceneryManager.setActiveScenery("StreetScenery");
+                                return;
+                            }
+                            GameBrain.geometryManager.getGeometryReferenceByIdentifier("StreetSkybox").material.forEach((material) => {
+                                material.color = new THREE.Color(0, 0, 0);
+                            });
+                        }
+
                         let item = GameBrain.geometryManager.getGeometryReferenceByIdentifier("button");
                         item.visible = DATA.data_manager.letters.hasPickupAll();
                         scene.add(GameBrain.cameraManager.camera);
@@ -611,8 +651,19 @@ export default class Game {
 
         models = [
             new Model({identifier: 'BistroEnvironment', path: 'models/FBX/Bar.fbx', initialScaleFactor: 1}),
-            new Model({identifier: 'BarBarman', path: 'models/FBX/Bar_Barman.fbx', initialScaleFactor:  0.15, initialPosition: {x: -96, y: 16, z: 31}, initialRotation: {x:0, y: toRad(180), z:0}}),
-            new Model({identifier: 'BarClient', path: 'models/FBX/Bar_Client.fbx', initialScaleFactor: 0.15, initialPosition: {x: -83, y: 11, z: 10}}),
+            new Model({
+                identifier: 'BarBarman',
+                path: 'models/FBX/Bar_Barman.fbx',
+                initialScaleFactor: 0.15,
+                initialPosition: {x: -96, y: 16, z: 31},
+                initialRotation: {x: 0, y: toRad(180), z: 0}
+            }),
+            new Model({
+                identifier: 'BarClient',
+                path: 'models/FBX/Bar_Client.fbx',
+                initialScaleFactor: 0.15,
+                initialPosition: {x: -83, y: 11, z: 10}
+            }),
 
             new Model({
                 identifier: 'letter-2',
@@ -690,8 +741,8 @@ export default class Game {
 
                         let gauge = GameBrain.geometryManager.getGeometryReferenceByIdentifier("BistroConversationGauge");
                         let sprite = GameBrain.geometryManager.getGeometryReferenceByIdentifier("BistroConversationSprite");
-                        gauge.lookAt( GameBrain.cameraManager.camera.position );
-                        sprite.lookAt( GameBrain.cameraManager.camera.position );
+                        gauge.lookAt(GameBrain.cameraManager.camera.position);
+                        sprite.lookAt(GameBrain.cameraManager.camera.position);
                     }
                 }
             )
@@ -804,7 +855,7 @@ export default class Game {
                     models: models,
                     lights: lights,
                     cameraPosition: {x: -30, y: 5, z: -10},
-                    fog: false,
+                    fog: true,
                     onLoadDone: (scenery) => {
                         ready++;
                         checkElementsReady();
@@ -822,12 +873,12 @@ export default class Game {
                                         child.material.uniforms.attenuationFactor.value = 800.0;
                                     } else if (child.name.includes("Cube")) {
                                         child.material.transparent = true;
-                                        child.material.opacity = 0.3;
+                                        child.material.opacity = 0;
                                         let newKangoo = kangoo.clone();
                                         newKangoo.identifier = kangoo.identifier;
-                                        newKangoo.position.x = child.position.x + scenery.basePosition.x - 75;
-                                        newKangoo.position.y = child.position.y + scenery.basePosition.y;
-                                        newKangoo.position.z = child.position.z + scenery.basePosition.z + 20;
+                                        newKangoo.position.x = child.position.x + scenery.basePosition.x - 50;
+                                        newKangoo.position.y = child.position.y + scenery.basePosition.y - 15;
+                                        newKangoo.position.z = child.position.z + scenery.basePosition.z + 10;
                                         GameBrain.sceneManager.scene.add(newKangoo);
                                     }
                                 }
@@ -1008,12 +1059,12 @@ export default class Game {
     _loop() {
         requestAnimationFrame(this._loop.bind(this));
 
-        //this._debugMode && this.stats.begin();
+        // this._debugMode && this.stats.begin();
 
         GameBrain.mixers.forEach(value => value.update(this._clock.getDelta()));
         GameBrain.controlsManager.controls.update(this._clock.getDelta()); // Only for device orientation controls
         GameBrain.renderer.render(GameBrain.sceneManager.scene, GameBrain.cameraManager.camera);
 
-        //this._debugMode && this.stats.end();
+        // this._debugMode && this.stats.end();
     }
 }
