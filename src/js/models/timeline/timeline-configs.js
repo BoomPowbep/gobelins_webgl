@@ -7,6 +7,7 @@ import Converter from "../converter";
 
 const TIMELINES = {
     begin : new Timeline([
+        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, false, 0),
         new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.SCENE_INTRO, 0),
         new TimelineItem(TIMELINE_TYPES.SOUND, "passant_0", 0),
         new TimelineItem(TIMELINE_TYPES.SOUND, "ringtone", 8000),
@@ -45,18 +46,25 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 15000)
     ]),
     sceneBistro: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, false, 0),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Ecoute la conversation du bar", 10000),
-    ]),
+    ], 'bistro', false),
     sceneColleuse: new Timeline([
         new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-1', 0)
-    ]),
+    ], 'colleuse', false),
     scenePolice: new Timeline([
         new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-2', 0)
-    ]),
+    ], 'police', false),
     sceneFinal: new Timeline([
         new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-3', 0)
+    ], 'final', false),
+    preListenBistro: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "sceneBistro", 0),
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "", 0),
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "Reste appuyé pour écouter",  1),
     ]),
     postListenBistro : new Timeline([
+        new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "preListenBistro", 0),
         new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "sceneBistro", 0),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "", 0),
         new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, true, 0),
@@ -73,7 +81,6 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 0)
     ]),
     stopTimeline: new Timeline([
-        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, false, 0),
         new TimelineItem(TIMELINE_TYPES.SOUND_STOP_ALL, null, 0),
         new TimelineItem(TIMELINE_TYPES.STOP_PREVIOUS_TIMELINE, null, 0),
     ]),

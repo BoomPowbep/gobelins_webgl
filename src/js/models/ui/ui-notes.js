@@ -15,7 +15,7 @@ class UiNotes extends Ui {
         super.setupDOM();
 
         if(DATA.data_manager.records.countPicked() >= 1) {
-            this.element.querySelector('.no-records');
+            this.element.querySelector('.no-records').style.display = "none";
         }
 
         let template = new Template("script[data-template='photo_el']");

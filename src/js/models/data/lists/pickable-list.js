@@ -43,6 +43,14 @@ class PickableList {
     countPicked() {
         return this.getPickedUp().length;
     }
+
+    countOnScene(scene) {
+        return this.items.filter(value => value.scene === scene).length;
+    }
+
+    countPickedOnScene( scene ) {
+        return this.items.filter(value => value.scene === scene && value.picked).length;
+    }
 }
 
 export default PickableList;

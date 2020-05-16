@@ -2,6 +2,7 @@ import DATA from "../models/data";
 import GameBrain from "./GameManager/GameManager";
 import gsap from "gsap";
 import {toRad} from "./Util/Helpers";
+import Mobile from "../models/ui/mobile/pickup";
 
 let draggableElements = null;
 
@@ -10,7 +11,7 @@ class UserHand {
      * On crée les éléments que l'utilisateur Drag'N'Drop
      */
     static createElements() {
-        if (DATA.is_gluing && draggableElements == null) {
+        if (draggableElements == null) {
             draggableElements = DATA.data_manager.letters.items.map(value => {
                 let shape = GameBrain.geometryManager.createBasicShape({
                     identifier: "dnd-" + value.identifier,
@@ -33,6 +34,7 @@ class UserHand {
      * Affiche les éléments restants en bas (si changement de scène etc)
      */
     static show() {
+        Mobile.lock();
         //on crée les éléments (sauf si ils existent déjà)
         if (DATA.is_gluing && draggableElements != null) {
             draggableElements.forEach(value => {
