@@ -25,7 +25,7 @@ class UiInstagram extends Ui {
         this.list.innerHTML = "";
         DATA.data_manager.instagramPosts.items.forEach(value => {
             if (value.isPicked()){
-                templateIg.append(this.list, {
+                templateIg.prepend(this.list, {
                     id: value.identifier,
                     name: value.getName(),
                     commentary: value.getCommentary(),

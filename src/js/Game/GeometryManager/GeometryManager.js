@@ -174,6 +174,45 @@ export default class GeometryManager {
         return cube;
     }
 
+    createVideoPlane({
+           identifier = "Unnamed",
+           size = {x: 1, y: 1, z: 1},
+           position = {x: 0, y: 0, z: 0},
+           rotation = {x: 0, y: 0, z: 0},
+           visibility=true,
+       }) {
+
+        let video = document.createElement( 'video' );
+        video.src = "textures/video.mp4";
+        video.load();
+
+        let texture = new THREE.VideoTexture( video );
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.format = THREE.RGBFormat;
+
+        let geometry = new THREE.PlaneBufferGeometry(size.x, size.y, 50);
+        let material = new THREE.MeshBasicMaterial( { map: texture, overdraw: true, side:THREE.DoubleSide } );
+        let shape = new THREE.Mesh(geometry, material);
+
+        shape.identifier = identifier;
+
+        shape.position.x = position.x;
+        shape.position.y = position.y;
+        shape.position.z = position.z;
+        shape.scale.x = size.x;
+        shape.scale.y = size.y;
+        shape.scale.z = size.z;
+        shape.rotation.x = rotation.x;
+        shape.rotation.y = rotation.y;
+        shape.rotation.z = rotation.z;
+        shape.visible = visibility;
+
+        shape.video = video;
+
+        return shape;
+    }
+
 
     /** 
      * Creates a basic shape.

@@ -26,7 +26,7 @@ class AudioManager {
      * @param key
      */
     static play(key) {
-        AudioManager.getAudio(key).play();
+        AudioManager.getAudio(key).play(0);
     }
 
     /**

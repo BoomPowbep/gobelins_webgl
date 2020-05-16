@@ -6,13 +6,17 @@ import AudioManager from "../audio/audio-manager";
 import Converter from "../converter";
 
 const TIMELINES = {
+
+    //INTRODUCTION
+
     begin : new Timeline([
         new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, false, 0),
         new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.SCENE_INTRO, 0),
-        new TimelineItem(TIMELINE_TYPES.SOUND, "passant_0", 0),
-        new TimelineItem(TIMELINE_TYPES.SOUND, "ringtone", 8000),
-        new TimelineItem(TIMELINE_TYPES.UI, "call", 8500),
-        new TimelineItem(TIMELINE_TYPES.TEXT, {el: ("#app_call .duration"), text: "Appel entrant"}, 8500),
+        new TimelineItem(TIMELINE_TYPES.SOUND, "passant_1", 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND, "passant_2", 11500),
+        new TimelineItem(TIMELINE_TYPES.SOUND, "ringtone", 14000),
+        new TimelineItem(TIMELINE_TYPES.UI, "call", 14200),
+        new TimelineItem(TIMELINE_TYPES.TEXT, {el: ("#app_call .duration"), text: "Appel entrant"}, 14200),
     ]),
     call: new Timeline([
         new TimelineItem(TIMELINE_TYPES.FUNCTION, () => {
@@ -33,36 +37,61 @@ const TIMELINES = {
         }, 0),
         new TimelineItem(TIMELINE_TYPES.SOUND_STOP, "ringtone", 0),
         new TimelineItem(TIMELINE_TYPES.SOUND, "appel", 0),
-        new TimelineItem(TIMELINE_TYPES.TEXT, {el:  ("#app_call .duration"), text: "Appel terminé"}, 20000),
-        new TimelineItem(TIMELINE_TYPES.UI_HIDE, "call", 21000),
-        new TimelineItem(TIMELINE_TYPES.PHONE, null, 21000),
-        new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 21000),
-        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, true, 21000)
+        new TimelineItem(TIMELINE_TYPES.TEXT, {el:  ("#app_call .duration"), text: "Appel terminé"}, 17000),
+        new TimelineItem(TIMELINE_TYPES.UI_HIDE, "call", 18000),
+        new TimelineItem(TIMELINE_TYPES.PHONE, null, 18000),
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 18000),
+        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, true, 18000)
     ]),
+
+    //CONCLUSION
+
     end: new Timeline([
         new TimelineItem(TIMELINE_TYPES.CAMERA,  {x: (1.5), y:(36), z:(-44)}, 5000),
         new TimelineItem(TIMELINE_TYPES.HOURS_SLIDE, {start: VARS.HOURS.SCENE_FINAL, end: VARS.HOURS.BEGIN, duration: 4000}, 7000),
         new TimelineItem(TIMELINE_TYPES.HIDE_SLIDE, null, 15000),
         new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 15000)
     ]),
+
+    //SCENE
+
     sceneBistro: new Timeline([
         new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, false, 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND, "ambient_bar", 0),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Ecoute la conversation du bar", 10000),
     ], 'bistro', false),
     sceneColleuse: new Timeline([
-        new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-1', 0)
+        new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-1', 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND, "ambient_cricket", 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND, "ambient_voiture", 0),
     ], 'colleuse', false),
     scenePolice: new Timeline([
-        new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-2', 0)
+        new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-2', 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND, "ambient_cricket", 0),
     ], 'police', false),
     sceneFinal: new Timeline([
-        new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-3', 0)
+        new TimelineItem(TIMELINE_TYPES.CONCLUSION, 'scene-3', 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND, "ambient_cricket", 0),
     ], 'final', false),
+
+    //PRE LISTEN
+
+    preListenPolice: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "scenePolice", 0),
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "", 0),
+    ]),
+    preListenColleuse: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "sceneColleuse", 0),
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "", 0),
+    ]),
     preListenBistro: new Timeline([
         new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "sceneBistro", 0),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "", 0),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Reste appuyé pour écouter",  1),
     ]),
+
+    //POST LISTEN
+
     postListenBistro : new Timeline([
         new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "preListenBistro", 0),
         new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "sceneBistro", 0),
@@ -76,6 +105,36 @@ const TIMELINES = {
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "instagram", 180000),
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 180000),
     ]),
+
+    postListenColleuse : new Timeline([
+        new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "preListenColleuse", 0),
+        new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "sceneColleuse", 0),
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "", 0),
+        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, true, 0),
+        new TimelineItem(TIMELINE_TYPES.SHOW_3D_MODEL, "letter-4", 0),
+        new TimelineItem(TIMELINE_TYPES.SHOW_3D_MODEL, "letter-5", 0),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "instagram", 30000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 30000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "instagram", 180000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 180000),
+    ]),
+
+    postListenPolice : new Timeline([
+        new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "preListenPolice", 0),
+        new TimelineItem(TIMELINE_TYPES.STOP_TIMELINE, "scenePolice", 0),
+        new TimelineItem(TIMELINE_TYPES.MESSAGE, "", 0),
+        new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, true, 0),
+        new TimelineItem(TIMELINE_TYPES.SHOW_3D_MODEL, "letter-6", 0),
+        new TimelineItem(TIMELINE_TYPES.SHOW_3D_MODEL, "letter-7", 0),
+        new TimelineItem(TIMELINE_TYPES.SHOW_3D_MODEL, "letter-8", 0),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "instagram", 30000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 30000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "instagram", 180000),
+        new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 180000),
+    ]),
+
+    //OTHER
+
     mapNotification: new Timeline([
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "maps", 0),
         new TimelineItem(TIMELINE_TYPES.NOTIFICATION, "phone", 0)

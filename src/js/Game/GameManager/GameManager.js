@@ -36,13 +36,30 @@ class GameManager {
             this.bistroCircleAnimationTick = null;
 
             this.listenings = [
-                new Listening("bistro", 3000, "vocal_1", "BistroConversationGauge", "BistroConversationSprite", () => {
-                    TIMELINES.postListenBistro.play();
-                    let vocal = DATA.data_manager.get("record", "vocal-1");
-                    vocal.pickedUp();
-                }, () => {
-                    TIMELINES.preListenBistro.play();
-                })
+                new Listening("bistro", 12000, "vocal_1", "BistroConversationGauge", "BistroConversationSprite", () => {
+                        TIMELINES.postListenBistro.play();
+                        let vocal = DATA.data_manager.get("record", "vocal-1");
+                        vocal.pickedUp();
+                    }, () => {
+                        TIMELINES.preListenBistro.play();
+                    }
+                ),
+                new Listening("colleuse", 20000, "vocal_2", "ColleuseConversationGauge", "ColleuseConversationSprite", () => {
+                        TIMELINES.postListenColleuse.play();
+                        let vocal = DATA.data_manager.get("record", "vocal-2");
+                        vocal.pickedUp();
+                    }, () => {
+                        TIMELINES.preListenColleuse.play();
+                    }
+                ),
+                new Listening("police", 20000, "vocal_3", "PoliceConversationGauge", "PoliceConversationSprite", () => {
+                        TIMELINES.postListenPolice.play();
+                        let vocal = DATA.data_manager.get("record", "vocal-3");
+                        vocal.pickedUp();
+                    }, () => {
+                        TIMELINES.preListenPolice.play();
+                    }
+                )
             ];
 
             this.mixers = [];

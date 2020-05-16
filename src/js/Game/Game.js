@@ -277,7 +277,13 @@ export default class Game {
                 size: {x: 4, y: 2, z: 0.1},
                 rotation: {x: toRad(0), y: toRad(-90), z: toRad(0)},
                 position: {x: 120, y: 65, z: 270}
-            })
+            }),
+            /*GameBrain.geometryManager.createVideoPlane({
+                identifier: "video",
+                size: {x: 4, y: 2, z: 0.1},
+                rotation: {x: toRad(0), y: toRad(-90), z: toRad(0)},
+                position: {x: 120, y: 65, z: 270}
+            })*/
         ];
 
         let models = [
@@ -291,11 +297,12 @@ export default class Game {
                 path: 'models/FBX/Boulette_Red.fbx',
                 initialScaleFactor: 0.02,
                 initialPosition: {
-                    x: 120,
-                    y: 50,
-                    z: 260
+                    x: 160,
+                    y: 29,
+                    z: 244
                 }
-            })
+            }),
+            new Model({identifier: 'StreetPassant', path: 'models/FBX/Street_Passant2.fbx', initialScaleFactor:  0.5, initialPosition: {x: -167, y: -32, z: -39}, initialRotation: {x:0, y: toRad(270), z:0}}),
         ];
 
         let lights = [
@@ -343,6 +350,7 @@ export default class Game {
                         // console.log(GameBrain.modelManager.getModelReferenceByIdentifier("StreetEnvironment").position);
 
                         GameBrain.sceneryManager.loadScenery("ColleusesScenery");
+                        GameBrain.modelManager.playFirstAnimationByIdentifier("StreetPassant");
                         checkElementsReady();
                     },
                     onSceneActive: (scene) => {
@@ -367,6 +375,10 @@ export default class Game {
                         scene.add(GameBrain.cameraManager.camera);
 
                         SCENE_EVENTS_VARS.end();
+
+
+                       /* let item_video = GameBrain.geometryManager.getGeometryReferenceByIdentifier("video");
+                        item_video.video.play();*/
                     }
                 }
             )
@@ -375,6 +387,21 @@ export default class Game {
         // -- Scenery 3 - Colleuses
         geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 1500, "ColleusesSkybox"), // Skybox
+            GameBrain.geometryManager.createCircleShape({
+                identifier: "ColleuseConversationGauge",
+                radius: 2,
+                position: {x: 126, y: -34, z: 40},
+                rotation: {x: 0, y: toRad(90), z: 0},
+                color: 0xFFFFFF
+            }),
+            GameBrain.geometryManager.createBasicSprite({
+                identifier: "ColleuseConversationSprite",
+                position: {x:  126, y: -34, z: 39.9},
+                size: {x: 2, y: 2, z: 1},
+                rotation: {x: 0, y: toRad(90), z: 0},
+                facingCamera: false,
+                texture: GameBrain.mapSprites.vocal
+            }),
         ];
 
         models = [
@@ -396,7 +423,8 @@ export default class Game {
                     x: 94,
                     y: -70,
                     z: -6
-                }
+                },
+                visible: false
             }),
             new Model({
                 identifier: 'letter-5',
@@ -406,7 +434,8 @@ export default class Game {
                     x: 21,
                     y: -70,
                     z: 83
-                }
+                },
+                visible: false
             }),
         ];
 
@@ -487,6 +516,11 @@ export default class Game {
                                 }
                             });
                             SCENE_EVENTS_VARS.sceneColleuse();
+
+                            let gauge = GameBrain.geometryManager.getGeometryReferenceByIdentifier("ColleuseConversationGauge");
+                            let sprite = GameBrain.geometryManager.getGeometryReferenceByIdentifier("ColleuseConversationSprite");
+                            gauge.lookAt( GameBrain.cameraManager.camera.position );
+                            sprite.lookAt( GameBrain.cameraManager.camera.position );
                         }
                     }
                 }
@@ -499,28 +533,28 @@ export default class Game {
 
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-1",
-                position: {x: -12, y: 2, z: 0},
+                position: {x: 2, y:  5.8, z: 17},
                 size: {x: 2, y: 2, z: 2},
                 texture: GameBrain.mapSprites.here
             }),
 
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-2",
-                position: {x: -3, y: 1, z: 8},
+                position: {x: -2, y:  5.8, z: -23.1},
                 size: {x: 2, y: 2, z: 2},
                 texture: GameBrain.mapSprites.here
             }),
 
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-3",
-                position: {x: -11, y: 2.7, z: -11},
+                position: {x: -16, y:  5.8, z: 7},
                 size: {x: 2, y: 2, z: 2},
                 texture: GameBrain.mapSprites.here
             }),
 
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "map-interest-final",
-                position: {x: -6, y: 1, z: -21},
+                position: {x: 3, y: 5.8, z: -10},
                 size: {x: 2, y: 2, z: 2},
                 texture: GameBrain.mapSprites.here
             }),
@@ -551,7 +585,7 @@ export default class Game {
                     updateLastScenery: false,
                     lights: lights,
                     cameraPosition: {x: 50, y: 40, z: 50},
-                    cameraLimits: {minX: 2970, maxX: 3000, minZ: -30, maxZ: 0},
+                    cameraLimits: {minX: 2955, maxX: 3015, minZ: -45, maxZ: 15},
                     fog: false,
                     orbitControls: false,
                     onLoadDone: () => {
@@ -750,7 +784,7 @@ export default class Game {
         function setupDatGUIModels() {
             let editedElement = GameBrain.modelManager.getModelReferenceByIdentifier('letter-1');
             let identifier = {model: ""};
-            let elementSelector = GameBrain.gui.add(identifier, 'model', ['BarClient', 'BarBarman', 'letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final", "BistroConversationGauge"]);
+            let elementSelector = GameBrain.gui.add(identifier, 'model', ['PoliceConversationGauge', 'ColleuseConversationGauge', 'StreetPassant', 'BarClient', 'BarBarman', 'letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final", "BistroConversationGauge"]);
 
             let x_element = null;
             let y_element = null;
@@ -791,6 +825,21 @@ export default class Game {
         // -- Scenery 5 - Comissariat
         geometries = [
             GameBrain.geometryManager.createColorSkybox(0x000000, 2000, "ComissariatSkybox"), // Skybox
+            GameBrain.geometryManager.createCircleShape({
+                identifier: "PoliceConversationGauge",
+                radius: 2,
+                position: {x: -14, y: 2, z: -43},
+                rotation: {x: 0, y: toRad(90), z: 0},
+                color: 0xFFFFFF
+            }),
+            GameBrain.geometryManager.createBasicSprite({
+                identifier: "PoliceConversationSprite",
+                position: {x: -14, y: 2, z: -42.85},
+                size: {x: 2, y: 2, z: 1},
+                rotation: {x: 0, y: toRad(90), z: 0},
+                facingCamera: false,
+                texture: GameBrain.mapSprites.vocal
+            }),
         ];
 
         models = [
@@ -806,7 +855,8 @@ export default class Game {
                 initialScaleFactor: 0.03,
                 initialPosition: {
                     x: 26, y: -21, z: -59
-                }
+                },
+                visible: false
             }),
             new Model({
                 identifier: 'letter-7',
@@ -814,7 +864,8 @@ export default class Game {
                 initialScaleFactor: 0.03,
                 initialPosition: {
                     x: 100, y: -22, z: 42
-                }
+                },
+                visible: false
             }),
             new Model({
                 identifier: 'letter-8',
@@ -822,7 +873,8 @@ export default class Game {
                 initialScaleFactor: 0.03,
                 initialPosition: {
                     x: -129, y: -15, z: -120
-                }
+                },
+                visible: false
             }),
             new Model({
                 identifier: 'Kangoo',
@@ -886,6 +938,10 @@ export default class Game {
                     },
                     onSceneActive: (scene) => {
                         SCENE_EVENTS_VARS.scenePolice();
+                        let gauge = GameBrain.geometryManager.getGeometryReferenceByIdentifier("PoliceConversationGauge");
+                        let sprite = GameBrain.geometryManager.getGeometryReferenceByIdentifier("PoliceConversationSprite");
+                        gauge.lookAt( GameBrain.cameraManager.camera.position );
+                        sprite.lookAt( GameBrain.cameraManager.camera.position );
                     }
                 }
             )
