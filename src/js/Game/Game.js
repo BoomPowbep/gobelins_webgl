@@ -263,8 +263,6 @@ export default class Game {
      */
     initSceneries() {
 
-        // FIXME faire un système de chargement des éléments depuis du json avec une boucle !!
-
         let ready = 0;
 
         // -- SCENERIES
@@ -701,7 +699,8 @@ export default class Game {
                     models: models,
                     lights: lights,
                     cameraPosition: {x: -20, y: 26, z: -45},
-                    fog: false,
+                    fog: true,
+                    fogColor: 0x313744,
                     onLoadDone: () => {
                         ready++;
                         GameBrain.modelManager.playFirstAnimationByIdentifier("BarClient");
