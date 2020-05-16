@@ -15,6 +15,8 @@ class Scenery {
                     cameraPosition = {x: 0, y: 0, z: 0},
                     cameraLimits = null,
                     fog = false,
+                    fogColor = 0x000000,
+                    fogDensity = 0.0015,
                     canMove = true,
                     ambiantSoundIdentifier = "Default",
                     orbitControls = true,
@@ -31,6 +33,8 @@ class Scenery {
         this.cameraPosition = cameraPosition;
         this.cameraLimits = cameraLimits;
         this.fog = fog;
+        this.fogColor = fogColor;
+        this.fogDensity = fogDensity;
         this.canMove = canMove;
         this.ambiantSoundIdentifier = ambiantSoundIdentifier;
         this.orbitControls = orbitControls;
@@ -89,7 +93,7 @@ class SceneryManager {
 
             // Set position of models
             queued.models.forEach((model) => {
-                if(model instanceof Model) {
+                if (model instanceof Model) {
                     model.initialPosition.x += queued.basePosition.x;
                     model.initialPosition.y += queued.basePosition.y;
                     model.initialPosition.z += queued.basePosition.z;
@@ -115,7 +119,7 @@ class SceneryManager {
 
                 // Apply position on volumetry
                 let volumetric = GameBrain.lightingManager.getLightReferenceByIdentifier(light.identifier + "-volumetry");
-                if(volumetric) {
+                if (volumetric) {
                     volumetric.material.uniforms.spotPosition.value = light.position;
                     volumetric.position.x += queued.basePosition.x;
                     volumetric.position.y += queued.basePosition.y;
@@ -127,12 +131,11 @@ class SceneryManager {
             queued.geometries.length > 0 && GameBrain.geometryManager.loadGeometries(queued.geometries);
 
             // Load models & add to scene
-            if(queued.models.length > 0) {
+            if (queued.models.length > 0) {
                 GameBrain.modelManager.loadModels(queued.models, () => {
                     addToScene();
                 });
-            }
-            else {
+            } else {
                 addToScene();
             }
 
@@ -152,7 +155,7 @@ class SceneryManager {
 
     startSceneryTransition(sceneryIdentifier, duration = 1) {
 
-        if(sceneryIdentifier !== VARS.SCENERIES.MAP) {
+        if (sceneryIdentifier !== VARS.SCENERIES.MAP) {
             document.querySelector("#hud").classList.remove("hide_hud");
             DATA.ui_manager.get('maps').hideOnly();
         }
@@ -197,7 +200,7 @@ class SceneryManager {
 
         this.activeScenery = sceneryIdentifier;
 
-        if(scenery.updateLastScenery)
+        if (scenery.updateLastScenery)
             this.lastScenery = sceneryIdentifier;
 
         if (scenery.loaded) {
@@ -216,7 +219,7 @@ class SceneryManager {
             // Set fog
             GameBrain.sceneManager.scene.fog = null;
             if (scenery.fog) {
-                GameBrain.sceneManager.scene.fog = new THREE.FogExp2(0x000000, 0.0015);
+                GameBrain.sceneManager.scene.fog = new THREE.FogExp2(scenery.fogColor, scenery.fogDensity);
             }
 
             // Set camera
