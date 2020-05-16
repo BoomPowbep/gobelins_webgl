@@ -201,7 +201,7 @@ export default class Game {
                 let camera_folder = GameBrain.gui.addFolder('Camera');
                 camera_folder.add(GameBrain.cameraManager.camera.position, 'x', -500, 500).step(5);
                 camera_folder.add(GameBrain.cameraManager.camera.position, 'y', 0, 70).step(1);
-                camera_folder.add(GameBrain.cameraManager.camera.position, 'z', -3500, -2500).step(5);
+                camera_folder.add(GameBrain.cameraManager.camera.position, 'z', 2500, 3500).step(5);
             }
         });
 
@@ -611,6 +611,8 @@ export default class Game {
 
         models = [
             new Model({identifier: 'BistroEnvironment', path: 'models/FBX/Bar.fbx', initialScaleFactor: 1}),
+           // new Model({identifier: 'BarBarman', path: 'models/FBX/Bar_Barman.fbx', initialScaleFactor: 1}),
+         //   new Model({identifier: 'BarClient', path: 'models/FBX/Bar_Client.fbx', initialScaleFactor: 1}),
 
             new Model({
                 identifier: 'letter-2',
@@ -647,12 +649,23 @@ export default class Game {
                     geometries: geometries,
                     models: models,
                     lights: lights,
-                    cameraPosition: {x: -20, y: 26, z: -55},
+                    cameraPosition: {x: -20, y: 26, z: -45},
                     fog: false,
                     onLoadDone: () => {
                         ready++;
                         GameBrain.sceneryManager.loadScenery("ComissariatScenery");
                         checkElementsReady();
+
+                        /*let sceneModel = GameBrain.modelManager.getModelReferenceByIdentifier("BistroEnvironment");
+                        if (sceneModel) {
+                            sceneModel.children.map((child) => {
+                                if (child.isMesh) {
+                                    if(child.name.includes("Barman")) {
+                                        console.log(child);
+                                    }
+                                }
+                            });
+                        }*/
 
                         // Change windows material
                         // let sceneModel = GameBrain.modelManager.getModelReferenceByIdentifier("BistroEnvironment");
