@@ -590,7 +590,7 @@ export default class Game {
         // -- Scenery 4 - Bistro
         // Première scène de jeu
         geometries = [
-            GameBrain.geometryManager.createColorSkybox(0x28BDF5, 1500, "BistroSkybox"), // Skybox
+            GameBrain.geometryManager.createColorSkybox(0x313744, 1500, "BistroSkybox"), // Skybox
 
             GameBrain.geometryManager.createCircleShape({
                 identifier: "BistroConversationGauge",
@@ -856,7 +856,7 @@ export default class Game {
                 setupDatGUIModels();
 
                 // setTimeout(() => {
-                SlideContent.introduction();
+                // SlideContent.introduction();
                 //}, 500);
             } else {
                 gsap.to("#loading .progress-bar div", {
