@@ -274,9 +274,9 @@ export default class Game {
                 identifier: "button",
                 texture: "textures/button.png",
                 facingCamera: false,
-                size: {x: 4, y: 2, z: 0.1},
+                size: {x: 3.5, y: 1.3, z: 0.1},
                 rotation: {x: toRad(0), y: toRad(-90), z: toRad(0)},
-                position: {x: 120, y: 65, z: 270}
+                position: {x: 117, y: 68, z: 266}
             }),
             /*GameBrain.geometryManager.createVideoPlane({
                 identifier: "video",
@@ -384,13 +384,13 @@ export default class Game {
             GameBrain.geometryManager.createCircleShape({
                 identifier: "ColleuseConversationGauge",
                 radius: 2,
-                position: {x: 126, y: -34, z: 40},
+                position: {x: 126, y: -43, z: 40},
                 rotation: {x: 0, y: toRad(90), z: 0},
                 color: 0xFFFFFF
             }),
             GameBrain.geometryManager.createBasicSprite({
                 identifier: "ColleuseConversationSprite",
-                position: {x:  126, y: -34, z: 39.9},
+                position: {x:  126, y: -43, z: 39.9},
                 size: {x: 2, y: 2, z: 1},
                 rotation: {x: 0, y: toRad(90), z: 0},
                 facingCamera: false,
@@ -413,6 +413,46 @@ export default class Game {
                 identifier: 'Colleuse1',
                 path: 'models/FBX/Colleuse.parle.fbx',
                 initialScaleFactor: 1,
+                initialPosition: {
+                    x: 134,
+                    y: -69,
+                    z: 34.5
+                },
+                initialRotation: {
+                    x: 0,
+                    y: 5,
+                    z: 0
+                }
+            }),
+            new Model({
+                identifier: 'Colleuse2',
+                path: 'models/FBX/Colleuse_colle.fbx',
+                initialScaleFactor: 1,
+                initialPosition: {
+                    x: 123,
+                    y: -69,
+                    z: 79
+                },
+                initialRotation: {
+                    x: 0,
+                    y: 1.8,
+                    z: 0
+                }
+            }),
+            new Model({
+                identifier: 'Colleuse3',
+                path: 'models/FBX/Colleuse_guet.fbx',
+                initialScaleFactor: 1,
+                initialPosition: {
+                    x: 111,
+                    y: -69,
+                    z: 186
+                },
+                initialRotation: {
+                    x: 0,
+                    y: 5,
+                    z: 0
+                }
             }),
             new Model({
                 identifier: 'letter-4',
@@ -457,6 +497,10 @@ export default class Game {
                     onSceneActive: (scenery) => {
                         let sceneModel = GameBrain.modelManager.getModelReferenceByIdentifier("ColleusesEnvironment");
 
+                        GameBrain.modelManager.playFirstAnimationByIdentifier("Colleuse1");
+                        GameBrain.modelManager.playFirstAnimationByIdentifier("Colleuse2");
+                        GameBrain.modelManager.playFirstAnimationByIdentifier("Colleuse3");
+
                         console.log("SCENE", sceneModel);
                         if (sceneModel) {
                             sceneModel.children.map((child) => {
@@ -466,14 +510,6 @@ export default class Game {
                                         child.material.uniforms.lightColor.value.set('white');
                                         child.material.uniforms.spotPosition.value = child.position;
                                         child.material.uniforms.attenuationFactor.value = 800.0;
-                                    }
-                                    else if(child.name === "Colleuse_parle") {
-                                        let c = GameBrain.modelManager.getModelReferenceByIdentifier("Colleuse1");
-                                        GameBrain.modelManager.playFirstAnimationByIdentifier("Colleuse1");
-                                        c.position.x = child.position.x + scenery.position.x;
-                                        c.position.y = child.position.y + scenery.position.y;
-                                        c.position.z = child.position.z + scenery.position.z;
-                                        console.log(scenery.position, c.position)
                                     }
                                 }
                             });
@@ -732,24 +768,27 @@ export default class Game {
         );
 
         function setupDatGUIModels() {
-            let editedElement = GameBrain.modelManager.getModelReferenceByIdentifier('letter-1');
+            let editedElement = GameBrain.modelManager.getModelReferenceByIdentifier('Colleuse1');
             let identifier = {model: ""};
-            let elementSelector = GameBrain.gui.add(identifier, 'model', ['PoliceConversationGauge', 'ColleuseConversationGauge', 'StreetPassant', 'BarClient', 'BarBarman', 'letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final", "BistroConversationGauge"]);
+            let elementSelector = GameBrain.gui.add(identifier, 'model', ['Colleuse2', 'Colleuse3', 'Colleuse1', 'PoliceConversationGauge', 'ColleuseConversationGauge', 'StreetPassant', 'BarClient', 'BarBarman', 'letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final", "BistroConversationGauge"]);
 
             let x_element = null;
             let y_element = null;
             let z_element = null;
+            let rotation_element = null;
 
             function makeSliderFor(el) {
                 if (x_element !== null) {
                     GameBrain.gui.remove(x_element);
                     GameBrain.gui.remove(y_element);
                     GameBrain.gui.remove(z_element);
+                    GameBrain.gui.remove(rotation_element);
                 }
 
                 x_element = GameBrain.gui.add(el.position, 'x', el.position.x - 100, el.position.x + 100);
                 y_element = GameBrain.gui.add(el.position, 'y', el.position.y - 30, el.position.y + 30);
                 z_element = GameBrain.gui.add(el.position, 'z', el.position.z - 100, el.position.z + 100);
+                rotation_element = GameBrain.gui.add(el.rotation, 'y', 0, toRad(360));
             }
 
             makeSliderFor(editedElement);
@@ -898,11 +937,9 @@ export default class Game {
                     autoAlpha: 0
                 });
 
-                setupDatGUIModels();
+                 SlideContent.introduction();
 
-                // setTimeout(() => {
-                // SlideContent.introduction();
-                //}, 500);
+                 this._debugMode && setupDatGUIModels();
             } else {
                 gsap.to("#loading .progress-bar div", {
                     duration: duration / 2,

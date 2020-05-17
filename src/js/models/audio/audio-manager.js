@@ -22,11 +22,19 @@ class AudioManager {
     }
 
     /**
-     * Shorter way to play send
+     * Shorter way to play sound
      * @param key
      */
     static play(key) {
         AudioManager.getAudio(key).play(0);
+    }
+
+    /**
+     * Shorter way to pause sound
+     * @param key
+     */
+    static pause(key) {
+        AudioManager.getAudio(key).pause();
     }
 
     /**
@@ -36,7 +44,7 @@ class AudioManager {
         //Iterate through our audio dictionary
         Object.entries(AUDIO_DICTIONARY).forEach(entry => {
             let value = entry[1];
-            let audio = new AudioFile(entry[0], value.file, value.volume??1, value.loop??false);
+            let audio = new AudioFile(entry[0], value.file, value.volume??1, value.loop??false, value.autoplay??false);
             AUDIO_LIST.push(audio);
         })
 
@@ -59,5 +67,7 @@ class AudioManager {
         AUDIO_LIST.forEach(value => value.pause());
     }
 }
+
+window.AudioManager = AudioManager;
 
 export default AudioManager;

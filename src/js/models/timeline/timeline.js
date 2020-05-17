@@ -34,6 +34,11 @@ class Timeline {
                         AudioManager.play(value.content);
                         break;
                     }
+                    case TIMELINE_TYPES.VIDEO : {
+                        //on n'a qu'une vidéo j'ai rien fait de générique pour ca.
+                        SlideContent.video(GameBrain.video);
+                        break;
+                    }
                     case TIMELINE_TYPES.SOUND_STOP : {
                         AudioManager.getAudio(value.content).pause();
                         break;

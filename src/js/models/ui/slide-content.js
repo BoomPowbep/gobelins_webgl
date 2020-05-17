@@ -2,6 +2,7 @@ import gsap from "gsap";
 import TIMELINES from "../timeline/timeline-configs";
 import Rewind from "../../Game/Util/Rewind";
 import VARS from "../vars";
+import GameBrain from "../../Game/GameManager/GameManager";
 
 class SlideContent {
     static show(html, callback = () => SlideContent.hide(), event = true, duration = 0.5) {
@@ -24,6 +25,23 @@ class SlideContent {
 
     static date(date, callback = undefined, color = "white", event = true) {
         SlideContent.show(`<div class='date' style="color:${color}"><span>${date.hour <= 9 ? `0${date.hour}`: date.hour}:${date.minute}</span><span>${VARS.DAYS[date.weekDay]} ${date.day} ${date.month}</span></div>`, callback, event);
+    }
+
+    /**
+     * @param {VideoFile} video
+     * @param callback
+     * @param event
+     */
+    static video(video) {
+        let el = document.querySelector('#slide-content');
+        let content = el.querySelector('div');
+
+        content.innerHTML = "";
+
+        video.appendIn(content);
+        video.play();
+
+        el.querySelector('.animation').style.display = "none";
     }
 
     static fromTo(start_date, end_date, callback = undefined, duration=5000, color = "white", event = true, open_duration = 0.5) {

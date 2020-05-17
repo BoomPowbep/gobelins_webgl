@@ -22,6 +22,9 @@ const AUDIO_DICTIONARY = {
     'ambient_cricket' : {file: "sounds/ambient/Crikets.mp3", volume: 0.5, loop: true},
     'ambient_bar' : {file: "sounds/ambient/Bar.mp3", volume: 0.5, loop: true},
     'ambient_voiture' : {file: "sounds/ambient/Voitures.mp3", volume: 0.5, loop: true},
+    'ambient_tick' : {file: "sounds/time.mp3", volume: 0.5, loop: true},
+
+    'introduction' : {file: "sounds/introduction.mp3", volume: 0.5, loop: true, autoplay: true},
 };
 
 export default AUDIO_DICTIONARY;

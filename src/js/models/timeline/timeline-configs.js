@@ -12,11 +12,12 @@ const TIMELINES = {
     begin : new Timeline([
         new TimelineItem(TIMELINE_TYPES.ALLOW_PICKING, false, 0),
         new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.SCENE_INTRO, 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND_STOP, "introduction", 0),
         new TimelineItem(TIMELINE_TYPES.SOUND, "passant_1", 0),
         new TimelineItem(TIMELINE_TYPES.SOUND, "passant_2", 11500),
-        new TimelineItem(TIMELINE_TYPES.SOUND, "ringtone", 14000),
-        new TimelineItem(TIMELINE_TYPES.UI, "call", 14200),
-        new TimelineItem(TIMELINE_TYPES.TEXT, {el: ("#app_call .duration"), text: "Appel entrant"}, 14200),
+        new TimelineItem(TIMELINE_TYPES.SOUND, "ringtone", 15000),
+        new TimelineItem(TIMELINE_TYPES.UI, "call", 15200),
+        new TimelineItem(TIMELINE_TYPES.TEXT, {el: ("#app_call .duration"), text: "Appel entrant"}, 15200),
     ]),
     call: new Timeline([
         new TimelineItem(TIMELINE_TYPES.FUNCTION, () => {
@@ -37,7 +38,7 @@ const TIMELINES = {
         }, 0),
         new TimelineItem(TIMELINE_TYPES.SOUND_STOP, "ringtone", 0),
         new TimelineItem(TIMELINE_TYPES.SOUND, "appel", 0),
-        new TimelineItem(TIMELINE_TYPES.TEXT, {el:  ("#app_call .duration"), text: "Appel terminé"}, 17000),
+        new TimelineItem(TIMELINE_TYPES.TEXT, {el:  ("#app_call .duration"), text: "Appel terminé"}, 17500),
         new TimelineItem(TIMELINE_TYPES.UI_HIDE, "call", 18000),
         new TimelineItem(TIMELINE_TYPES.PHONE, null, 18000),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 18000),
@@ -47,10 +48,15 @@ const TIMELINES = {
     //CONCLUSION
 
     end: new Timeline([
-        new TimelineItem(TIMELINE_TYPES.CAMERA,  {x: (1.5), y:(36), z:(-44)}, 5000),
-        new TimelineItem(TIMELINE_TYPES.HOURS_SLIDE, {start: VARS.HOURS.SCENE_FINAL, end: VARS.HOURS.BEGIN, duration: 4000}, 7000),
-        new TimelineItem(TIMELINE_TYPES.HIDE_SLIDE, null, 15000),
-        new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 15000)
+        new TimelineItem(TIMELINE_TYPES.SOUND, "introduction", 0),
+        new TimelineItem(TIMELINE_TYPES.HOURS_SLIDE, {start: VARS.HOURS.SCENE_FINAL, end: VARS.HOURS.BEGIN, duration: 4000}, 5000),
+        new TimelineItem(TIMELINE_TYPES.VIDEO, null, 14000),
+        new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 14000)
+    ]),
+
+    afterVideo: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.CONCLUSION,  'final', 0),
+        new TimelineItem(TIMELINE_TYPES.SOUND_STOP, "introduction", 0),
     ]),
 
     //SCENE
