@@ -694,14 +694,14 @@ export default class Game {
                 identifier: 'BarBarman',
                 path: 'models/FBX/Bar_Barman.fbx',
                 initialScaleFactor: 0.15,
-                initialPosition: {x: -96, y: 16, z: 31},
+                initialPosition: {x: -92, y: 9, z: 31},
                 initialRotation: {x: 0, y: toRad(180), z: 0}
             }),
             new Model({
                 identifier: 'BarClient',
                 path: 'models/FBX/Bar_Client.fbx',
                 initialScaleFactor: 0.15,
-                initialPosition: {x: -83, y: 11, z: 10}
+                initialPosition: {x: -83, y: 11, z: 11}
             }),
 
             new Model({
@@ -785,7 +785,7 @@ export default class Game {
         function setupDatGUIModels() {
             let editedElement = GameBrain.modelManager.getModelReferenceByIdentifier('Colleuse1');
             let identifier = {model: ""};
-            let elementSelector = GameBrain.gui.add(identifier, 'model', ['Colleuse2', 'Colleuse3', 'Colleuse1', 'PoliceConversationGauge', 'ColleuseConversationGauge', 'StreetPassant', 'BarClient', 'BarBarman', 'letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final", "BistroConversationGauge"]);
+            let elementSelector = GameBrain.gui.add(identifier, 'model', ['Police_Texting', 'Police_Smoking', 'Colleuse2', 'Colleuse3', 'Colleuse1', 'PoliceConversationGauge', 'ColleuseConversationGauge', 'StreetPassant', 'BarClient', 'BarBarman', 'letter-1', 'letter-2', 'letter-3', 'letter-4', 'letter-5', 'letter-6', 'letter-7', 'letter-8', "map-interest-1", "map-interest-2", "map-interest-3", "map-interest-final", "BistroConversationGauge"]);
 
             let x_element = null;
             let y_element = null;
@@ -858,7 +858,7 @@ export default class Game {
                 path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.03,
                 initialPosition: {
-                    x: 26, y: -21, z: -59
+                    x: 34, y: -22, z: -68
                 },
                 visible: false
             }),
@@ -876,7 +876,7 @@ export default class Game {
                 path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.03,
                 initialPosition: {
-                    x: -129, y: -15, z: -120
+                    x: -125, y: -13, z: -67
                 },
                 visible: false
             }),
@@ -887,6 +887,24 @@ export default class Game {
                 initialPosition: {x: 0, y: -100000, z: 0},
                 initialRotation: {x: 0, y: toRad(-90), z: 0}
             }),
+            new Model({
+                identifier: 'Police_Texting',
+                path: 'models/FBX/Police_Texting.fbx',
+                initialScaleFactor: 1,
+                initialRotation: {x: 0, y: 3.4, z: 0},
+                initialPosition: {
+                    x: 61, y: -20, z: -113
+                },
+            }),
+            new Model({
+                identifier: 'Police_Smoking',
+                path: 'models/FBX/Police_Smoking.fbx',
+                initialScaleFactor: 1,
+                initialPosition: {
+                    x: 61, y: -20, z: -162
+                },
+            }),
+
         ];
 
         lights = [];
@@ -903,6 +921,9 @@ export default class Game {
                     onLoadDone: (scenery) => {
                         ready++;
                         checkElementsReady();
+
+                        GameBrain.modelManager.playFirstAnimationByIdentifier("Police_Smoking");
+                        GameBrain.modelManager.playFirstAnimationByIdentifier("Police_Texting");
 
                         let sceneModel = GameBrain.modelManager.getModelReferenceByIdentifier("ComissariatEnvironment");
                         let kangoo = GameBrain.modelManager.getModelReferenceByIdentifier("Kangoo");
@@ -940,7 +961,7 @@ export default class Game {
             )
         );
 
-        function checkElementsReady() {
+        let checkElementsReady = () => {
             const duration = 1;
             let total = GameBrain.sceneryManager._sceneries.length;
 
