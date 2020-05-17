@@ -10,6 +10,8 @@ import {SceneryManager} from "../SceneryManager/SceneryManager";
 import * as dat from "dat.gui";
 import Listening from "../../models/listening/listening";
 import AudioManager from "../../models/audio/audio-manager";
+import VideoFile from "../../models/ui/video-file";
+import SlideContent from "../../models/ui/slide-content";
 
 class GameManager {
     /**
@@ -35,6 +37,13 @@ class GameManager {
             this.bistroListenTimer = null;
             this.bistroCircleAnimationTick = null;
 
+            //Video sauvage, pas le temps de faire mieux. A voir pour améliorer
+            this.video = new VideoFile("meurtre", () => {
+                TIMELINES.afterVideo.play();
+                SlideContent.hide();
+            })
+
+            //intéractions d'écoute. TODO refacto pour génériser les callbacks
             this.listenings = [
                 new Listening("bistro", 12000, "vocal_1", "BistroConversationGauge", "BistroConversationSprite", () => {
                         TIMELINES.postListenBistro.play();
@@ -62,10 +71,13 @@ class GameManager {
                 )
             ];
 
+            //Les différentes anims de personnage
             this.mixers = [];
 
+            //Sprites pour la minimap
             this.mapSprites = {};
 
+            //Singleton
             GameManager.instance = this;
 
             // Event listeners
@@ -111,7 +123,7 @@ class GameManager {
         /* -- Set default controls -- */
         GameBrain.controlsManager.initDeviceOrientation(GameBrain.cameraManager.camera);
 
-
+        //On crée les sprites pour la minimap
         let loader =  new THREE.TextureLoader();
         this.mapSprites = {
             red:   loader.load(`textures/pins/red.png`),

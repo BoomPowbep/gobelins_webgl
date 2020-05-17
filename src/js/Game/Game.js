@@ -961,9 +961,7 @@ export default class Game {
 
                 setupDatGUIModels();
 
-                // setTimeout(() => {
-                // SlideContent.introduction();
-                //}, 500);
+                 SlideContent.introduction();
             } else {
                 gsap.to("#loading .progress-bar div", {
                     duration: duration / 2,

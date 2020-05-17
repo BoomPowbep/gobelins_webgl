@@ -47,10 +47,13 @@ const TIMELINES = {
     //CONCLUSION
 
     end: new Timeline([
-        new TimelineItem(TIMELINE_TYPES.CAMERA,  {x: (1.5), y:(36), z:(-44)}, 5000),
-        new TimelineItem(TIMELINE_TYPES.HOURS_SLIDE, {start: VARS.HOURS.SCENE_FINAL, end: VARS.HOURS.BEGIN, duration: 4000}, 7000),
-        new TimelineItem(TIMELINE_TYPES.HIDE_SLIDE, null, 15000),
-        new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 15000)
+        new TimelineItem(TIMELINE_TYPES.HOURS_SLIDE, {start: VARS.HOURS.SCENE_FINAL, end: VARS.HOURS.BEGIN, duration: 4000}, 5000),
+        new TimelineItem(TIMELINE_TYPES.VIDEO, null, 14000),
+        new TimelineItem(TIMELINE_TYPES.HOURS_HUD, VARS.HOURS.BEGIN, 14000)
+    ]),
+
+    afterVideo: new Timeline([
+        new TimelineItem(TIMELINE_TYPES.CONCLUSION,  'final', 0),
     ]),
 
     //SCENE

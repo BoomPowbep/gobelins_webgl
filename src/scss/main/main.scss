@@ -254,6 +254,11 @@ html {
   background: $background-color;
   z-index: 200;
   text-align: center;
+  video {
+    width: 100%;
+    top: 50%;
+  //  transform: translateY(-50%);
+  }
   >div{
     display: flex;
     width: 100%;
