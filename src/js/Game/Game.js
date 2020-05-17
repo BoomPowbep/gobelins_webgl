@@ -410,6 +410,11 @@ export default class Game {
                 }
             }),
             new Model({
+                identifier: 'Colleuse1',
+                path: 'models/FBX/Colleuse.parle.fbx',
+                initialScaleFactor: 1,
+            }),
+            new Model({
                 identifier: 'letter-4',
                 path: 'models/FBX/Boulette.fbx',
                 initialScaleFactor: 0.03,
@@ -449,7 +454,7 @@ export default class Game {
                         GameBrain.sceneryManager.loadScenery("MapScenery");
                         checkElementsReady();
                     },
-                    onSceneActive: (scene) => {
+                    onSceneActive: (scenery) => {
                         let sceneModel = GameBrain.modelManager.getModelReferenceByIdentifier("ColleusesEnvironment");
 
                         console.log("SCENE", sceneModel);
@@ -461,6 +466,14 @@ export default class Game {
                                         child.material.uniforms.lightColor.value.set('white');
                                         child.material.uniforms.spotPosition.value = child.position;
                                         child.material.uniforms.attenuationFactor.value = 800.0;
+                                    }
+                                    else if(child.name === "Colleuse_parle") {
+                                        let c = GameBrain.modelManager.getModelReferenceByIdentifier("Colleuse1");
+                                        GameBrain.modelManager.playFirstAnimationByIdentifier("Colleuse1");
+                                        c.position.x = child.position.x + scenery.position.x;
+                                        c.position.y = child.position.y + scenery.position.y;
+                                        c.position.z = child.position.z + scenery.position.z;
+                                        console.log(scenery.position, c.position)
                                     }
                                 }
                             });
