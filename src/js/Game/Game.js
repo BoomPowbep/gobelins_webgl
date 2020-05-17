@@ -937,9 +937,9 @@ export default class Game {
                     autoAlpha: 0
                 });
 
-                setupDatGUIModels();
-
                  SlideContent.introduction();
+
+                 this._debugMode && setupDatGUIModels();
             } else {
                 gsap.to("#loading .progress-bar div", {
                     duration: duration / 2,
