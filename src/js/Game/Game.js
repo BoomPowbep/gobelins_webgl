@@ -321,6 +321,21 @@ export default class Game {
                         ready++;
                         UserHand.createElements();
 
+                        let sceneModel = GameBrain.modelManager.getModelReferenceByIdentifier("StreetEnvironment");
+
+                        if (sceneModel) {
+                            sceneModel.children.map((child) => {
+                                if (child.isMesh) {
+                                    if (child.name.includes("Cone")) {
+                                        child.material = new THREEx.VolumetricSpotLightMaterial();
+                                        child.material.uniforms.lightColor.value.set('white');
+                                        child.material.uniforms.spotPosition.value = child.position;
+                                        child.material.uniforms.attenuationFactor.value = 100.0;
+                                    }
+                                }
+                            });
+                        }
+
                         let clone = GameBrain.modelManager.getModelReferenceByIdentifier("StreetEnvironment").clone();
                         clone.identifier += "1";
                         clone.position.z += 900 + scenery.basePosition.z;
