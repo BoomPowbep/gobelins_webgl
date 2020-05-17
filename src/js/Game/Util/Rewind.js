@@ -1,7 +1,9 @@
 import VARS from "../../models/vars";
+import AudioManager from "../../models/audio/audio-manager";
 
 class Rewind {
     static dateRewind(el, start, end, duration = 4000) {
+        AudioManager.play("ambient_tick");
         const DELAY = 10;
 
         //On calcule les scores du début à la fin
@@ -27,6 +29,7 @@ class Rewind {
             if((progression === 1 && begin >= score_end) || (progression === -1 && begin <= score_end))  {
                 //fin de l'interval, on clear l'interval et on set la date finale
                 clearInterval(interval);
+                AudioManager.pause("ambient_tick");
                 el.innerHTML = `<span>${end.hour <= 9 ? `0${end.hour}`: end.hour}:${end.minute <= 9 ? `0${end.minute}`: end.minute}</span><span>${VARS.DAYS[end.weekDay]} ${end.day} ${start.month}</span>`;
             }
             else {
