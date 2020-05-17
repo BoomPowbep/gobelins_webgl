@@ -305,13 +305,7 @@ export default class Game {
             new Model({identifier: 'StreetPassant', path: 'models/FBX/Street_Passant2.fbx', initialScaleFactor:  0.5, initialPosition: {x: -167, y: -32, z: -39}, initialRotation: {x:0, y: toRad(270), z:0}}),
         ];
 
-        let lights = [
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "StreetSpotLight",
-            //     position: {x: 50, y: 150, z: -1000},
-            //     intensity: 3
-            // })
-        ];
+        let lights = [];
 
         GameBrain.sceneryManager.addScenery(
             new Scenery({
@@ -439,52 +433,7 @@ export default class Game {
             }),
         ];
 
-        lights = [
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "ColleusesSpotLight-0",
-            //     position: {x: 80, y: 35, z: -480},
-            //     target: {x: 78, y: 0, z: -480},
-            //     intensity: 10,
-            //     angle: .4,
-            //     distance: 210
-            // }),
-            //
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "ColleusesSpotLight-1",
-            //     position: {x: 80, y: 35, z: -195},
-            //     target: {x: 78, y: 0, z: -195},
-            //     intensity: 10,
-            //     angle: .4,
-            //     distance: 210
-            // }),
-            //
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "ColleusesSpotLight-2",
-            //     position: {x: 80, y: 35, z: 0},
-            //     target: {x: 78, y: 0, z: 0},
-            //     intensity: 10,
-            //     angle: .4,
-            //     distance: 210
-            // }),
-            //
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "ColleusesSpotLight-3",
-            //     position: {x: 80, y: 35, z: 195},
-            //     target: {x: 78, y: 0, z: 195},
-            //     intensity: 10,
-            //     angle: .4,
-            //     distance: 210
-            // }),
-            //
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "ColleusesSpotLight-4",
-            //     position: {x: 80, y: 35, z: 480},
-            //     target: {x: 78, y: 0, z: 480},
-            //     intensity: 10,
-            //     angle: .4,
-            //     distance: 210
-            // }),
-        ];
+        lights = [];
 
         GameBrain.sceneryManager.addScenery(
             new Scenery({
@@ -568,13 +517,7 @@ export default class Game {
             }),
         ];
 
-        lights = [
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "MapSpotLight",
-            //     angle: 0,
-            //     distance: 500,
-            // })
-        ];
+        lights = [];
 
         GameBrain.sceneryManager.addScenery(
             new Scenery({
@@ -717,13 +660,7 @@ export default class Game {
             })
         ];
 
-        lights = [
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "BistroSpotLight",
-            //     angle: 0,
-            //     distance: 500,
-            // })
-        ];
+        lights = [];
 
         GameBrain.sceneryManager.addScenery(
             new Scenery({
@@ -885,18 +822,7 @@ export default class Game {
             }),
         ];
 
-        lights = [
-            // GameBrain.lightingManager.createSpotLight({
-            //     identifier: "ComissariatSpotLight-0",
-            //     position: {x: 38, y: 41, z: 10},
-            //     target: {x: 38, y: 0, z: 10},
-            //     intensity: 100,
-            //     angle: .03,
-            //     distance: 15,
-            //     radiusTop: .6,
-            //     attenuationFactor: 3.0,
-            // }),
-        ];
+        lights = [];
 
         GameBrain.sceneryManager.addScenery(
             new Scenery({
