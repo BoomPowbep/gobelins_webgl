@@ -38,7 +38,7 @@ const TIMELINES = {
         }, 0),
         new TimelineItem(TIMELINE_TYPES.SOUND_STOP, "ringtone", 0),
         new TimelineItem(TIMELINE_TYPES.SOUND, "appel", 0),
-        new TimelineItem(TIMELINE_TYPES.TEXT, {el:  ("#app_call .duration"), text: "Appel terminé"}, 17000),
+        new TimelineItem(TIMELINE_TYPES.TEXT, {el:  ("#app_call .duration"), text: "Appel terminé"}, 17500),
         new TimelineItem(TIMELINE_TYPES.UI_HIDE, "call", 18000),
         new TimelineItem(TIMELINE_TYPES.PHONE, null, 18000),
         new TimelineItem(TIMELINE_TYPES.MESSAGE, "Tu as désormais accès à ton téléphone pour enquêter", 18000),

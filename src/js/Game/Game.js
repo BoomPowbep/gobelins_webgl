@@ -274,9 +274,9 @@ export default class Game {
                 identifier: "button",
                 texture: "textures/button.png",
                 facingCamera: false,
-                size: {x: 4, y: 2, z: 0.1},
+                size: {x: 3.5, y: 1.3, z: 0.1},
                 rotation: {x: toRad(0), y: toRad(-90), z: toRad(0)},
-                position: {x: 120, y: 65, z: 270}
+                position: {x: 117, y: 68, z: 266}
             }),
             /*GameBrain.geometryManager.createVideoPlane({
                 identifier: "video",
@@ -365,7 +365,7 @@ export default class Game {
                         }
 
                         let item = GameBrain.geometryManager.getGeometryReferenceByIdentifier("button");
-                        item.visible = DATA.data_manager.letters.hasPickupAll();
+                        //item.visible = DATA.data_manager.letters.hasPickupAll();
                         scene.add(GameBrain.cameraManager.camera);
 
                         SCENE_EVENTS_VARS.end();
