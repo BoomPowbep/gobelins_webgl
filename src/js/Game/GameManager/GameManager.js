@@ -131,6 +131,15 @@ class GameManager {
             green:   loader.load(`textures/pins/green.png`),
             vocal:   loader.load(`textures/vocal_icon.png`),
             vocal_listened:   loader.load(`textures/vocal_icon_green.png`),
+
+            bar_green:   loader.load(`textures/pins/Bar_02.png`),
+            bar_red:   loader.load(`textures/pins/Bar_01.png`),
+            police_green:   loader.load(`textures/pins/Police_02.png`),
+            police_red:   loader.load(`textures/pins/Police_01.png`),
+            collage_green:   loader.load(`textures/pins/Collage_02.png`),
+            collage_red:   loader.load(`textures/pins/Collage_01.png`),
+            colleuses_green:   loader.load(`textures/pins/Colleuses_02.png`),
+            colleuses_red:   loader.load(`textures/pins/Colleuses_01.png`),
         };
     }
 

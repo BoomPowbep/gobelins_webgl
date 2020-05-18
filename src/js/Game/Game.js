@@ -628,24 +628,26 @@ export default class Game {
                         item_interest1.material.map = (active === VARS.SCENERIES.BAR) ?
                             GameBrain.mapSprites.here :
                             ((barFinish) ?
-                                GameBrain.mapSprites.green :
-                                GameBrain.mapSprites.red);
+                                GameBrain.mapSprites.bar_green :
+                                GameBrain.mapSprites.bar_red);
+
                         item_interest2.material.map = (active === VARS.SCENERIES.COLLEUSE) ?
                             GameBrain.mapSprites.here :
                             ((colleuseFinish) ?
-                                GameBrain.mapSprites.green :
-                                GameBrain.mapSprites.red);
+                                GameBrain.mapSprites.colleuses_green :
+                                GameBrain.mapSprites.colleuses_red);
+
                         item_interest3.material.map = (active === VARS.SCENERIES.POLICE) ?
                             GameBrain.mapSprites.here :
                             ((policeFinish) ?
-                                GameBrain.mapSprites.green :
-                                GameBrain.mapSprites.red);
+                                GameBrain.mapSprites.police_green :
+                                GameBrain.mapSprites.police_red);
 
                         item.material.map = (active === VARS.SCENERIES.STREET) ?
                             GameBrain.mapSprites.here :
                             ((introductionFinish && !policeFinish) ? // si il a pas fini la police on le garde vert, sinon il doit y retourner
-                                GameBrain.mapSprites.green :
-                                GameBrain.mapSprites.red);
+                                GameBrain.mapSprites.collage_green :
+                                GameBrain.mapSprites.collage_red);
 
                         //on cherche sur quel élément on focus la map
                         if (!introductionFinish)
@@ -1104,9 +1106,11 @@ export default class Game {
                 GameBrain.sceneryManager.startSceneryTransition(VARS.SCENERIES.POLICE);
                 break;
             case "button":
-                GameBrain.sceneManager.scene.remove(GameBrain.geometryManager.getGeometryReferenceByIdentifier("button"));
-                DATA.is_gluing = true;
-                UserHand.show();
+                if (DATA.data_manager.letters.hasPickupAll()) {
+                    GameBrain.sceneManager.scene.remove(GameBrain.geometryManager.getGeometryReferenceByIdentifier("button"));
+                    DATA.is_gluing = true;
+                    UserHand.show();
+                }
                 break;
             default:
                 break;
