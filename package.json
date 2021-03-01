@@ -29,7 +29,7 @@
     "gsap": "^3.2.6",
     "orbit-controls-es6": "^2.0.1",
     "stats-js": "^1.0.1",
-    "three": "^0.113.2",
+    "three": "^0.125.0",
     "three-device-orientation": "^1.0.3"
   }
 }
